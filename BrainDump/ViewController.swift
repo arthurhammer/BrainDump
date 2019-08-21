@@ -2,14 +2,18 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var coreDataStore: CoreDataStore? {
+        didSet {
+            textView?.text = coreDataStore?.dump.text
+            textView?.startEditing(animated: false)
+        }
+    }
+
     @IBOutlet private weak var textView: UITextView?
     @IBOutlet private weak var toolbar: UIToolbar?
-    private lazy var toolbarWrapper = self.toolbar.flatMap(SafeAreaInputAccessoryViewWrapperView.init)
 
+    private lazy var toolbarWrapper = self.toolbar.flatMap(SafeAreaInputAccessoryViewWrapperView.init)
     private let textInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    private let defaults = UserDefaults.standard
-    private let textKey = "Text"
-    private var isInitialLayout = true
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -28,18 +32,6 @@ class ViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
-
-        loadText()
-        textView?.becomeFirstResponder()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        if isInitialLayout {
-            isInitialLayout = false
-            textView?.scrollToBottom(animated: false)
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,14 +39,6 @@ class ViewController: UIViewController {
         // In some cases, inputAccessoryView vanishes, e.g. when showing full screen share
         // sheet action.
         becomeFirstResponder()
-    }
-
-    func saveText() {
-        defaults.set(textView?.text ?? "", forKey: textKey)
-    }
-
-    private func loadText() {
-        textView?.text = defaults.string(forKey: textKey) ?? ""
     }
 
     @IBAction private func shareText() {
@@ -65,7 +49,8 @@ class ViewController: UIViewController {
 
     @IBAction private func clearText() {
         textView?.text = ""
-        saveText()
+        coreDataStore?.dump.text = ""
+        coreDataStore?.save()
     }
 
     @objc
@@ -87,6 +72,10 @@ class ViewController: UIViewController {
 extension ViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        saveText()
+        coreDataStore?.save()
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        coreDataStore?.dump.text = textView.text
     }
 }

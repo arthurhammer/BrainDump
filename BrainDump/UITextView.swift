@@ -5,4 +5,9 @@ extension UITextView {
         let bottom = caretRect(for: endOfDocument)
         scrollRectToVisible(bottom, animated: animated)
     }
+
+    func startEditing(animated: Bool) {
+        becomeFirstResponder()
+        scrollToBottom(animated: animated)
+    }
 }

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		00456167230C44AC009B50DB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456166230C44AC009B50DB /* UITextView.swift */; };
 		00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */; };
+		00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */; };
+		00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */; };
+		00B050EB230D752A0075B3D3 /* Dump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E7230D70690075B3D3 /* Dump.swift */; };
 		00C4A0EC23055D4E009494A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0EB23055D4E009494A0 /* AppDelegate.swift */; };
 		00C4A0EE23055D4E009494A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0ED23055D4E009494A0 /* ViewController.swift */; };
 		00C4A0F123055D4E009494A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0EF23055D4E009494A0 /* Main.storyboard */; };
@@ -19,6 +22,9 @@
 /* Begin PBXFileReference section */
 		00456166230C44AC009B50DB /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInputAccessoryViewWrapperView.swift; sourceTree = "<group>"; };
+		00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BrainDump.xcdatamodel; sourceTree = "<group>"; };
+		00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		00B050E7230D70690075B3D3 /* Dump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dump.swift; sourceTree = "<group>"; };
 		00C4A0E823055D4E009494A0 /* BrainDump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainDump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C4A0EB23055D4E009494A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00C4A0ED23055D4E009494A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +77,9 @@
 				00C4A0ED23055D4E009494A0 /* ViewController.swift */,
 				00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */,
 				00456166230C44AC009B50DB /* UITextView.swift */,
+				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
+				00B050E7230D70690075B3D3 /* Dump.swift */,
+				00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */,
 				00C4A0EF23055D4E009494A0 /* Main.storyboard */,
 				00C4A0F423055D50009494A0 /* LaunchScreen.storyboard */,
 				00456165230C3193009B50DB /* Resources */,
@@ -151,6 +160,9 @@
 			files = (
 				00C4A0EE23055D4E009494A0 /* ViewController.swift in Sources */,
 				00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */,
+				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
+				00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */,
+				00B050EB230D752A0075B3D3 /* Dump.swift in Sources */,
 				00456167230C44AC009B50DB /* UITextView.swift in Sources */,
 				00C4A0EC23055D4E009494A0 /* AppDelegate.swift in Sources */,
 			);
@@ -352,6 +364,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */,
+			);
+			currentVersion = 00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */;
+			path = BrainDump.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 00C4A0E023055D4E009494A0 /* Project object */;
 }
