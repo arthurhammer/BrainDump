@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00456167230C44AC009B50DB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456166230C44AC009B50DB /* UITextView.swift */; };
 		00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */; };
+		0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */; };
 		00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */; };
 		00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */; };
 		00B050EB230D752A0075B3D3 /* Dump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E7230D70690075B3D3 /* Dump.swift */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		00456166230C44AC009B50DB /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInputAccessoryViewWrapperView.swift; sourceTree = "<group>"; };
+		0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpDataSource.swift; sourceTree = "<group>"; };
 		00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BrainDump.xcdatamodel; sourceTree = "<group>"; };
 		00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		00B050E7230D70690075B3D3 /* Dump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dump.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				00C4A0ED23055D4E009494A0 /* ViewController.swift */,
 				00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */,
 				00456166230C44AC009B50DB /* UITextView.swift */,
+				0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */,
 				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
 				00B050E7230D70690075B3D3 /* Dump.swift */,
 				00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */,
@@ -160,6 +163,7 @@
 			files = (
 				00C4A0EE23055D4E009494A0 /* ViewController.swift in Sources */,
 				00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */,
+				0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
 				00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */,
 				00B050EB230D752A0075B3D3 /* Dump.swift in Sources */,

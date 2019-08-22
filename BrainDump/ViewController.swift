@@ -2,9 +2,9 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var coreDataStore: CoreDataStore? {
+    var dataSource: DumpDataSource? {
         didSet {
-            textView?.text = coreDataStore?.dump.text
+            textView?.text = dataSource?.dump.text
             textView?.startEditing(animated: false)
         }
     }
@@ -49,8 +49,8 @@ class ViewController: UIViewController {
 
     @IBAction private func clearText() {
         textView?.text = ""
-        coreDataStore?.dump.text = ""
-        coreDataStore?.save()
+        dataSource?.dump.text = ""
+        dataSource?.save()
     }
 
     @objc
@@ -72,10 +72,10 @@ class ViewController: UIViewController {
 extension ViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        coreDataStore?.save()
+        dataSource?.save()
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        coreDataStore?.dump.text = textView.text
+        dataSource?.dump.text = textView.text
     }
 }

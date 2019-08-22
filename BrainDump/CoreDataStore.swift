@@ -1,20 +1,8 @@
 import CoreData
 
+
+
 class CoreDataStore: NSPersistentContainer {
-
-    private(set) lazy var dump: Dump = {
-        let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
-        request.fetchLimit = 1
-
-        if let dump = (try? viewContext.fetch(request))?.first {
-            return dump
-        }
-
-        let dump = Dump(in: viewContext)
-        save()
-
-        return dump
-    }()
 
     var storeURL: URL {
         return CoreDataStore.defaultDirectoryURL().appendingPathComponent("\(name).sqlite")
