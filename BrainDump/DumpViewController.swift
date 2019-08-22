@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class DumpViewController: UIViewController {
 
     var dataSource: DumpDataSource? {
         didSet {
@@ -53,8 +53,7 @@ class ViewController: UIViewController {
         dataSource?.save()
     }
 
-    @objc
-    private func keyboardWillShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey],
             let keyboardHeight = (keyboardFrame as? NSValue)?.cgRectValue.size.height else { return }
 
@@ -62,14 +61,13 @@ class ViewController: UIViewController {
         textView?.scrollIndicatorInsets.bottom = keyboardHeight
     }
 
-    @objc
-    private func keyboardDidHide(notification: NSNotification) {
+    @objc private func keyboardDidHide(notification: NSNotification) {
         textView?.contentInset = .zero
         textView?.scrollIndicatorInsets = .zero
     }
 }
 
-extension ViewController: UITextViewDelegate {
+extension DumpViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         dataSource?.save()

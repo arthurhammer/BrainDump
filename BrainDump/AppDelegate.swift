@@ -4,13 +4,13 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private var controller: ViewController!
-    private lazy var coreDataStore = CoreDataStore(name: "BrainDump")
+    private var dumpViewController: DumpViewController!
+    private lazy var store = CoreDataStore(name: "BrainDump")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        coreDataStore.loadStore {
-            self.controller = ((self.window?.rootViewController as! UINavigationController).topViewController as! ViewController)
-            self.controller.dataSource = DumpDataSource(store: self.coreDataStore)
+        store.loadStore {
+            self.dumpViewController = ((self.window?.rootViewController as! UINavigationController).topViewController as! DumpViewController)
+            self.dumpViewController.dataSource = DumpDataSource(store: self.store)
         }
 
         return true

@@ -1,7 +1,5 @@
 import CoreData
 
-
-
 class CoreDataStore: NSPersistentContainer {
 
     var storeURL: URL {
