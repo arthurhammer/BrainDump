@@ -1,8 +1,12 @@
 import CoreData
 import UIKit
 
+// Stack Overflow: "Leave the General Problem for later, if it may ever be necessary and worth the effort"
+// When changing interval: how to notify user some notes might be deleted right now?
+
 class DumpDataSource {
 
+    var didDeleteDump: ((Dump) -> ())?  // WRONG: Called for ANY dump
     let deleteAfter: TimeInterval
 
     private(set) var currentDump: Dump?
@@ -15,11 +19,13 @@ class DumpDataSource {
         subscribeToNotifications()
         purgeExpiredDumpsIfNecessary()
 
+        // Loads any one dump, not sorted or sth
         let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
         request.sortDescriptors = [NSSortDescriptor(key: "dateModified", ascending: false)]
         // request.fetchLimit = 1
 
         let result = try? store.viewContext.fetch(request)
+        print("Fetched: ", result?.count ?? 0, result ?? [])
 
         if let dump = result?.first {
             print("Loading existing dump")
@@ -55,13 +61,16 @@ class DumpDataSource {
     }
 
     private func purgeExpiredDumpsIfNecessary() {
+        print("Clean")
         let purgeBefore = Date().addingTimeInterval(.init(-deleteAfter))
         let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
         request.predicate = NSPredicate(format: "dateModified <= %@", purgeBefore as NSDate)
 
         guard let result = try? store.viewContext.fetch(request) else { return }
+        print("Deleting:", result)
 
         result.forEach(store.viewContext.delete)
         save()
+        result.forEach { didDeleteDump?($0) }
     }
 }
