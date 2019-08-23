@@ -5,7 +5,9 @@ class DumpsDataSource: NSObject {
     private let store: CoreDataStore
     private let frc: NSFetchedResultsController<Dump>
 
+    var dumpsWillChange: (() -> ())?
     var dumpDidChange: ((FetchedResultsControllerChange) -> ())?
+    var dumpsDidChange: (() -> ())?
 
     init(store: CoreDataStore) {
         self.store = store
@@ -28,11 +30,36 @@ class DumpsDataSource: NSObject {
     func dump(at index: Int) -> Dump {
         return frc.object(at: IndexPath(row: index, section: 0))
     }
+
+    func createNewDump() -> Dump {
+        let dump = Dump(in: store.viewContext)
+        store.save()
+        return dump
+    }
+
+    func deleteDump(at index: Int) {
+        let dump = frc.object(at: IndexPath(row: index, section: 0))
+        store.viewContext.delete(dump)
+        store.save()
+    }
+
+    func deleteAllDumps() {
+        frc.fetchedObjects?.forEach(store.viewContext.delete)
+        store.save()
+    }
 }
 
 extension DumpsDataSource: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        dumpsWillChange?()
+    }
+
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange object: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         let change = FetchedResultsControllerChange(object: object, type: type, indexPath: indexPath, newIndexPath: newIndexPath)
         dumpDidChange?(change)
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        dumpsDidChange?()
     }
 }

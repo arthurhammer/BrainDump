@@ -99,4 +99,11 @@ extension DumpViewController: DumpsViewControllerDelegate {
         dataSource?.currentDump = dump
         textView?.text = dump.text
     }
+
+    func controller(_ controller: DumpsViewController, didCreateNewDump dump: Dump) {
+        dismiss(animated: true)
+        dataSource?.currentDump = dump
+        textView?.text = dump.text
+        textView?.startEditing(animated: true)
+    }
 }

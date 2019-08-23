@@ -113,11 +113,23 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Brain Dumps" id="VYI-Yq-fyW">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="csr-sr-Mtq">
+                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="amN-rJ-D9S">
                             <connections>
-                                <action selector="done" destination="avn-7g-eKo" id="ulO-Og-l7I"/>
+                                <action selector="deleteAllDumps" destination="avn-7g-eKo" id="xow-pR-OA7"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem style="done" systemItem="done" id="csr-sr-Mtq">
+                                <connections>
+                                    <action selector="done" destination="avn-7g-eKo" id="ulO-Og-l7I"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="compose" id="0TA-oB-D1u">
+                                <connections>
+                                    <action selector="createNewDump" destination="avn-7g-eKo" id="voA-Z6-twM"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFt-s0-3Vu" userLabel="First Responder" sceneMemberID="firstResponder"/>
