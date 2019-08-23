@@ -9,8 +9,12 @@ class DumpDataSource {
     var didDeleteDump: ((Dump) -> ())?  // WRONG: Called for ANY dump
     let deleteAfter: TimeInterval
 
-    private(set) var currentDump: Dump?
+    var currentDump: Dump?
     private let store: CoreDataStore
+
+    func _todoDumpsDataSource() -> DumpsDataSource {
+        return DumpsDataSource(store: store)
+    }
 
     init(store: CoreDataStore, deleteAfter: TimeInterval = 24 * 60 * 60) {
         self.store = store

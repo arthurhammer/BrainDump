@@ -41,6 +41,17 @@ class DumpViewController: UIViewController {
         becomeFirstResponder()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = (segue.destination as? UINavigationController)?.topViewController as? DumpsViewController {
+            prepareForDumpsSegue(with: controller)
+        }
+    }
+
+    private func prepareForDumpsSegue(with destination: DumpsViewController) {
+        destination.delegate = self
+        destination.dataSource = dataSource?._todoDumpsDataSource()
+    }
+
     @IBAction private func shareDump() {
         let text = textView?.text ?? ""
         let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
@@ -79,5 +90,13 @@ extension DumpViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         dataSource?.currentDump?.text = textView.text
+    }
+}
+
+extension DumpViewController: DumpsViewControllerDelegate {
+    func controller(_ controller: DumpsViewController, didSelectDump dump: Dump) {
+        dismiss(animated: true)
+        dataSource?.currentDump = dump
+        textView?.text = dump.text
     }
 }

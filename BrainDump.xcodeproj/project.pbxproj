@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		00456167230C44AC009B50DB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456166230C44AC009B50DB /* UITextView.swift */; };
 		00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */; };
+		0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21B230FCB36005A91A6 /* DumpsViewController.swift */; };
+		0063F21E230FE66F005A91A6 /* FetchedResultsControllerChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21D230FE66F005A91A6 /* FetchedResultsControllerChange.swift */; };
+		0063F220230FE6A3005A91A6 /* DumpsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21F230FE6A3005A91A6 /* DumpsDataSource.swift */; };
 		0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */; };
 		00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */; };
 		00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */; };
@@ -23,6 +26,9 @@
 /* Begin PBXFileReference section */
 		00456166230C44AC009B50DB /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInputAccessoryViewWrapperView.swift; sourceTree = "<group>"; };
+		0063F21B230FCB36005A91A6 /* DumpsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsViewController.swift; sourceTree = "<group>"; };
+		0063F21D230FE66F005A91A6 /* FetchedResultsControllerChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsControllerChange.swift; sourceTree = "<group>"; };
+		0063F21F230FE6A3005A91A6 /* DumpsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsDataSource.swift; sourceTree = "<group>"; };
 		0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpDataSource.swift; sourceTree = "<group>"; };
 		00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BrainDump.xcdatamodel; sourceTree = "<group>"; };
 		00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
@@ -59,6 +65,7 @@
 		0063F218230FC8CD005A91A6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0063F21D230FE66F005A91A6 /* FetchedResultsControllerChange.swift */,
 				00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */,
 				00456166230C44AC009B50DB /* UITextView.swift */,
 			);
@@ -84,6 +91,15 @@
 			path = "Dump Editor";
 			sourceTree = "<group>";
 		};
+		0063F221230FE6AB005A91A6 /* Dumps */ = {
+			isa = PBXGroup;
+			children = (
+				0063F21B230FCB36005A91A6 /* DumpsViewController.swift */,
+				0063F21F230FE6A3005A91A6 /* DumpsDataSource.swift */,
+			);
+			path = Dumps;
+			sourceTree = "<group>";
+		};
 		00C4A0DF23055D4E009494A0 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +122,7 @@
 				00C4A0EB23055D4E009494A0 /* AppDelegate.swift */,
 				00C4A0EF23055D4E009494A0 /* Main.storyboard */,
 				00C4A0F423055D50009494A0 /* LaunchScreen.storyboard */,
+				0063F221230FE6AB005A91A6 /* Dumps */,
 				0063F21A230FC91C005A91A6 /* Dump Editor */,
 				0063F219230FC8F7005A91A6 /* Model */,
 				0063F218230FC8CD005A91A6 /* Utilities */,
@@ -187,11 +204,14 @@
 			files = (
 				00C4A0EE23055D4E009494A0 /* DumpViewController.swift in Sources */,
 				00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */,
+				0063F21E230FE66F005A91A6 /* FetchedResultsControllerChange.swift in Sources */,
 				0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */,
+				0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
 				00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */,
 				00B050EB230D752A0075B3D3 /* Dump.swift in Sources */,
 				00456167230C44AC009B50DB /* UITextView.swift in Sources */,
+				0063F220230FE6A3005A91A6 /* DumpsDataSource.swift in Sources */,
 				00C4A0EC23055D4E009494A0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

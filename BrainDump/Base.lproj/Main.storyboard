@@ -45,7 +45,11 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
-                        <barButtonItem systemItem="organize" id="hPx-zj-ArU"/>
+                        <barButtonItem systemItem="organize" id="hPx-zj-ArU">
+                            <connections>
+                                <segue destination="lTg-r8-oLr" kind="presentation" id="WvD-Pm-Xe8"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ixk-KB-mXe"/>
                         <barButtonItem systemItem="trash" id="2fs-ZY-PRO">
                             <connections>
@@ -67,7 +71,58 @@
                     </items>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="992.75362318840587" y="129.91071428571428"/>
+            <point key="canvasLocation" x="978" y="130"/>
+        </scene>
+        <!--Brain Dumps-->
+        <scene sceneID="bnf-Mx-a2T">
+            <objects>
+                <tableViewController id="avn-7g-eKo" customClass="DumpsViewController" customModule="BrainDump" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tvF-Pd-xIN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="b48-bw-Hj0" detailTextLabel="bx7-JX-Bi0" style="IBUITableViewCellStyleSubtitle" id="wpA-b9-ZYZ">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wpA-b9-ZYZ" id="Fnx-kt-u6X">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="b48-bw-Hj0">
+                                            <rect key="frame" x="20" y="5" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bx7-JX-Bi0">
+                                            <rect key="frame" x="20" y="25.5" width="44" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="avn-7g-eKo" id="6ZT-QJ-9UU"/>
+                            <outlet property="delegate" destination="avn-7g-eKo" id="QF7-Of-GS1"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Brain Dumps" id="VYI-Yq-fyW">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="csr-sr-Mtq">
+                            <connections>
+                                <action selector="done" destination="avn-7g-eKo" id="ulO-Og-l7I"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rFt-s0-3Vu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1887" y="919"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hY0-lR-qru">
@@ -85,6 +140,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTU-MP-Md5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="129.91071428571428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="KyF-cg-RXk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lTg-r8-oLr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="wbV-1Y-fV5">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="avn-7g-eKo" kind="relationship" relationship="rootViewController" id="JyE-ae-NL2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X4M-q7-aPR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="977" y="919"/>
         </scene>
     </scenes>
 </document>
