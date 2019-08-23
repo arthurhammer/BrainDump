@@ -5,20 +5,7 @@ class DumpDataSource {
 
     let deleteAfter: TimeInterval
 
-    private(set) lazy var dump: Dump = {
-        let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
-        request.fetchLimit = 1
-
-        if let dump = (try? store.viewContext.fetch(request))?.first {
-            return dump
-        }
-
-        let dump = Dump(in: store.viewContext)
-        save()
-
-        return dump
-    }()
-
+    private(set) var currentDump: Dump?
     private let store: CoreDataStore
 
     init(store: CoreDataStore, deleteAfter: TimeInterval = 24 * 60 * 60) {
@@ -27,6 +14,34 @@ class DumpDataSource {
 
         subscribeToNotifications()
         purgeExpiredDumpsIfNecessary()
+
+        let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
+        request.sortDescriptors = [NSSortDescriptor(key: "dateModified", ascending: false)]
+        // request.fetchLimit = 1
+
+        let result = try? store.viewContext.fetch(request)
+
+        if let dump = result?.first {
+            print("Loading existing dump")
+            currentDump = dump
+        } else {
+            currentDump = Dump(in: store.viewContext)
+        }
+
+        save()
+    }
+
+    /// Replaces `currentDump` with the returned new instance.
+    @discardableResult func createNewCurrentDump() -> Dump {
+        currentDump = Dump(in: store.viewContext)
+        save()
+        return currentDump!
+    }
+
+    func deleteCurrentDump() {
+        currentDump.flatMap(store.viewContext.delete)
+        currentDump = nil
+        save()
     }
 
     @objc func save() {

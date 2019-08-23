@@ -4,7 +4,7 @@ class DumpViewController: UIViewController {
 
     var dataSource: DumpDataSource? {
         didSet {
-            textView?.text = dataSource?.dump.text
+            textView?.text = dataSource?.currentDump?.text
             textView?.startEditing(animated: false)
         }
     }
@@ -41,16 +41,20 @@ class DumpViewController: UIViewController {
         becomeFirstResponder()
     }
 
-    @IBAction private func shareText() {
+    @IBAction private func shareDump() {
         let text = textView?.text ?? ""
         let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         present(controller, animated: true)
     }
 
-    @IBAction private func clearText() {
-        textView?.text = ""
-        dataSource?.dump.text = ""
-        dataSource?.save()
+    @IBAction private func deleteDump() {
+        dataSource?.deleteCurrentDump()
+        createNewDump()
+    }
+
+    @IBAction private func createNewDump() {
+        dataSource?.createNewCurrentDump()
+        textView?.text = dataSource?.currentDump?.text
     }
 
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -74,6 +78,6 @@ extension DumpViewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        dataSource?.dump.text = textView.text
+        dataSource?.currentDump?.text = textView.text
     }
 }
