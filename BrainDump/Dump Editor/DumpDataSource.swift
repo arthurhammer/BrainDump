@@ -1,80 +1,60 @@
 import CoreData
-import UIKit
-
-// Stack Overflow: "Leave the General Problem for later, if it may ever be necessary and worth the effort"
-// When changing interval: how to notify user some notes might be deleted right now?
 
 class DumpDataSource {
 
-    var didDeleteDump: ((Dump) -> ())?  // WRONG: Called for ANY dump
-    let deleteAfter: TimeInterval
+    var dump: Dump? {
+        didSet {
+            guard dump != oldValue else { return }
+            configureObserver()
+            dumpDidUpdate?()
+        }
+    }
 
-    var currentDump: Dump?
+    var dumpDidUpdate: (() -> ())?
+
     private let store: CoreDataStore
+    private var observer: ManagedObjectObserver<Dump>?
 
-    func _todoDumpsDataSource() -> DumpsDataSource {
+    init(store: CoreDataStore, dump: Dump?) {
+        self.store = store
+        self.dump = dump
+        configureObserver()
+    }
+
+    // TODO:
+    func _dumpsDataSource() -> DumpsDataSource {
         return DumpsDataSource(store: store)
     }
 
-    init(store: CoreDataStore, deleteAfter: TimeInterval = 24 * 60 * 60) {
-        self.store = store
-        self.deleteAfter = deleteAfter
-
-        subscribeToNotifications()
-        purgeExpiredDumpsIfNecessary()
-
-        // Loads any one dump, not sorted or sth
-        let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
-        request.sortDescriptors = [NSSortDescriptor(key: "dateModified", ascending: false)]
-        // request.fetchLimit = 1
-
-        let result = try? store.viewContext.fetch(request)
-        print("Fetched: ", result?.count ?? 0, result ?? [])
-
-        if let dump = result?.first {
-            print("Loading existing dump")
-            currentDump = dump
-        } else {
-            currentDump = Dump(in: store.viewContext)
-        }
-
+    func createNewDump(withText text: String? = nil) {
+        dump = Dump(in: store.viewContext, text: text)
         save()
     }
 
-    /// Replaces `currentDump` with the returned new instance.
-    @discardableResult func createNewCurrentDump() -> Dump {
-        currentDump = Dump(in: store.viewContext)
-        save()
-        return currentDump!
-    }
-
-    func deleteCurrentDump() {
-        currentDump.flatMap(store.viewContext.delete)
-        currentDump = nil
+    func deleteDump() {
+        guard let dump = dump else { return }
+        // `dump` is set to nil in the observer handler.
+        store.viewContext.delete(dump)
         save()
     }
 
-    @objc func save() {
+    func save() {
         store.save()
     }
 
-    private func subscribeToNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willTerminateNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
+    private func configureObserver() {
+        guard let dump = dump else {
+            observer = nil
+            return
+        }
 
-    private func purgeExpiredDumpsIfNecessary() {
-        print("Clean")
-        let purgeBefore = Date().addingTimeInterval(.init(-deleteAfter))
-        let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
-        request.predicate = NSPredicate(format: "dateModified <= %@", purgeBefore as NSDate)
-
-        guard let result = try? store.viewContext.fetch(request) else { return }
-        print("Deleting:", result)
-
-        result.forEach(store.viewContext.delete)
-        save()
-        result.forEach { didDeleteDump?($0) }
+        observer = ManagedObjectObserver(object: dump, context: store.viewContext) { [weak self] dump, changeType in
+            if case .delete = changeType {
+                // Update handler is called in `didSet`.
+                self?.dump = nil
+            } else {
+                self?.dumpDidUpdate?()
+            }
+        }
     }
 }

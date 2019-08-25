@@ -3,10 +3,7 @@ import UIKit
 class DumpViewController: UIViewController {
 
     var dataSource: DumpDataSource? {
-        didSet {
-            textView?.text = dataSource?.currentDump?.text
-            textView?.startEditing(animated: false)
-        }
+        didSet { configureDataSource() }
     }
 
     @IBOutlet private weak var textView: UITextView?
@@ -41,6 +38,11 @@ class DumpViewController: UIViewController {
         becomeFirstResponder()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dataSource?.save()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = (segue.destination as? UINavigationController)?.topViewController as? DumpsViewController {
             prepareForDumpsSegue(with: controller)
@@ -49,7 +51,7 @@ class DumpViewController: UIViewController {
 
     private func prepareForDumpsSegue(with destination: DumpsViewController) {
         destination.delegate = self
-        destination.dataSource = dataSource?._todoDumpsDataSource()
+        destination.dataSource = dataSource?._dumpsDataSource()
     }
 
     @IBAction private func shareDump() {
@@ -59,13 +61,14 @@ class DumpViewController: UIViewController {
     }
 
     @IBAction private func deleteDump() {
-        dataSource?.deleteCurrentDump()
-        createNewDump()
+        dataSource?.deleteDump()
+        textView?.startEditing(animated: true)
     }
 
     @IBAction private func createNewDump() {
-        dataSource?.createNewCurrentDump()
-        textView?.text = dataSource?.currentDump?.text
+        // nil for a temporary dump until it is edited by the user.
+        dataSource?.dump = nil
+        textView?.startEditing(animated: true)
     }
 
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -80,30 +83,54 @@ class DumpViewController: UIViewController {
         textView?.contentInset = .zero
         textView?.scrollIndicatorInsets = .zero
     }
+
+    private func showDump() {
+        // Avoid setting text view again in response to change handler originating in
+        // text view change.
+        guard textView?.text != dataSource?.dump?.text else { return }
+        textView?.text = dataSource?.dump?.text
+    }
+
+    private func updateDump(withText text: String?) {
+        if dataSource?.dump == nil, text != nil, text != "" {
+            // Make temporary into permanent dump.
+            dataSource?.createNewDump(withText: text)
+        } else {
+            dataSource?.dump?.text = text
+        }
+    }
+
+    private func configureDataSource() {
+        dataSource?.dumpDidUpdate = { [weak self] in
+            self?.showDump()
+        }
+
+        showDump()
+        textView?.startEditing(animated: true)
+    }
 }
 
 extension DumpViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
+        updateDump(withText: textView.text)
         dataSource?.save()
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        dataSource?.currentDump?.text = textView.text
+        updateDump(withText: textView.text)
     }
 }
 
 extension DumpViewController: DumpsViewControllerDelegate {
+
     func controller(_ controller: DumpsViewController, didSelectDump dump: Dump) {
         dismiss(animated: true)
-        dataSource?.currentDump = dump
-        textView?.text = dump.text
+        dataSource?.dump = dump
     }
 
-    func controller(_ controller: DumpsViewController, didCreateNewDump dump: Dump) {
+    func controllerDidSelectCreateNewDump(_ controller: DumpsViewController) {
         dismiss(animated: true)
-        dataSource?.currentDump = dump
-        textView?.text = dump.text
-        textView?.startEditing(animated: true)
+        createNewDump()
     }
 }

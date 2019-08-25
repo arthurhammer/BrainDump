@@ -2,7 +2,7 @@ import UIKit
 
 protocol DumpsViewControllerDelegate: class {
     func controller(_ controller: DumpsViewController, didSelectDump dump: Dump)
-    func controller(_ controller: DumpsViewController, didCreateNewDump dump: Dump)
+    func controllerDidSelectCreateNewDump(_ controller: DumpsViewController)
 }
 
 class DumpsViewController: UITableViewController {
@@ -28,8 +28,7 @@ class DumpsViewController: UITableViewController {
     }
 
     @IBAction func createNewDump() {
-        guard let dump = dataSource?.createNewDump() else { return }
-        delegate?.controller(self, didCreateNewDump: dump)
+        delegate?.controllerDidSelectCreateNewDump(self)
     }
 
     @IBAction private func deleteAllDumps() {
@@ -83,6 +82,7 @@ class DumpsViewController: UITableViewController {
 
     private func shareAction(for indexPath: IndexPath) -> UIContextualAction {
         let title = NSLocalizedString("Share", comment: "")
+
         return UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
             let text = self?.dataSource?.dump(at: indexPath.row).text ?? ""
             let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)

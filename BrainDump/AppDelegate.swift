@@ -8,12 +8,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var store = CoreDataStore(name: "BrainDump")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        dumpViewController = ((window?.rootViewController as! UINavigationController).topViewController as! DumpViewController)
+
         store.loadStore {
-            self.dumpViewController = ((self.window?.rootViewController as! UINavigationController).topViewController as! DumpViewController)
-            self.dumpViewController.dataSource = DumpDataSource(store: self.store)
+            let currentDump = self.loadDump()
+            self.dumpViewController.dataSource = DumpDataSource(store: self.store, dump: currentDump)
         }
 
         return true
+    }
+
+    private func loadDump() -> Dump? {
+        let request = Dump.defaultFetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Dump.dateModified), ascending: false)]
+        request.fetchLimit = 1
+
+        return try? store.viewContext.fetch(request).first
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

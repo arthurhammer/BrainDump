@@ -11,6 +11,7 @@ struct FetchedResultsControllerChange {
 import UIKit
 
 extension UITableView {
+
     func applyChange(_ change: FetchedResultsControllerChange, cellUpdater: @escaping(Any, IndexPath) -> ()) {
         switch change.type {
 

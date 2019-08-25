@@ -2,18 +2,17 @@ import CoreData
 
 class DumpsDataSource: NSObject {
 
-    private let store: CoreDataStore
-    private let frc: NSFetchedResultsController<Dump>
-
     var dumpsWillChange: (() -> ())?
     var dumpDidChange: ((FetchedResultsControllerChange) -> ())?
     var dumpsDidChange: (() -> ())?
 
+    private let store: CoreDataStore
+    private let frc: NSFetchedResultsController<Dump>
+
     init(store: CoreDataStore) {
         self.store = store
 
-        // todo
-        let request = NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
+        let request = Dump.defaultFetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Dump.dateModified), ascending: false)]
         self.frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.viewContext, sectionNameKeyPath: nil, cacheName: nil)
 
@@ -29,12 +28,6 @@ class DumpsDataSource: NSObject {
 
     func dump(at index: Int) -> Dump {
         return frc.object(at: IndexPath(row: index, section: 0))
-    }
-
-    func createNewDump() -> Dump {
-        let dump = Dump(in: store.viewContext)
-        store.save()
-        return dump
     }
 
     func deleteDump(at index: Int) {

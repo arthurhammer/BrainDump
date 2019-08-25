@@ -1,4 +1,5 @@
 import CoreData
+import UIKit
 
 class CoreDataStore: NSPersistentContainer {
 
@@ -18,11 +19,12 @@ class CoreDataStore: NSPersistentContainer {
             }
 
             self.viewContext.automaticallyMergesChangesFromParent = true
+            self.subscribeToNotifications()
             completion()
         }
     }
 
-    func save() {
+    @objc func save() {
         guard viewContext.hasChanges else { return }
 
         do {
@@ -31,5 +33,11 @@ class CoreDataStore: NSPersistentContainer {
             // Unrecoverable. No need to inform user, just crash.
             fatalError("Unresolved error saving context \(error), \(error.userInfo)")
         }
+    }
+
+    private func subscribeToNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willTerminateNotification, object: nil)
     }
 }
