@@ -113,7 +113,12 @@ class DumpViewController: UIViewController {
 extension DumpViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        updateDump(withText: textView.text)
+        // Avoid changing `dateModified` if no changes happened. In `textViewDidChange`,
+        // we accept any change though as the user might paste identical text which counts
+        // as change.
+        if textView.text != dataSource?.dump?.text {
+            updateDump(withText: textView.text)
+        }
         dataSource?.save()
     }
 
