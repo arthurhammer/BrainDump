@@ -66,8 +66,8 @@ class DumpViewController: UIViewController {
     }
 
     @IBAction private func createNewDump() {
-        // nil for a temporary dump until it is edited by the user.
-        dataSource?.dump = nil
+        // Create actual new dump only when user starts editing.
+        dataSource?.archiveDump()
         textView?.startEditing(animated: true)
     }
 
@@ -93,7 +93,7 @@ class DumpViewController: UIViewController {
 
     private func updateDump(withText text: String?) {
         if dataSource?.dump == nil, text != nil, text != "" {
-            // Make temporary into permanent dump.
+            // Create actual new dump.
             dataSource?.createNewDump(withText: text)
         } else {
             dataSource?.dump?.text = text
@@ -120,6 +120,7 @@ extension DumpViewController: UITextViewDelegate {
         if textView.text != dataSource?.dump?.text {
             updateDump(withText: textView.text)
         }
+
         dataSource?.save()
     }
 

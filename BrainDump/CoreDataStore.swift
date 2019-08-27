@@ -5,6 +5,7 @@ class CoreDataStore: NSPersistentContainer {
 
     var lastEditedDumpDataSource = UserDefaults.standard
 
+    // TODO
     func fetchLastEditedDump() throws -> Dump? {
         guard let uri = lastEditedDumpDataSource.lastEditedDumpURI else { return nil }
         return try viewContext.fetchObject(withURI: uri)
@@ -13,14 +14,6 @@ class CoreDataStore: NSPersistentContainer {
     func setLastEditedDump(_ dump: Dump?) {
         assert(!(dump?.objectID.isTemporaryID == true))
         lastEditedDumpDataSource.lastEditedDumpURI = dump?.objectID.uriRepresentation()
-    }
-}
-
-extension NSPersistentContainer {
-
-    var storeURL: URL {
-        let fileName = "\(name).sqlite"
-        return NSPersistentContainer.defaultDirectoryURL().appendingPathComponent(fileName)
     }
 
     /// Loads the store asynchronously.
@@ -40,6 +33,14 @@ extension NSPersistentContainer {
             completion()
         }
     }
+}
+
+extension NSPersistentContainer {
+
+    var storeURL: URL {
+        let fileName = "\(name).sqlite"
+        return NSPersistentContainer.defaultDirectoryURL().appendingPathComponent(fileName)
+    }
 
     /// Saves the `viewContext`.
     @objc func save() {
@@ -53,7 +54,7 @@ extension NSPersistentContainer {
         }
     }
 
-    private func subscribeToNotifications() {
+    func subscribeToNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willTerminateNotification, object: nil)

@@ -6,11 +6,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     private var dumpViewController: DumpViewController!
     private lazy var store = CoreDataStore(name: "BrainDump")
+    private var purger: DumpsPurger?  // TODO
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         dumpViewController = ((window?.rootViewController as! UINavigationController).topViewController as! DumpViewController)
 
+        // TODO
+        UserDefaults.standard.createNewDumpAfter = 2 * 60 * 60
+        UserDefaults.standard.deleteArchivedDumpsAfter = 48 * 60 * 60
+
         store.loadStore {
+            self.purger = DumpsPurger(context: self.store.viewContext)
             self.dumpViewController.dataSource = DumpDataSource(store: self.store)
         }
 

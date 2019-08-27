@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		001A4A7D231542A9006E22D3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7C231542A9006E22D3 /* Settings.swift */; };
+		001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */; };
 		00456167230C44AC009B50DB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456166230C44AC009B50DB /* UITextView.swift */; };
 		00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */; };
 		0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21B230FCB36005A91A6 /* DumpsViewController.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		001A4A7C231542A9006E22D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = BrainDump/Settings.swift; sourceTree = SOURCE_ROOT; };
+		001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsPurger.swift; sourceTree = "<group>"; };
 		00456166230C44AC009B50DB /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInputAccessoryViewWrapperView.swift; sourceTree = "<group>"; };
 		0063F21B230FCB36005A91A6 /* DumpsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				00C4A0EB23055D4E009494A0 /* AppDelegate.swift */,
 				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
+				001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */,
 				001A4A7C231542A9006E22D3 /* Settings.swift */,
 				00C4A0EF23055D4E009494A0 /* Main.storyboard */,
 				00C4A0F423055D50009494A0 /* LaunchScreen.storyboard */,
@@ -219,6 +222,7 @@
 				0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */,
 				0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
+				001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */,
 				00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */,
 				00B050EB230D752A0075B3D3 /* Dump.swift in Sources */,
 				00456167230C44AC009B50DB /* UITextView.swift in Sources */,
