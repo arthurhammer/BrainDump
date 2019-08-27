@@ -11,19 +11,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dumpViewController = ((window?.rootViewController as! UINavigationController).topViewController as! DumpViewController)
 
         store.loadStore {
-            let currentDump = self.loadDump()
-            self.dumpViewController.dataSource = DumpDataSource(store: self.store, dump: currentDump)
+            self.dumpViewController.dataSource = DumpDataSource(store: self.store)
         }
 
         return true
-    }
-
-    private func loadDump() -> Dump? {
-        let request = Dump.defaultFetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Dump.dateModified), ascending: false)]
-        request.fetchLimit = 1
-
-        return try? store.viewContext.fetch(request).first
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

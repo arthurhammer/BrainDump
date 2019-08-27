@@ -5,6 +5,7 @@ class DumpDataSource {
     var dump: Dump? {
         didSet {
             guard dump != oldValue else { return }
+            store.setLastEditedDump(dump)
             configureObserver()
             dumpDidUpdate?()
         }
@@ -15,9 +16,9 @@ class DumpDataSource {
     private let store: CoreDataStore
     private var observer: ManagedObjectObserver<Dump>?
 
-    init(store: CoreDataStore, dump: Dump?) {
+    init(store: CoreDataStore) {
         self.store = store
-        self.dump = dump
+        self.dump = try? store.fetchLastEditedDump()
         configureObserver()
     }
 
@@ -27,8 +28,9 @@ class DumpDataSource {
     }
 
     func createNewDump(withText text: String? = nil) {
-        dump = Dump(in: store.viewContext, text: text)
+        let dump = Dump(in: store.viewContext, text: text)
         save()
+        self.dump = dump
     }
 
     func deleteDump() {
