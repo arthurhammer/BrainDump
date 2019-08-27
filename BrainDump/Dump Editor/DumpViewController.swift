@@ -97,6 +97,7 @@ class DumpViewController: UIViewController {
             dataSource?.createNewDump(withText: text)
         } else {
             dataSource?.dump?.text = text
+            dataSource?.dump?.dateModified = Date()
         }
     }
 
