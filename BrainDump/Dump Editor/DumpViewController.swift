@@ -28,7 +28,7 @@ class DumpViewController: UIViewController {
         toolbar?.setShadowImage(UIImage(), forToolbarPosition: .bottom)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -79,7 +79,7 @@ class DumpViewController: UIViewController {
         textView?.scrollIndicatorInsets.bottom = keyboardHeight
     }
 
-    @objc private func keyboardDidHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(notification: NSNotification) {
         textView?.contentInset = .zero
         textView?.scrollIndicatorInsets = .zero
     }
