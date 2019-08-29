@@ -44,8 +44,13 @@ class DumpViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = (segue.destination as? UINavigationController)?.topViewController as? DumpsViewController {
-            prepareForDumpsSegue(with: controller)
+        if let destination = segue.destination as? UINavigationController,
+            let dumpsViewController = destination.topViewController as? DumpsViewController {
+
+            // TODO
+            destination.modalPresentationStyle = .custom
+            destination.transitioningDelegate = self
+            prepareForDumpsSegue(with: dumpsViewController)
         }
     }
 

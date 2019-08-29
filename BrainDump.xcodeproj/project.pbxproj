@@ -20,6 +20,8 @@
 		00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */; };
 		00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */; };
 		00B050EB230D752A0075B3D3 /* Dump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E7230D70690075B3D3 /* Dump.swift */; };
+		00B20B452317FB56002F5DD6 /* SlidePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B20B442317FB56002F5DD6 /* SlidePresentationController.swift */; };
+		00B20B4723180012002F5DD6 /* SlideAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B20B4623180012002F5DD6 /* SlideAnimator.swift */; };
 		00C4A0EC23055D4E009494A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0EB23055D4E009494A0 /* AppDelegate.swift */; };
 		00C4A0EE23055D4E009494A0 /* DumpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0ED23055D4E009494A0 /* DumpViewController.swift */; };
 		00C4A0F123055D4E009494A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0EF23055D4E009494A0 /* Main.storyboard */; };
@@ -41,6 +43,8 @@
 		00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BrainDump.xcdatamodel; sourceTree = "<group>"; };
 		00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		00B050E7230D70690075B3D3 /* Dump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dump.swift; sourceTree = "<group>"; };
+		00B20B442317FB56002F5DD6 /* SlidePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidePresentationController.swift; sourceTree = "<group>"; };
+		00B20B4623180012002F5DD6 /* SlideAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideAnimator.swift; sourceTree = "<group>"; };
 		00C4A0E823055D4E009494A0 /* BrainDump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainDump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C4A0EB23055D4E009494A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00C4A0ED23055D4E009494A0 /* DumpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 			isa = PBXGroup;
 			children = (
 				00C4A0EB23055D4E009494A0 /* AppDelegate.swift */,
+				00B20B442317FB56002F5DD6 /* SlidePresentationController.swift */,
+				00B20B4623180012002F5DD6 /* SlideAnimator.swift */,
 				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
 				001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */,
 				001A4A7C231542A9006E22D3 /* Settings.swift */,
@@ -221,9 +227,11 @@
 				001A4A7D231542A9006E22D3 /* Settings.swift in Sources */,
 				0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */,
 				0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */,
+				00B20B452317FB56002F5DD6 /* SlidePresentationController.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
 				001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */,
 				00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */,
+				00B20B4723180012002F5DD6 /* SlideAnimator.swift in Sources */,
 				00B050EB230D752A0075B3D3 /* Dump.swift in Sources */,
 				00456167230C44AC009B50DB /* UITextView.swift in Sources */,
 				0063F220230FE6A3005A91A6 /* DumpsDataSource.swift in Sources */,
