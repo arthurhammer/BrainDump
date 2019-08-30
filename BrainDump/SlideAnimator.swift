@@ -1,12 +1,14 @@
 import UIKit
 
+/// Animates the slide.
 class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    let isPresenting: Bool
-    let duration: TimeInterval = 0.25
+    private let type: TransitionType
+    private let duration: TimeInterval = 0.25
+    private var animator: UIViewPropertyAnimator?
 
-    init(isPresenting: Bool) {
-        self.isPresenting = isPresenting
+    init(type: TransitionType) {
+        self.type = type
         super.init()
     }
 
@@ -15,13 +17,28 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func animateTransition(using context: UIViewControllerContextTransitioning) {
-        guard let presentedView = self.presentedView(in: context),
-            let presentedViewController = self.presentedViewController(in: context) else { return }
+        animator(using: context).startAnimation()
+    }
+
+    // Required when using UIPercentDrivenInteractiveTransition, I think...
+    func interruptibleAnimator(using context: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
+        return animator(using: context)
+    }
+
+    /// - Note: Mutates self.animator.
+    private func animator(using context: UIViewControllerContextTransitioning) -> UIViewPropertyAnimator {
+        // interruptibleAnimator(using:) requires we return the same instance during one
+        // transition.
+        if let animator = animator { return animator }
+
+        guard let presentedView = context.presentedView(for: type),
+            let presentedViewController = context.presentedViewController(for: type) else { fatalError("No presented view or controller in context.") }
 
         let duration = transitionDuration(using: context)
+        let animator = UIViewPropertyAnimator(duration: duration, curve: .easeInOut)
         let finalFrame: CGRect
 
-        if isPresenting {
+        if type == .presentation {
             finalFrame = context.finalFrame(for: presentedViewController)
             let initialFrame = finalFrame.offsetBy(dx: -finalFrame.width, dy: 0)
             presentedView.frame = initialFrame
@@ -30,19 +47,30 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             finalFrame = presentedView.frame.offsetBy(dx: -presentedView.frame.width, dy: 0)
         }
 
-        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+        animator.addAnimations {
             presentedView.frame = finalFrame
-        }, completion: { _ in
+        }
+
+        // Store the animator.
+        self.animator = animator
+
+        animator.addCompletion { _ in
             context.completeTransition(!context.transitionWasCancelled)
-        })
-    }
+            // Reset animator for a potential next transition.
+            self.animator = nil
+        }
 
-    private func presentedView(in context: UIViewControllerContextTransitioning) -> UIView? {
-        return isPresenting ? context.view(forKey: .to) : context.view(forKey: .from)
-    }
-
-    func presentedViewController(in context: UIViewControllerContextTransitioning) -> UIViewController? {
-        return isPresenting ? context.viewController(forKey: .to) : context.viewController(forKey: .from)
+        return animator
     }
 }
 
+private extension UIViewControllerContextTransitioning {
+
+    func presentedView(for type: TransitionType) -> UIView? {
+        return (type == .presentation) ? view(forKey: .to) : view(forKey: .from)
+    }
+
+    func presentedViewController(for type: TransitionType) -> UIViewController? {
+        return (type == .presentation) ? viewController(forKey: .to) : viewController(forKey: .from)
+    }
+}

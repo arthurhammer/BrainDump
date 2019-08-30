@@ -2,17 +2,30 @@ import UIKit
 
 class SlidePresentationController: UIPresentationController {
 
-    private let widthFraction: CGFloat = 0.85  // TODO: larger iPhones
+    var interactionController: SlideInteractor?
+
+    private let widthFraction: CGFloat = 0.85
     private let dimmingOpacity: CGFloat = 0.35
     private let cornerRadius: CGFloat = 16
+
+    private lazy var tapToDismissRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
+    private lazy var panToDismissRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan))
 
     private lazy var dimmingView: UIView = {
         let view = UIView(frame: .zero)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.alpha = 0
         view.backgroundColor = .black
+        tapToDismissRecognizer.require(toFail: panToDismissRecognizer)
+        view.addGestureRecognizer(tapToDismissRecognizer)
+        view.addGestureRecognizer(panToDismissRecognizer)
         return view
     }()
+
+    init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, interactor: SlideInteractor?) {
+        self.interactionController = interactor
+        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
+    }
 
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let container = containerView else { return .zero }
@@ -48,35 +61,14 @@ class SlidePresentationController: UIPresentationController {
         }, completion: nil)
     }
 
-    // TODO
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
+    @objc private func didTap(sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else { return }
+        presentedViewController.dismiss(animated: true)
     }
 
-    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
-        super.preferredContentSizeDidChange(forChildContentContainer: container)
-    }
-}
-
-extension DumpViewController: UIViewControllerTransitioningDelegate {
-
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return SlidePresentationController(presentedViewController: presented, presenting: presenting)
-    }
-
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SlideAnimator(isPresenting: true)
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SlideAnimator(isPresenting: false)
-    }
-
-    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return nil
-    }
-
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return nil
+    @objc private func didPan(sender: UIPanGestureRecognizer) {
+        interactionController?.handlePan(for: sender, transitionType: .dismissal, performTransition: {
+            presentedViewController.dismiss(animated: true)
+        })
     }
 }

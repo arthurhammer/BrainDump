@@ -1,0 +1,80 @@
+import UIKit
+
+class Coordinator {
+
+    let store: CoreDataStore
+    let editorViewController: DumpViewController
+
+    lazy var libraryContainer: UINavigationController = {
+        let librarStoryboardId = "Library"
+        guard let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: librarStoryboardId) as? UINavigationController else { fatalError("Wrong controller id or type.") }
+        return controller
+    }()
+
+    lazy var libraryViewController: DumpsViewController = {
+        guard let controller = libraryContainer.viewControllers.first as? DumpsViewController else { fatalError("Wrong root controller.") }
+        return controller
+    }()
+
+    lazy var transitionController = SlideTransitionController()
+
+    init(store: CoreDataStore, editorViewController: DumpViewController) {
+        self.store = store
+        self.editorViewController = editorViewController
+        self.editorViewController.delegate = self
+        self.editorViewController.dataSource = DumpDataSource(store: store)
+        configureSlideToLibraryGesture()
+    }
+}
+
+private extension Coordinator {
+
+    func showLibrary() {
+        libraryViewController.delegate = self
+        if libraryViewController.dataSource == nil {
+            libraryViewController.dataSource = DumpsDataSource(store: store)
+        }
+
+        transitionController.prepareTransition(for: libraryContainer)
+        editorViewController.view.endEditing(true)
+        editorViewController.present(libraryContainer, animated: true)
+    }
+
+    func hideLibrary() {
+        editorViewController.dismiss(animated: true)
+    }
+
+    func configureSlideToLibraryGesture() {
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSlideToLibraryPan(sender:)))
+        editorViewController.textView?.panGestureRecognizer.shouldRequireFailure(of: panRecognizer)
+        editorViewController.view.addGestureRecognizer(panRecognizer)
+    }
+
+    @objc func handleSlideToLibraryPan(sender: UIPanGestureRecognizer) {
+        transitionController.interactionController.handlePan(for: sender, transitionType: .presentation, performTransition: showLibrary)
+    }
+}
+
+extension Coordinator: DumpViewControllerDelegate {
+
+    func controllerDidSelectShowLibrary(_ controller: DumpViewController) {
+        showLibrary()
+    }
+}
+
+extension Coordinator: DumpsViewControllerDelegate {
+
+    func controllerDidFinish(_ controller: DumpsViewController) {
+        hideLibrary()
+    }
+
+    func controller(_ controller: DumpsViewController, didSelectDump dump: Dump) {
+        hideLibrary()
+        editorViewController.dataSource?.dump = dump
+    }
+
+    func controllerDidSelectCreateNewDump(_ controller: DumpsViewController) {
+        hideLibrary()
+        editorViewController.createNewDump()
+    }
+}

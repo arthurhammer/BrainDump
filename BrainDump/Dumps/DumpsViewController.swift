@@ -1,13 +1,14 @@
 import UIKit
 
 protocol DumpsViewControllerDelegate: class {
+    func controllerDidFinish(_ controller: DumpsViewController)
     func controller(_ controller: DumpsViewController, didSelectDump dump: Dump)
     func controllerDidSelectCreateNewDump(_ controller: DumpsViewController)
 }
 
 class DumpsViewController: UITableViewController {
 
-    var delegate: DumpsViewControllerDelegate?
+    weak var delegate: DumpsViewControllerDelegate?
 
     private let cellIdentifier = "Cell"
 
@@ -24,10 +25,10 @@ class DumpsViewController: UITableViewController {
     }
 
     @IBAction private func done() {
-        dismiss(animated: true)
+        delegate?.controllerDidFinish(self)
     }
 
-    @IBAction func createNewDump() {
+    @IBAction private func createNewDump() {
         delegate?.controllerDidSelectCreateNewDump(self)
     }
 

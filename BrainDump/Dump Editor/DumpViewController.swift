@@ -1,13 +1,19 @@
 import UIKit
 
+protocol DumpViewControllerDelegate: class {
+    func controllerDidSelectShowLibrary(_ controller: DumpViewController)
+}
+
 class DumpViewController: UIViewController {
+
+    weak var delegate: DumpViewControllerDelegate?
 
     var dataSource: DumpDataSource? {
         didSet { configureDataSource() }
     }
 
-    @IBOutlet private weak var textView: UITextView?
-    @IBOutlet private weak var toolbar: UIToolbar?
+    @IBOutlet var textView: UITextView?
+    @IBOutlet private var toolbar: UIToolbar?
 
     private lazy var toolbarWrapper = self.toolbar.flatMap(SafeAreaInputAccessoryViewWrapperView.init)
     private let textInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -43,20 +49,8 @@ class DumpViewController: UIViewController {
         dataSource?.save()
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? UINavigationController,
-            let dumpsViewController = destination.topViewController as? DumpsViewController {
-
-            // TODO
-            destination.modalPresentationStyle = .custom
-            destination.transitioningDelegate = self
-            prepareForDumpsSegue(with: dumpsViewController)
-        }
-    }
-
-    private func prepareForDumpsSegue(with destination: DumpsViewController) {
-        destination.delegate = self
-        destination.dataSource = dataSource?._dumpsDataSource()
+    @IBAction private func showLibrary() {
+        delegate?.controllerDidSelectShowLibrary(self)
     }
 
     @IBAction private func shareDump() {
@@ -70,7 +64,7 @@ class DumpViewController: UIViewController {
         textView?.startEditing(animated: true)
     }
 
-    @IBAction private func createNewDump() {
+    @IBAction func createNewDump() {
         // Create actual new dump only when user starts editing.
         dataSource?.archiveDump()
         textView?.startEditing(animated: true)
@@ -80,7 +74,7 @@ class DumpViewController: UIViewController {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey],
             let keyboardHeight = (keyboardFrame as? NSValue)?.cgRectValue.size.height else { return }
 
-        textView?.contentInset.bottom = textInsets.bottom + keyboardHeight
+        textView?.contentInset.bottom = keyboardHeight
         textView?.scrollIndicatorInsets.bottom = keyboardHeight
     }
 
@@ -131,18 +125,5 @@ extension DumpViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDump(withText: textView.text)
-    }
-}
-
-extension DumpViewController: DumpsViewControllerDelegate {
-
-    func controller(_ controller: DumpsViewController, didSelectDump dump: Dump) {
-        dismiss(animated: true)
-        dataSource?.dump = dump
-    }
-
-    func controllerDidSelectCreateNewDump(_ controller: DumpsViewController) {
-        dismiss(animated: true)
-        createNewDump()
     }
 }
