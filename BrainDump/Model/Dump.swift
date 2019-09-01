@@ -18,3 +18,23 @@ class Dump: NSManagedObject {
         self.dateModified = dateCreated
     }
 }
+
+extension Dump {
+
+    var title: String? {
+        return text?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: "\n", maxSplits: 1)
+            .first
+            .flatMap(String.init)
+    }
+
+    var body: String? {
+        return text?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: "\n", maxSplits: 1)
+            .dropFirst()
+            .joined(separator: "\n")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}

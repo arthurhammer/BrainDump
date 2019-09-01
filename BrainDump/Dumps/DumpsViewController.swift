@@ -10,19 +10,12 @@ class DumpsViewController: UITableViewController {
 
     weak var delegate: DumpsViewControllerDelegate?
 
-    private let cellIdentifier = "Cell"
-
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.doesRelativeDateFormatting = true
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }()
-
     var dataSource: DumpsDataSource? {
         didSet { configureDataSource() }
     }
+
+    private lazy var dateFormatter = DateFormatter.relativeDateFormatter()
+    private let cellIdentifier = "Cell"
 
     @IBAction private func done() {
         delegate?.controllerDidFinish(self)
@@ -46,20 +39,22 @@ class DumpsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DumpCell else { fatalError("Wrong cell id or type.") }
         if let dump = dataSource?.dump(at: indexPath.row) {
             configure(cell: cell, for: dump)
         }
         return cell
     }
 
-    private func configure(cell: UITableViewCell, for dump: Dump) {
-        cell.textLabel?.text = dump.text
-        cell.detailTextLabel?.text = dateFormatter.string(from: dump.dateModified)
+    private func configure(cell: DumpCell, for dump: Dump) {
+        let emptyTitle = NSLocalizedString("New Dump", comment: "Default title for an empty dump")
+        cell.titleLabel.text = dump.title ?? emptyTitle
+        cell.bodyLabel.text = dump.body
+        cell.dateLabel.text = dateFormatter.string(forRelativeDate: dump.dateModified)
     }
 
     private func reconfigure(cellAt indexPath: IndexPath, for dump: Dump) {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? DumpCell else { return }
         configure(cell: cell, for: dump)
     }
 

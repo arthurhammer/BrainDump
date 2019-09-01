@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		001A4A7D231542A9006E22D3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7C231542A9006E22D3 /* Settings.swift */; };
 		001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */; };
+		00434C43231C8F96007844E1 /* DumpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C42231C8F96007844E1 /* DumpCell.swift */; };
+		00434C45231C920C007844E1 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C44231C920C007844E1 /* Formatters.swift */; };
 		00456167230C44AC009B50DB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456166230C44AC009B50DB /* UITextView.swift */; };
 		00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */; };
 		0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21B230FCB36005A91A6 /* DumpsViewController.swift */; };
@@ -36,6 +38,8 @@
 /* Begin PBXFileReference section */
 		001A4A7C231542A9006E22D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = BrainDump/Settings.swift; sourceTree = SOURCE_ROOT; };
 		001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsPurger.swift; sourceTree = "<group>"; };
+		00434C42231C8F96007844E1 /* DumpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpCell.swift; sourceTree = "<group>"; };
+		00434C44231C920C007844E1 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		00456166230C44AC009B50DB /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInputAccessoryViewWrapperView.swift; sourceTree = "<group>"; };
 		0063F21B230FCB36005A91A6 /* DumpsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 			children = (
 				0063F2262313F7AA005A91A6 /* dprint.swift */,
 				0063F21D230FE66F005A91A6 /* FetchedResultsControllerChange.swift */,
+				00434C44231C920C007844E1 /* Formatters.swift */,
 				0063F22423103098005A91A6 /* ManagedObjectObserver.swift */,
 				00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */,
 				00A00CD9231C8ECD00A336CC /* UIFont.swift */,
@@ -117,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				0063F21B230FCB36005A91A6 /* DumpsViewController.swift */,
+				00434C42231C8F96007844E1 /* DumpCell.swift */,
 				0063F21F230FE6A3005A91A6 /* DumpsDataSource.swift */,
 			);
 			path = Dumps;
@@ -245,8 +251,10 @@
 				00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */,
 				0063F22523103098005A91A6 /* ManagedObjectObserver.swift in Sources */,
 				0063F21E230FE66F005A91A6 /* FetchedResultsControllerChange.swift in Sources */,
+				00434C43231C8F96007844E1 /* DumpCell.swift in Sources */,
 				001A4A7D231542A9006E22D3 /* Settings.swift in Sources */,
 				00B20B4C231866CB002F5DD6 /* Coordinator.swift in Sources */,
+				00434C45231C920C007844E1 /* Formatters.swift in Sources */,
 				0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */,
 				0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */,
 				00B20B452317FB56002F5DD6 /* SlidePresentationController.swift in Sources */,
