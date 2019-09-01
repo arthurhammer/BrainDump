@@ -17,6 +17,7 @@
 		0063F22523103098005A91A6 /* ManagedObjectObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F22423103098005A91A6 /* ManagedObjectObserver.swift */; };
 		0063F2272313F7AB005A91A6 /* dprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F2262313F7AA005A91A6 /* dprint.swift */; };
 		0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */; };
+		00A00CDA231C8ECD00A336CC /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A00CD9231C8ECD00A336CC /* UIFont.swift */; };
 		00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */; };
 		00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */; };
 		00B050EB230D752A0075B3D3 /* Dump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E7230D70690075B3D3 /* Dump.swift */; };
@@ -43,6 +44,7 @@
 		0063F22423103098005A91A6 /* ManagedObjectObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectObserver.swift; sourceTree = "<group>"; };
 		0063F2262313F7AA005A91A6 /* dprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dprint.swift; sourceTree = "<group>"; };
 		0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpDataSource.swift; sourceTree = "<group>"; };
+		00A00CD9231C8ECD00A336CC /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BrainDump.xcdatamodel; sourceTree = "<group>"; };
 		00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		00B050E7230D70690075B3D3 /* Dump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dump.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				0063F21D230FE66F005A91A6 /* FetchedResultsControllerChange.swift */,
 				0063F22423103098005A91A6 /* ManagedObjectObserver.swift */,
 				00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */,
+				00A00CD9231C8ECD00A336CC /* UIFont.swift */,
 				00456166230C44AC009B50DB /* UITextView.swift */,
 			);
 			path = Utilities;
@@ -254,6 +257,7 @@
 				00B20B4723180012002F5DD6 /* SlideAnimator.swift in Sources */,
 				00B050EB230D752A0075B3D3 /* Dump.swift in Sources */,
 				00456167230C44AC009B50DB /* UITextView.swift in Sources */,
+				00A00CDA231C8ECD00A336CC /* UIFont.swift in Sources */,
 				0063F220230FE6A3005A91A6 /* DumpsDataSource.swift in Sources */,
 				0063F2272313F7AB005A91A6 /* dprint.swift in Sources */,
 				00C4A0EC23055D4E009494A0 /* AppDelegate.swift in Sources */,

@@ -16,7 +16,9 @@ class DumpViewController: UIViewController {
     @IBOutlet private var toolbar: UIToolbar?
 
     private lazy var toolbarWrapper = self.toolbar.flatMap(SafeAreaInputAccessoryViewWrapperView.init)
-    private let textInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    private let textInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+    private let lineHeightMultiple: CGFloat = 1.2
+    private let font = UIFont.systemFont(ofSize: 16)  // TODO: size categories
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -29,9 +31,7 @@ class DumpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        textView?.delegate = self
-        textView?.textContainerInset = textInsets
-        toolbar?.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+        configureViews()
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -107,6 +107,26 @@ class DumpViewController: UIViewController {
 
         showDump()
         textView?.startEditing(animated: true)
+    }
+
+    private func configureViews() {
+        toolbar?.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+
+        textView?.delegate = self
+        textView?.textContainerInset = textInsets
+
+        let style = NSMutableParagraphStyle()
+        // When setting either line height or line spacing the caret and selection markers
+        // will be off to the top or bottom. To center the caret, balance both spaces.
+        let (multiple, spacing) = font.adjustedLineHeightMultipleAndSpacing(forPreferredMultiple: lineHeightMultiple)
+
+        style.lineHeightMultiple = multiple
+        style.lineSpacing = spacing
+
+        textView?.typingAttributes = [
+            .paragraphStyle: style,
+            .font: font
+        ]
     }
 }
 
