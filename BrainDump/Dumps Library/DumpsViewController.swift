@@ -14,6 +14,10 @@ class DumpsViewController: UITableViewController {
         didSet { configureDataSource() }
     }
 
+    var selectedDump: Dump?  {
+        didSet { selectDump(selectedDump) }
+    }
+
     private lazy var dateFormatter = DateFormatter.relativeDateFormatter()
     private let pinActionColor = UIColor(red: 0.42, green: 0.53, blue: 0.93, alpha: 1.00)
     private let sectionSeparatorColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
@@ -39,6 +43,7 @@ class DumpsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let dump = dataSource?.dump(at: indexPath) else { return }
+        selectedDump = dump
         delegate?.controller(self, didSelectDump: dump)
     }
 
@@ -85,6 +90,12 @@ class DumpsViewController: UITableViewController {
         return sectionHeaderHeight
     }
 
+    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        DispatchQueue.main.async {  // Doesn't seem to work without.
+            self.selectDump(self.selectedDump)
+        }
+    }
+
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let actions = [
             deleteAction(for: indexPath),
@@ -108,6 +119,16 @@ class DumpsViewController: UITableViewController {
         }
 
         tableView.reloadData()
+    }
+
+    private func selectDump(_ dump: Dump?) {
+        guard let dump = dump,
+            let indexPath = dataSource?.indexPath(of: dump) else {
+                tableView.selectRow(at: nil, animated: true, scrollPosition: .none)
+                return
+        }
+
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
     }
 }
 

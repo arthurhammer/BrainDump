@@ -37,6 +37,10 @@ class DumpsDataSource: NSObject {
         return frc.object(at: indexPath)
     }
 
+    func indexPath(of dump: Dump) -> IndexPath? {
+        return frc.indexPath(forObject: dump)
+    }
+
     func deleteDump(at indexPath: IndexPath) {
         let dump = frc.object(at: indexPath)
         store.viewContext.delete(dump)

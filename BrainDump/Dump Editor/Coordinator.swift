@@ -30,10 +30,12 @@ class Coordinator {
 private extension Coordinator {
 
     func showLibrary() {
-        libraryViewController.delegate = self
         if libraryViewController.dataSource == nil {
             libraryViewController.dataSource = DumpsDataSource(store: store)
         }
+
+        libraryViewController.delegate = self
+        libraryViewController.selectedDump = editorViewController.dataSource?.dump
 
         transitionController.prepareTransition(for: libraryContainer)
         editorViewController.view.endEditing(true)
