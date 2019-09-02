@@ -54,9 +54,9 @@
 		00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BrainDump.xcdatamodel; sourceTree = "<group>"; };
 		00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		00B050E7230D70690075B3D3 /* Dump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dump.swift; sourceTree = "<group>"; };
-		00B20B442317FB56002F5DD6 /* SlidePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SlidePresentationController.swift; path = ../SlidePresentationController.swift; sourceTree = "<group>"; };
-		00B20B4623180012002F5DD6 /* SlideAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SlideAnimator.swift; path = ../SlideAnimator.swift; sourceTree = "<group>"; };
-		00B20B482318480E002F5DD6 /* SlideTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SlideTransitionController.swift; path = ../SlideTransitionController.swift; sourceTree = "<group>"; };
+		00B20B442317FB56002F5DD6 /* SlidePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidePresentationController.swift; sourceTree = "<group>"; };
+		00B20B4623180012002F5DD6 /* SlideAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideAnimator.swift; sourceTree = "<group>"; };
+		00B20B482318480E002F5DD6 /* SlideTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideTransitionController.swift; sourceTree = "<group>"; };
 		00B20B4B231866CB002F5DD6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Coordinator.swift; path = "Dump Editor/Coordinator.swift"; sourceTree = "<group>"; };
 		00B20B4D2318884D002F5DD6 /* SlideInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInteractor.swift; sourceTree = "<group>"; };
 		00C4A0E823055D4E009494A0 /* BrainDump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainDump.app; sourceTree = BUILT_PRODUCTS_DIR; };
