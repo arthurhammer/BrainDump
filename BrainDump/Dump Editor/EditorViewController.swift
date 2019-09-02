@@ -1,14 +1,14 @@
 import UIKit
 
-protocol DumpViewControllerDelegate: class {
-    func controllerDidSelectShowLibrary(_ controller: DumpViewController)
+protocol EditorViewControllerDelegate: class {
+    func controllerDidSelectShowLibrary(_ controller: EditorViewController)
 }
 
-class DumpViewController: UIViewController {
+class EditorViewController: UIViewController {
 
-    weak var delegate: DumpViewControllerDelegate?
+    weak var delegate: EditorViewControllerDelegate?
 
-    var dataSource: DumpDataSource? {
+    var dataSource: EditorDataSource? {
         didSet { configureDataSource() }
     }
 
@@ -92,7 +92,7 @@ class DumpViewController: UIViewController {
     }
 }
 
-extension DumpViewController: UITextViewDelegate {
+extension EditorViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         // Avoid changing `dateModified` if no changes happened. In `textViewDidChange`,

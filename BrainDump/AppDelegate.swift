@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         store = CoreDataStore(name: "BrainDump")
 
         store.loadStore {
-            let editorViewController = (self.window!.rootViewController as! UINavigationController).viewControllers.first as! DumpViewController
+            let editorViewController = (self.window!.rootViewController as! UINavigationController).topViewController as! EditorViewController
             self.coordinator = Coordinator(store: self.store, editorViewController: editorViewController)
             self.purger = DumpsPurger(context: self.store.viewContext)
         }

@@ -3,7 +3,7 @@ import UIKit
 class Coordinator {
 
     let store: CoreDataStore
-    let editorViewController: DumpViewController
+    let editorViewController: EditorViewController
 
     lazy var libraryContainer: UINavigationController = {
         let librarStoryboardId = "Library"
@@ -18,11 +18,11 @@ class Coordinator {
 
     lazy var transitionController = SlideTransitionController()
 
-    init(store: CoreDataStore, editorViewController: DumpViewController) {
+    init(store: CoreDataStore, editorViewController: EditorViewController) {
         self.store = store
         self.editorViewController = editorViewController
         self.editorViewController.delegate = self
-        self.editorViewController.dataSource = DumpDataSource(store: store)
+        self.editorViewController.dataSource = EditorDataSource(store: store)
         configureSlideToLibraryGesture()
     }
 }
@@ -55,9 +55,9 @@ private extension Coordinator {
     }
 }
 
-extension Coordinator: DumpViewControllerDelegate {
+extension Coordinator: EditorViewControllerDelegate {
 
-    func controllerDidSelectShowLibrary(_ controller: DumpViewController) {
+    func controllerDidSelectShowLibrary(_ controller: EditorViewController) {
         showLibrary()
     }
 }

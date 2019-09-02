@@ -19,7 +19,7 @@
 		0063F220230FE6A3005A91A6 /* DumpsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21F230FE6A3005A91A6 /* DumpsDataSource.swift */; };
 		0063F22523103098005A91A6 /* ManagedObjectObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F22423103098005A91A6 /* ManagedObjectObserver.swift */; };
 		0063F2272313F7AB005A91A6 /* dprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F2262313F7AA005A91A6 /* dprint.swift */; };
-		0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */; };
+		0095C5C8230E87CB00F964D2 /* EditorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0095C5C7230E87CB00F964D2 /* EditorDataSource.swift */; };
 		00A00CDA231C8ECD00A336CC /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A00CD9231C8ECD00A336CC /* UIFont.swift */; };
 		00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E2230D33370075B3D3 /* BrainDump.xcdatamodeld */; };
 		00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */; };
@@ -30,7 +30,7 @@
 		00B20B4C231866CB002F5DD6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B20B4B231866CB002F5DD6 /* Coordinator.swift */; };
 		00B20B4E2318884D002F5DD6 /* SlideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B20B4D2318884D002F5DD6 /* SlideInteractor.swift */; };
 		00C4A0EC23055D4E009494A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0EB23055D4E009494A0 /* AppDelegate.swift */; };
-		00C4A0EE23055D4E009494A0 /* DumpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0ED23055D4E009494A0 /* DumpViewController.swift */; };
+		00C4A0EE23055D4E009494A0 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0ED23055D4E009494A0 /* EditorViewController.swift */; };
 		00C4A0F123055D4E009494A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0EF23055D4E009494A0 /* Main.storyboard */; };
 		00C4A0F323055D50009494A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0F223055D50009494A0 /* Assets.xcassets */; };
 		00C4A0F623055D50009494A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0F423055D50009494A0 /* LaunchScreen.storyboard */; };
@@ -49,7 +49,7 @@
 		0063F21F230FE6A3005A91A6 /* DumpsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsDataSource.swift; sourceTree = "<group>"; };
 		0063F22423103098005A91A6 /* ManagedObjectObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectObserver.swift; sourceTree = "<group>"; };
 		0063F2262313F7AA005A91A6 /* dprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dprint.swift; sourceTree = "<group>"; };
-		0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpDataSource.swift; sourceTree = "<group>"; };
+		0095C5C7230E87CB00F964D2 /* EditorDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorDataSource.swift; sourceTree = "<group>"; };
 		00A00CD9231C8ECD00A336CC /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		00B050E3230D33370075B3D3 /* BrainDump.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BrainDump.xcdatamodel; sourceTree = "<group>"; };
 		00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		00B20B4D2318884D002F5DD6 /* SlideInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInteractor.swift; sourceTree = "<group>"; };
 		00C4A0E823055D4E009494A0 /* BrainDump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainDump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C4A0EB23055D4E009494A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		00C4A0ED23055D4E009494A0 /* DumpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpViewController.swift; sourceTree = "<group>"; };
+		00C4A0ED23055D4E009494A0 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		00C4A0F023055D4E009494A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00C4A0F223055D50009494A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00C4A0F523055D50009494A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -95,7 +95,6 @@
 				0063F21D230FE66F005A91A6 /* FetchedResultsControllerChange.swift */,
 				00434C44231C920C007844E1 /* Formatters.swift */,
 				0063F22423103098005A91A6 /* ManagedObjectObserver.swift */,
-				00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */,
 				00A00CD9231C8ECD00A336CC /* UIFont.swift */,
 				00456166230C44AC009B50DB /* UITextView.swift */,
 			);
@@ -114,21 +113,22 @@
 		0063F21A230FC91C005A91A6 /* Dump Editor */ = {
 			isa = PBXGroup;
 			children = (
-				00C4A0ED23055D4E009494A0 /* DumpViewController.swift */,
-				0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */,
+				00C4A0ED23055D4E009494A0 /* EditorViewController.swift */,
+				0095C5C7230E87CB00F964D2 /* EditorDataSource.swift */,
 				00434C48231D4945007844E1 /* EditorTextView.swift */,
+				00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */,
 			);
 			path = "Dump Editor";
 			sourceTree = "<group>";
 		};
-		0063F221230FE6AB005A91A6 /* Dumps */ = {
+		0063F221230FE6AB005A91A6 /* Dumps Library */ = {
 			isa = PBXGroup;
 			children = (
 				0063F21B230FCB36005A91A6 /* DumpsViewController.swift */,
 				00434C42231C8F96007844E1 /* DumpCell.swift */,
 				0063F21F230FE6A3005A91A6 /* DumpsDataSource.swift */,
 			);
-			path = Dumps;
+			path = "Dumps Library";
 			sourceTree = "<group>";
 		};
 		00B20B4A23184836002F5DD6 /* Transition */ = {
@@ -168,7 +168,7 @@
 				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
 				001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */,
 				001A4A7C231542A9006E22D3 /* Settings.swift */,
-				0063F221230FE6AB005A91A6 /* Dumps */,
+				0063F221230FE6AB005A91A6 /* Dumps Library */,
 				0063F21A230FC91C005A91A6 /* Dump Editor */,
 				00B20B4A23184836002F5DD6 /* Transition */,
 				0063F219230FC8F7005A91A6 /* Model */,
@@ -250,7 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00B20B492318480E002F5DD6 /* SlideTransitionController.swift in Sources */,
-				00C4A0EE23055D4E009494A0 /* DumpViewController.swift in Sources */,
+				00C4A0EE23055D4E009494A0 /* EditorViewController.swift in Sources */,
 				00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */,
 				0063F22523103098005A91A6 /* ManagedObjectObserver.swift in Sources */,
 				0063F21E230FE66F005A91A6 /* FetchedResultsControllerChange.swift in Sources */,
@@ -258,7 +258,7 @@
 				001A4A7D231542A9006E22D3 /* Settings.swift in Sources */,
 				00B20B4C231866CB002F5DD6 /* Coordinator.swift in Sources */,
 				00434C45231C920C007844E1 /* Formatters.swift in Sources */,
-				0095C5C8230E87CB00F964D2 /* DumpDataSource.swift in Sources */,
+				0095C5C8230E87CB00F964D2 /* EditorDataSource.swift in Sources */,
 				0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */,
 				00B20B452317FB56002F5DD6 /* SlidePresentationController.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,

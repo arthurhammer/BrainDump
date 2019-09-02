@@ -1,5 +1,6 @@
 import CoreData
 
+/// Observes a single NSManagedObject for changes.
 class ManagedObjectObserver<T>: NSObject, NSFetchedResultsControllerDelegate where T: NSManagedObject {
 
     enum ChangeType {

@@ -1,7 +1,7 @@
 import CoreData
 import UIKit
 
-class DumpDataSource {
+class EditorDataSource {
 
     var dump: Dump? {
         didSet {
