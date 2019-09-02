@@ -106,6 +106,19 @@ class DumpsViewController: UITableViewController {
         return UISwipeActionsConfiguration(actions: actions.compactMap { $0 })
     }
 
+    override func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return action == #selector(UIResponder.copy(_:))
+    }
+
+    override func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        guard action == #selector(UIResponder.copy(_:)) else { return }
+        UIPasteboard.general.string = dataSource?.dump(at: indexPath).text
+    }
+
     private func configureDataSource() {
         dataSource?.dumpsWillChange = tableView.beginUpdates
         dataSource?.dumpsDidChange = tableView.endUpdates
