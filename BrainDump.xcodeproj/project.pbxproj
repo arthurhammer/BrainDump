@@ -11,6 +11,7 @@
 		001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */; };
 		00434C43231C8F96007844E1 /* DumpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C42231C8F96007844E1 /* DumpCell.swift */; };
 		00434C45231C920C007844E1 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C44231C920C007844E1 /* Formatters.swift */; };
+		00434C49231D4945007844E1 /* EditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C48231D4945007844E1 /* EditorTextView.swift */; };
 		00456167230C44AC009B50DB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456166230C44AC009B50DB /* UITextView.swift */; };
 		00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */; };
 		0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21B230FCB36005A91A6 /* DumpsViewController.swift */; };
@@ -40,6 +41,7 @@
 		001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsPurger.swift; sourceTree = "<group>"; };
 		00434C42231C8F96007844E1 /* DumpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpCell.swift; sourceTree = "<group>"; };
 		00434C44231C920C007844E1 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		00434C48231D4945007844E1 /* EditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTextView.swift; sourceTree = "<group>"; };
 		00456166230C44AC009B50DB /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInputAccessoryViewWrapperView.swift; sourceTree = "<group>"; };
 		0063F21B230FCB36005A91A6 /* DumpsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			children = (
 				00C4A0ED23055D4E009494A0 /* DumpViewController.swift */,
 				0095C5C7230E87CB00F964D2 /* DumpDataSource.swift */,
+				00434C48231D4945007844E1 /* EditorTextView.swift */,
 			);
 			path = "Dump Editor";
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				00B20B452317FB56002F5DD6 /* SlidePresentationController.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
 				001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */,
+				00434C49231D4945007844E1 /* EditorTextView.swift in Sources */,
 				00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */,
 				00B20B4E2318884D002F5DD6 /* SlideInteractor.swift in Sources */,
 				00B20B4723180012002F5DD6 /* SlideAnimator.swift in Sources */,

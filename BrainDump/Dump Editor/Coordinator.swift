@@ -46,7 +46,7 @@ private extension Coordinator {
 
     func configureSlideToLibraryGesture() {
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSlideToLibraryPan(sender:)))
-        editorViewController.textView?.panGestureRecognizer.shouldRequireFailure(of: panRecognizer)
+        editorViewController.editor?.panGestureRecognizer.shouldRequireFailure(of: panRecognizer)
         editorViewController.view.addGestureRecognizer(panRecognizer)
     }
 

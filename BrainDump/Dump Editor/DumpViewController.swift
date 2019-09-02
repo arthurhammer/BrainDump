@@ -12,13 +12,10 @@ class DumpViewController: UIViewController {
         didSet { configureDataSource() }
     }
 
-    @IBOutlet var textView: UITextView?
+    @IBOutlet var editor: EditorTextView?
     @IBOutlet private var toolbar: UIToolbar?
 
     private lazy var toolbarWrapper = self.toolbar.flatMap(SafeAreaInputAccessoryViewWrapperView.init)
-    private let textInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-    private let lineHeightMultiple: CGFloat = 1.2
-    private let font = UIFont.systemFont(ofSize: 16)  // TODO: size categories
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -31,10 +28,8 @@ class DumpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureViews()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        toolbar?.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+        editor?.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -54,40 +49,27 @@ class DumpViewController: UIViewController {
     }
 
     @IBAction private func shareDump() {
-        let text = textView?.text ?? ""
+        let text = editor?.text ?? ""
         let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         present(controller, animated: true)
     }
 
     @IBAction private func deleteDump() {
         dataSource?.deleteDump()
-        textView?.startEditing(animated: true)
+        editor?.startEditing(animated: true)
     }
 
     @IBAction func createNewDump() {
         // Create actual new dump only when user starts editing.
         dataSource?.archiveDump()
-        textView?.startEditing(animated: true)
-    }
-
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey],
-            let keyboardHeight = (keyboardFrame as? NSValue)?.cgRectValue.size.height else { return }
-
-        textView?.contentInset.bottom = keyboardHeight
-        textView?.scrollIndicatorInsets.bottom = keyboardHeight
-    }
-
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        textView?.contentInset = .zero
-        textView?.scrollIndicatorInsets = .zero
+        editor?.startEditing(animated: true)
     }
 
     private func showDump() {
         // Avoid setting text view again in response to change handler originating in
         // text view change.
-        guard textView?.text != dataSource?.dump?.text else { return }
-        textView?.text = dataSource?.dump?.text
+        guard editor?.text != dataSource?.dump?.text else { return }
+        editor?.text = dataSource?.dump?.text
     }
 
     private func updateDump(withText text: String?) {
@@ -106,27 +88,7 @@ class DumpViewController: UIViewController {
         }
 
         showDump()
-        textView?.startEditing(animated: true)
-    }
-
-    private func configureViews() {
-        toolbar?.setShadowImage(UIImage(), forToolbarPosition: .bottom)
-
-        textView?.delegate = self
-        textView?.textContainerInset = textInsets
-
-        let style = NSMutableParagraphStyle()
-        // When setting either line height or line spacing the caret and selection markers
-        // will be off to the top or bottom. To center the caret, balance both spaces.
-        let (multiple, spacing) = font.adjustedLineHeightMultipleAndSpacing(forPreferredMultiple: lineHeightMultiple)
-
-        style.lineHeightMultiple = multiple
-        style.lineSpacing = spacing
-
-        textView?.typingAttributes = [
-            .paragraphStyle: style,
-            .font: font
-        ]
+        editor?.startEditing(animated: true)
     }
 }
 
