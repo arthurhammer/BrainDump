@@ -20,6 +20,8 @@ class CoreDataStore: NSPersistentContainer {
     func loadStore(completion: @escaping () -> ()) {
         let description = NSPersistentStoreDescription(url: storeURL)
         description.shouldAddStoreAsynchronously = true
+        description.shouldMigrateStoreAutomatically = true
+        description.shouldInferMappingModelAutomatically = true
         persistentStoreDescriptions = [description]
 
         loadPersistentStores { description, error in

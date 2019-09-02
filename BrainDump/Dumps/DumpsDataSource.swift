@@ -9,12 +9,10 @@ class DumpsDataSource: NSObject {
     private let store: CoreDataStore
     private let frc: NSFetchedResultsController<Dump>
 
-    init(store: CoreDataStore) {
+    init(store: CoreDataStore, fetchRequest: NSFetchRequest<Dump> = Dump.libraryFetchRequest()) {
         self.store = store
-
-        let request = Dump.defaultFetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Dump.dateModified), ascending: false)]
-        self.frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        let sectionKey = fetchRequest.sortDescriptors?.first?.key ?? ""
+        self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: store.viewContext, sectionNameKeyPath: sectionKey, cacheName: nil)
 
         super.init()
 
@@ -38,6 +36,10 @@ class DumpsDataSource: NSObject {
 
     func deleteAllDumps() {
         frc.fetchedObjects?.forEach(store.viewContext.delete)
+        store.save()
+    }
+
+    func save() {
         store.save()
     }
 }

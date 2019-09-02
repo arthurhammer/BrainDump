@@ -15,6 +15,7 @@ class DumpsViewController: UITableViewController {
     }
 
     private lazy var dateFormatter = DateFormatter.relativeDateFormatter()
+    private let pinActionColor = UIColor(red: 0.42, green: 0.53, blue: 0.93, alpha: 1.00)
     private let cellIdentifier = "Cell"
 
     @IBAction private func done() {
@@ -59,32 +60,13 @@ class DumpsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let actions = [deleteAction(for: indexPath), shareAction(for: indexPath)]
-        return UISwipeActionsConfiguration(actions: actions)
-    }
+        let actions = [
+            deleteAction(for: indexPath),
+            pinAction(for: indexPath),
+            shareAction(for: indexPath)
+        ]
 
-    private func deleteAction(for indexPath: IndexPath) -> UIContextualAction {
-        let title = NSLocalizedString("Delete", comment: "")
-
-        return UIContextualAction(style: .destructive, title: title) { [weak self] action, _, completion in
-            guard let dataSource = self?.dataSource else {
-                completion(false)
-                return
-            }
-            dataSource.deleteDump(at: indexPath.row)
-            completion(true)
-        }
-    }
-
-    private func shareAction(for indexPath: IndexPath) -> UIContextualAction {
-        let title = NSLocalizedString("Share", comment: "")
-
-        return UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
-            let text = self?.dataSource?.dump(at: indexPath.row).text ?? ""
-            let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
-            self?.present(controller, animated: true)
-            completion(true)
-        }
+        return UISwipeActionsConfiguration(actions: actions.compactMap { $0 })
     }
 
     private func configureDataSource() {
@@ -100,5 +82,48 @@ class DumpsViewController: UITableViewController {
         dataSource?.dumpsDidChange = tableView.endUpdates
 
         tableView.reloadData()
+    }
+}
+
+// #MARK: Swipe Actions
+
+private extension DumpsViewController {
+
+    func deleteAction(for indexPath: IndexPath) -> UIContextualAction {
+        let title = NSLocalizedString("Delete", comment: "")
+
+        return UIContextualAction(style: .destructive, title: title) { [weak self] action, _, completion in
+            guard let dataSource = self?.dataSource else {
+                completion(false)
+                return
+            }
+            dataSource.deleteDump(at: indexPath.row)
+            completion(true)
+        }
+    }
+
+    func shareAction(for indexPath: IndexPath) -> UIContextualAction {
+        let title = NSLocalizedString("Share", comment: "")
+
+        return UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
+            let text = self?.dataSource?.dump(at: indexPath.row).text ?? ""
+            let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+            self?.present(controller, animated: true)
+            completion(true)
+        }
+    }
+
+    func pinAction(for indexPath: IndexPath) -> UIContextualAction? {
+        guard let dump = dataSource?.dump(at: indexPath.row) else { return nil }
+        let title = dump.isPinned ? NSLocalizedString("Unpin", comment: "") : NSLocalizedString("Pin", comment: "")
+
+        let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
+            dump.isPinned = !dump.isPinned
+            self?.dataSource?.save()
+            completion(true)
+        }
+
+        action.backgroundColor = pinActionColor
+        return action
     }
 }
