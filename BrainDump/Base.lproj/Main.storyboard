@@ -77,7 +77,7 @@
         <scene sceneID="bnf-Mx-a2T">
             <objects>
                 <tableViewController id="avn-7g-eKo" customClass="DumpsViewController" customModule="BrainDump" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tvF-Pd-xIN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" estimatedSectionFooterHeight="28" id="tvF-Pd-xIN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -89,27 +89,40 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="84.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="bOZ-NS-ON0">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="bOZ-NS-ON0">
                                             <rect key="frame" x="20" y="11" width="374" height="63"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="&lt;Title&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ggy-U4-NtE">
-                                                    <rect key="frame" x="0.0" y="0.0" width="57.5" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="&lt;Body&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z14-32-72h">
-                                                    <rect key="frame" x="0.0" y="26" width="48" height="16"/>
+                                                    <rect key="frame" x="0.0" y="26" width="374" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Date&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duf-cO-AbQ">
-                                                    <rect key="frame" x="0.0" y="47" width="45.5" height="16"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cWF-hq-Q5I">
+                                                    <rect key="frame" x="0.0" y="47" width="374" height="16"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="&lt;Date&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duf-cO-AbQ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="183" height="16"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin" translatesAutoresizingMaskIntoConstraints="NO" id="H5J-uE-c1H">
+                                                            <rect key="frame" x="358" y="0.0" width="16" height="16"/>
+                                                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="16" id="cEx-Xk-CcU"/>
+                                                                <constraint firstAttribute="width" secondItem="H5J-uE-c1H" secondAttribute="height" id="hQX-4r-IcJ"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                         </stackView>
                                     </subviews>
@@ -123,6 +136,7 @@
                                 <connections>
                                     <outlet property="bodyLabel" destination="Z14-32-72h" id="rnb-H6-2Ot"/>
                                     <outlet property="dateLabel" destination="duf-cO-AbQ" id="33n-1Q-qga"/>
+                                    <outlet property="isPinnedImageView" destination="H5J-uE-c1H" id="BkI-a3-NsX"/>
                                     <outlet property="titleLabel" destination="Ggy-U4-NtE" id="WEQ-Qt-SCM"/>
                                 </connections>
                             </tableViewCell>
@@ -135,7 +149,7 @@
                     <navigationItem key="navigationItem" title="Brain Dumps" id="VYI-Yq-fyW">
                         <barButtonItem key="leftBarButtonItem" systemItem="trash" id="amN-rJ-D9S">
                             <connections>
-                                <action selector="deleteAllDumps" destination="avn-7g-eKo" id="xow-pR-OA7"/>
+                                <action selector="deleteAllUnpinnedDumps" destination="avn-7g-eKo" id="xow-pR-OA7"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -159,7 +173,7 @@
         <!--Navigation Controller-->
         <scene sceneID="KyF-cg-RXk">
             <objects>
-                <navigationController storyboardIdentifier="Library" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="lTg-r8-oLr" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Library" automaticallyAdjustsScrollViewInsets="NO" id="lTg-r8-oLr" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="wbV-1Y-fV5">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -167,7 +181,6 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cAx-Ii-oTg">
-                        <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -196,5 +209,8 @@
             <point key="canvasLocation" x="137.68115942028987" y="-1315.1785714285713"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pin" width="11" height="17"/>
+    </resources>
     <color key="tintColor" red="0.42352941176470588" green="0.53333333333333333" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
 </document>

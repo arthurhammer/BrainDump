@@ -3,7 +3,8 @@ import CoreData
 class DumpsDataSource: NSObject {
 
     var dumpsWillChange: (() -> ())?
-    var dumpDidChange: ((FetchedResultsControllerChange) -> ())?
+    var sectionDidChange: ((FetchedResultsControllerSectionChange) -> ())?
+    var dumpDidChange: ((FetchedResultsControllerObjectChange) -> ())?
     var dumpsDidChange: (() -> ())?
 
     private let store: CoreDataStore
@@ -20,22 +21,32 @@ class DumpsDataSource: NSObject {
         try? frc.performFetch()
     }
 
-    func numberOfDumps() -> Int {
-        return frc.sections?.first?.numberOfObjects ?? 0
+    func showsHeader(forSection section: Int) -> Bool {
+        return (section == 1) && (numberOfSections > 0) && (numberOfDumps(inSection: 1) > 0)
     }
 
-    func dump(at index: Int) -> Dump {
-        return frc.object(at: IndexPath(row: index, section: 0))
+    var numberOfSections: Int {
+        return frc.sections?.count ?? 0
     }
 
-    func deleteDump(at index: Int) {
-        let dump = frc.object(at: IndexPath(row: index, section: 0))
+    func numberOfDumps(inSection section: Int) -> Int {
+        return frc.sections?[section].numberOfObjects ?? 0
+    }
+
+    func dump(at indexPath: IndexPath) -> Dump {
+        return frc.object(at: indexPath)
+    }
+
+    func deleteDump(at indexPath: IndexPath) {
+        let dump = frc.object(at: indexPath)
         store.viewContext.delete(dump)
         store.save()
     }
 
-    func deleteAllDumps() {
-        frc.fetchedObjects?.forEach(store.viewContext.delete)
+    func deleteAllUnpinnedDumps() {
+        frc.fetchedObjects?
+            .filter { !$0.isPinned }
+            .forEach(store.viewContext.delete)
         store.save()
     }
 
@@ -45,13 +56,17 @@ class DumpsDataSource: NSObject {
 }
 
 extension DumpsDataSource: NSFetchedResultsControllerDelegate {
+
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         dumpsWillChange?()
     }
 
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        sectionDidChange?(.init(type: type, index: sectionIndex))
+    }
+
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange object: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        let change = FetchedResultsControllerChange(object: object, type: type, indexPath: indexPath, newIndexPath: newIndexPath)
-        dumpDidChange?(change)
+        dumpDidChange?(.init(object: object, type: type, indexPath: indexPath, newIndexPath: newIndexPath))
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

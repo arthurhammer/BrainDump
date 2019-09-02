@@ -16,7 +16,14 @@ class DumpsViewController: UITableViewController {
 
     private lazy var dateFormatter = DateFormatter.relativeDateFormatter()
     private let pinActionColor = UIColor(red: 0.42, green: 0.53, blue: 0.93, alpha: 1.00)
+    private let sectionSeparatorColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
+    private let sectionHeaderHeight: CGFloat = 5
     private let cellIdentifier = "Cell"
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tableView.setEditing(false, animated: true)
+    }
 
     @IBAction private func done() {
         delegate?.controllerDidFinish(self)
@@ -26,24 +33,30 @@ class DumpsViewController: UITableViewController {
         delegate?.controllerDidSelectCreateNewDump(self)
     }
 
-    @IBAction private func deleteAllDumps() {
-        dataSource?.deleteAllDumps()
+    @IBAction private func deleteAllUnpinnedDumps() {
+        dataSource?.deleteAllUnpinnedDumps()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let dump = dataSource?.dump(at: indexPath.row) else { return }
+        guard let dump = dataSource?.dump(at: indexPath) else { return }
         delegate?.controller(self, didSelectDump: dump)
     }
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return dataSource?.numberOfSections ?? 0
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.numberOfDumps() ?? 0
+        return dataSource?.numberOfDumps(inSection: section) ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DumpCell else { fatalError("Wrong cell id or type.") }
-        if let dump = dataSource?.dump(at: indexPath.row) {
+
+        if let dump = dataSource?.dump(at: indexPath) {
             configure(cell: cell, for: dump)
         }
+
         return cell
     }
 
@@ -52,11 +65,24 @@ class DumpsViewController: UITableViewController {
         cell.titleLabel.text = dump.title ?? emptyTitle
         cell.bodyLabel.text = dump.body
         cell.dateLabel.text = dateFormatter.string(forRelativeDate: dump.dateModified)
+        cell.isPinned = dump.isPinned
     }
 
     private func reconfigure(cellAt indexPath: IndexPath, for dump: Dump) {
         guard let cell = tableView.cellForRow(at: indexPath) as? DumpCell else { return }
         configure(cell: cell, for: dump)
+    }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard dataSource?.showsHeader(forSection: section) == true else { return nil }
+        let view = UIView(frame: .zero)
+        view.backgroundColor = sectionSeparatorColor
+        return view
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard dataSource?.showsHeader(forSection: section) == true else { return 0 }
+        return sectionHeaderHeight
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -71,6 +97,8 @@ class DumpsViewController: UITableViewController {
 
     private func configureDataSource() {
         dataSource?.dumpsWillChange = tableView.beginUpdates
+        dataSource?.dumpsDidChange = tableView.endUpdates
+        dataSource?.sectionDidChange = tableView.applyChange
 
         dataSource?.dumpDidChange = { [weak self] change in
             self?.tableView.applyChange(change, cellUpdater: { object, indexPath in
@@ -78,8 +106,6 @@ class DumpsViewController: UITableViewController {
                 self?.reconfigure(cellAt: indexPath, for: dump)
             })
         }
-
-        dataSource?.dumpsDidChange = tableView.endUpdates
 
         tableView.reloadData()
     }
@@ -97,7 +123,8 @@ private extension DumpsViewController {
                 completion(false)
                 return
             }
-            dataSource.deleteDump(at: indexPath.row)
+
+            dataSource.deleteDump(at: indexPath)
             completion(true)
         }
     }
@@ -106,7 +133,7 @@ private extension DumpsViewController {
         let title = NSLocalizedString("Share", comment: "")
 
         return UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
-            let text = self?.dataSource?.dump(at: indexPath.row).text ?? ""
+            let text = self?.dataSource?.dump(at: indexPath).text ?? ""
             let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
             self?.present(controller, animated: true)
             completion(true)
@@ -114,7 +141,7 @@ private extension DumpsViewController {
     }
 
     func pinAction(for indexPath: IndexPath) -> UIContextualAction? {
-        guard let dump = dataSource?.dump(at: indexPath.row) else { return nil }
+        guard let dump = dataSource?.dump(at: indexPath) else { return nil }
         let title = dump.isPinned ? NSLocalizedString("Unpin", comment: "") : NSLocalizedString("Pin", comment: "")
 
         let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in

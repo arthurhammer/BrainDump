@@ -7,11 +7,23 @@ class DumpCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var bodyLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var isPinnedImageView: UIImageView!
+
+    var isPinned: Bool = false {
+        didSet { isPinnedImageView.isHidden = !isPinned }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
         selectedBackgroundView = UIView()
         selectedBackgroundView?.backgroundColor = selectionColor
+        isPinned = false
+        isPinnedImageView.tintColor = .lightGray
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isPinned = false
     }
 }
