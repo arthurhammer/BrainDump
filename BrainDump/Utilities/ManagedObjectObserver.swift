@@ -44,6 +44,7 @@ private func fetchRequest<T>(for object: T) -> NSFetchRequest<T> where T: NSMana
     let request = NSFetchRequest<T>(entityName: String(describing: T.self))
     request.predicate = NSPredicate(format: "SELF = %@", object)
     request.fetchLimit = 1
+    request.fetchBatchSize = 1
     // Unused dummy as frc requires a sort descriptor.
     request.sortDescriptors = [NSSortDescriptor(key: "objectID", ascending: true)]
     return request

@@ -24,9 +24,9 @@ class DumpsPurger {
         let purgeBefore = Date().addingTimeInterval(-purgeAfter)
 
         if let dump = current {
-            request.predicate = NSPredicate(format: "(dateModified <= %@) AND (isPinned = false) AND (SELF != %@)", purgeBefore as NSDate, dump)
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@) AND (SELF != %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), purgeBefore as NSDate, dump)
         } else {
-            request.predicate = NSPredicate(format: "(dateModified <= %@) AND (isPinned = false)", purgeBefore as NSDate)
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), purgeBefore as NSDate)
         }
 
         guard let results = try? context.fetch(request) else { return }

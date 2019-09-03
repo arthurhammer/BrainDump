@@ -28,11 +28,6 @@ class EditorDataSource {
         subscribeToNotifications()
     }
 
-    // TODO
-    func _dumpsDataSource() -> DumpsDataSource {
-        return DumpsDataSource(store: store)
-    }
-
     func createNewDump(withText text: String? = nil) {
         let dump = Dump(in: store.viewContext, text: text)
         save()
