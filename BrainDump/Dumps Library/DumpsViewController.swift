@@ -29,6 +29,11 @@ class DumpsViewController: UITableViewController {
     private let sectionHeaderHeight: CGFloat = 5
     private let cellIdentifier = "Cell"
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureSearchController()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateLabelsTimer.start()
@@ -157,6 +162,21 @@ class DumpsViewController: UITableViewController {
         }
 
         tableView.reloadData()
+    }
+
+    private func configureSearchController() {
+        definesPresentationContext = true
+
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        searchController.searchBar.tintColor = view.tintColor
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = dataSource?.searcher
+
+        dataSource?.searcher.resultsDidUpdate = { [weak self] _ in
+            self?.tableView.reloadData()
+        }
     }
 
     private func selectDump(_ dump: Dump?) {

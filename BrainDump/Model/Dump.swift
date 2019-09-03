@@ -25,6 +25,7 @@ extension Dump {
 
     static func libraryFetchRequest() -> NSFetchRequest<Dump> {
         let request = defaultFetchRequest()
+        request.fetchBatchSize = 30
         request.sortDescriptors = [
             NSSortDescriptor(key: #keyPath(Dump.isPinned), ascending: false),
             NSSortDescriptor(key: #keyPath(Dump.dateModified), ascending: false)

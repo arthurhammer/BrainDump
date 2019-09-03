@@ -7,6 +7,8 @@ class DumpsDataSource: NSObject {
     var dumpDidChange: ((FetchedResultsControllerObjectChange) -> ())?
     var dumpsDidChange: (() -> ())?
 
+    lazy var searcher = FetchedResultsControllerSearcher<Dump>(frc: frc, searchKeyPath: #keyPath(Dump.text), debounceBy: 0.25)
+
     private let store: CoreDataStore
     private let settings: UserDefaults
     private let frc: NSFetchedResultsController<Dump>
