@@ -1,19 +1,37 @@
 import Foundation
 
-extension DateFormatter {
+class DateModifiedFormatter {
 
-    static func relativeDateFormatter() -> DateFormatter {
+    private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.doesRelativeDateFormatting = true
         formatter.dateStyle = .short
         formatter.timeStyle = .short
         return formatter
-    }
+    }()
 
-    /// - Note: This method has side-effects on the receiver's `dateStyle` property.
-    func string(forRelativeDate date: Date) -> String {
+    func string(from date: Date) -> String {
         let isToday = Calendar.current.isDateInToday(date)
-        dateStyle = isToday ? .none : .short
-        return string(from: date)
+        formatter.dateStyle = isToday ? .none : .short
+        return formatter.string(from: date)
+    }
+}
+
+class TimeRemainingFormatter {
+
+    private lazy var formatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.maximumUnitCount = 1
+        formatter.allowsFractionalUnits = true
+        formatter.unitsStyle = .abbreviated
+        formatter.zeroFormattingBehavior = .dropAll
+        return formatter
+    }()
+
+    /// If `from` exceeds `to`, `to` will be set to `from`.
+    func string(from: Date, to: Date) -> String? {
+        let to = max(from, to)
+        return formatter.string(from: from, to: to)
     }
 }

@@ -7,10 +7,14 @@ class DumpCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var bodyLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var expirationLabel: UILabel!
     @IBOutlet var isPinnedImageView: UIImageView!
 
     var isPinned: Bool = false {
-        didSet { isPinnedImageView.isHidden = !isPinned }
+        didSet {
+            isPinnedImageView.isHidden = !isPinned
+            expirationLabel.isHidden = isPinned
+        }
     }
 
     override func awakeFromNib() {

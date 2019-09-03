@@ -12,6 +12,7 @@
 		00434C43231C8F96007844E1 /* DumpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C42231C8F96007844E1 /* DumpCell.swift */; };
 		00434C45231C920C007844E1 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C44231C920C007844E1 /* Formatters.swift */; };
 		00434C49231D4945007844E1 /* EditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C48231D4945007844E1 /* EditorTextView.swift */; };
+		00434C4B231E6638007844E1 /* BackgroundPausingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C4A231E6638007844E1 /* BackgroundPausingTimer.swift */; };
 		00456167230C44AC009B50DB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456166230C44AC009B50DB /* UITextView.swift */; };
 		00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */; };
 		0063F21C230FCB36005A91A6 /* DumpsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063F21B230FCB36005A91A6 /* DumpsViewController.swift */; };
@@ -42,6 +43,7 @@
 		00434C42231C8F96007844E1 /* DumpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpCell.swift; sourceTree = "<group>"; };
 		00434C44231C920C007844E1 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		00434C48231D4945007844E1 /* EditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTextView.swift; sourceTree = "<group>"; };
+		00434C4A231E6638007844E1 /* BackgroundPausingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundPausingTimer.swift; sourceTree = "<group>"; };
 		00456166230C44AC009B50DB /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		00456177230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInputAccessoryViewWrapperView.swift; sourceTree = "<group>"; };
 		0063F21B230FCB36005A91A6 /* DumpsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		0063F218230FC8CD005A91A6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				00434C4A231E6638007844E1 /* BackgroundPausingTimer.swift */,
 				0063F2262313F7AA005A91A6 /* dprint.swift */,
 				0063F21D230FE66F005A91A6 /* FetchedResultsControllerChange.swift */,
 				00434C44231C920C007844E1 /* Formatters.swift */,
@@ -254,6 +257,7 @@
 				00456178230C7430009B50DB /* SafeAreaInputAccessoryViewWrapperView.swift in Sources */,
 				0063F22523103098005A91A6 /* ManagedObjectObserver.swift in Sources */,
 				0063F21E230FE66F005A91A6 /* FetchedResultsControllerChange.swift in Sources */,
+				00434C4B231E6638007844E1 /* BackgroundPausingTimer.swift in Sources */,
 				00434C43231C8F96007844E1 /* DumpCell.swift in Sources */,
 				001A4A7D231542A9006E22D3 /* Settings.swift in Sources */,
 				00B20B4C231866CB002F5DD6 /* Coordinator.swift in Sources */,

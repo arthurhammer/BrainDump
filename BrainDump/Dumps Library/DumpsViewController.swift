@@ -18,14 +18,25 @@ class DumpsViewController: UITableViewController {
         didSet { selectDump(selectedDump) }
     }
 
-    private lazy var dateFormatter = DateFormatter.relativeDateFormatter()
+    private lazy var dateFormatter = DateModifiedFormatter()
+    private lazy var expirationFormatter = TimeRemainingFormatter()
+    private lazy var updateLabelsTimer = BackgroundPausingTimer(interval: 60, tolerance: 15) { [weak self] in
+        self?.reconfigureVisibleCells()
+    }
+
     private let pinActionColor = UIColor(red: 0.42, green: 0.53, blue: 0.93, alpha: 1.00)
     private let sectionSeparatorColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
     private let sectionHeaderHeight: CGFloat = 5
     private let cellIdentifier = "Cell"
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateLabelsTimer.start()
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        updateLabelsTimer.stop()
         tableView.setEditing(false, animated: true)
     }
 
@@ -69,13 +80,27 @@ class DumpsViewController: UITableViewController {
         let emptyTitle = NSLocalizedString("New Dump", comment: "Default title for an empty dump")
         cell.titleLabel.text = dump.title ?? emptyTitle
         cell.bodyLabel.text = dump.body
-        cell.dateLabel.text = dateFormatter.string(forRelativeDate: dump.dateModified)
+        cell.dateLabel.text = dateFormatter.string(from: dump.dateModified)
         cell.isPinned = dump.isPinned
+
+        if let expiration = dataSource?.expirationDate(for: dump) {
+            cell.expirationLabel.text = expirationFormatter.string(from: Date(), to: expiration)
+        } else {
+            cell.expirationLabel.text = nil
+        }
     }
 
     private func reconfigure(cellAt indexPath: IndexPath, for dump: Dump) {
         guard let cell = tableView.cellForRow(at: indexPath) as? DumpCell else { return }
         configure(cell: cell, for: dump)
+    }
+
+    private func reconfigureVisibleCells() {
+        guard let dataSource = dataSource else { return }
+
+        (tableView.indexPathsForVisibleRows ?? [])
+            .map { ($0, dataSource.dump(at: $0)) }
+            .forEach(reconfigure)
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

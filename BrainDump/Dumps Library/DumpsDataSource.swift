@@ -8,10 +8,12 @@ class DumpsDataSource: NSObject {
     var dumpsDidChange: (() -> ())?
 
     private let store: CoreDataStore
+    private let settings: UserDefaults
     private let frc: NSFetchedResultsController<Dump>
 
-    init(store: CoreDataStore, fetchRequest: NSFetchRequest<Dump> = Dump.libraryFetchRequest()) {
+    init(store: CoreDataStore, fetchRequest: NSFetchRequest<Dump> = Dump.libraryFetchRequest(), settings: UserDefaults = .standard) {
         self.store = store
+        self.settings = settings
         let sectionKey = fetchRequest.sortDescriptors?.first?.key ?? ""
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: store.viewContext, sectionNameKeyPath: sectionKey, cacheName: nil)
 
@@ -19,6 +21,11 @@ class DumpsDataSource: NSObject {
 
         frc.delegate = self
         try? frc.performFetch()
+    }
+
+    func expirationDate(for dump: Dump) -> Date? {
+        guard let delay = settings.deleteArchivedDumpsAfter else { return nil }
+        return dump.dateModified.addingTimeInterval(delay)
     }
 
     func showsHeader(forSection section: Int) -> Bool {
