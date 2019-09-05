@@ -164,9 +164,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Brain Dumps" id="VYI-Yq-fyW">
-                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="amN-rJ-D9S">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="P6J-F7-eqq">
                             <connections>
-                                <action selector="deleteAllUnpinnedDumps" destination="avn-7g-eKo" id="xow-pR-OA7"/>
+                                <action selector="showSettings" destination="avn-7g-eKo" id="84P-8n-KIZ"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -178,6 +178,11 @@
                             <barButtonItem systemItem="compose" id="0TA-oB-D1u">
                                 <connections>
                                     <action selector="createNewDump" destination="avn-7g-eKo" id="voA-Z6-twM"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="trash" id="amN-rJ-D9S">
+                                <connections>
+                                    <action selector="deleteAllUnpinnedDumps" destination="avn-7g-eKo" id="xow-pR-OA7"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>

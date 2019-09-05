@@ -25,9 +25,13 @@ class DumpsDataSource: NSObject {
         try? frc.performFetch()
     }
 
+    /// nil if the dump is set to not expire.
     func expirationDate(for dump: Dump) -> Date? {
-        guard let delay = settings.deleteArchivedDumpsAfter else { return nil }
-        return dump.dateModified.addingTimeInterval(delay)
+        guard settings.isDeleteOldDumpsAfterEnabled,
+            !dump.isPinned else { return nil }
+
+        let delay = settings.deleteOldDumpsAfter
+        return Calendar.current.date(byAdding: delay, to: dump.dateModified)
     }
 
     func showsHeader(forSection section: Int) -> Bool {
