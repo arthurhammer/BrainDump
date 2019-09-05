@@ -16,23 +16,41 @@ class DumpsPurger {
 
     // TODO
     private func purge() {
-        guard let purgeAfter = settings.deleteArchivedDumpsAfter else { return }
-        let current = settings.lastEditedDumpURI.flatMap(context.persistentStoreCoordinator!.managedObjectID(forURIRepresentation:))
+        guard settings.isDeleteOldDumpsAfterEnabled else { return }
 
-        let request = Dump.defaultFetchRequest()
-        request.includesPropertyValues = false
-        let purgeBefore = Date().addingTimeInterval(-purgeAfter)
+        let now = Date()
+        let deleteWithin = settings.deleteOldDumpsAfter.negative
 
-        if let dump = current {
-            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@) AND (SELF != %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), purgeBefore as NSDate, dump)
-        } else {
-            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), purgeBefore as NSDate)
+        guard let deleteBefore = Calendar.current.date(byAdding: deleteWithin, to: now) else {
+            dprint("Could not create date from: ", now, time)
+            return
         }
 
-        guard let results = try? context.fetch(request) else { return }
+        dprint(time, now, deleteBefore)
 
-        dprint("Deleting", Date(), results.count)
+        // TODO: no
+        let currentDump = settings.lastEditedDumpURI.flatMap(context.persistentStoreCoordinator!.managedObjectID(forURIRepresentation:))
+        let request = Dump.defaultFetchRequest()
+        request.includesPropertyValues = false
+
+        if let dump = currentDump {
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@) AND (SELF != %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), deleteBefore as NSDate, dump)
+        } else {
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), deleteBefore as NSDate)
+        }
+
+        guard let results = try? context.fetch(request),
+            !results.isEmpty else { return }
+
+        dprint("Deleting", now, results.count)
         results.forEach(context.delete)
-        try? context.save()  //  todo doenst check haschanges + error handling
+        try? context.save()
+    }
+}
+
+extension DateComponents {
+    var negative: DateComponents {
+        let flip: (Int?) -> (Int?) = { $0.flatMap { -$0 } }
+        return DateComponents(calendar: calendar, timeZone: timeZone, era: flip(era), year: flip(year), month: flip(month), day: flip(day), hour: flip(hour), minute: flip(minute), second: flip(second), nanosecond: flip(nanosecond))
     }
 }

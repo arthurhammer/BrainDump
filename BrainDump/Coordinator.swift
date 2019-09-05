@@ -46,6 +46,15 @@ private extension Coordinator {
         editorViewController.dismiss(animated: true)
     }
 
+    func showSettings() {
+        guard let settingsContainer = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
+            let settingsViewController = settingsContainer.topViewController as? SettingsViewController else { fatalError("Wrong storyboard id or controller type.") }
+
+        settingsContainer.modalPresentationStyle = .custom   // TODO
+        settingsViewController.delegate = self
+        libraryViewController.present(settingsContainer, animated: true)
+    }
+
     func configureSlideToLibraryGesture() {
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSlideToLibraryPan(sender:)))
         editorViewController.editor?.panGestureRecognizer.shouldRequireFailure(of: panRecognizer)
@@ -70,6 +79,10 @@ extension Coordinator: DumpsViewControllerDelegate {
         hideLibrary()
     }
 
+    func controllerDidSelectShowSettings(_ controller: DumpsViewController) {
+        showSettings()
+    }
+
     func controller(_ controller: DumpsViewController, didSelectDump dump: Dump) {
         hideLibrary()
         editorViewController.dataSource?.dump = dump
@@ -78,5 +91,12 @@ extension Coordinator: DumpsViewControllerDelegate {
     func controllerDidSelectCreateNewDump(_ controller: DumpsViewController) {
         hideLibrary()
         editorViewController.createNewDump()
+    }
+}
+
+extension Coordinator: SettingsViewControllerDelegate {
+
+    func controllerDidFinish(_ controller: SettingsViewController) {
+        libraryContainer.dismiss(animated: true)
     }
 }

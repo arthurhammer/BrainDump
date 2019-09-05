@@ -1,0 +1,88 @@
+import UIKit
+
+protocol SettingsViewControllerDelegate: class {
+    func controllerDidFinish(_ controller: SettingsViewController)
+}
+
+class SettingsViewController: UITableViewController {
+
+    weak var delegate: SettingsViewControllerDelegate?
+
+    let settings = UserDefaults.standard
+
+    @IBOutlet private var createNewDumpAfterSwitch: UISwitch!
+    @IBOutlet private var createNewDumpAfterLabel: UILabel!
+    @IBOutlet private var createNewDumpAfterStepper: TimeUntilStepper!
+
+    @IBOutlet private var deleteOldDumpsAfterSwitch: UISwitch!
+    @IBOutlet private var deleteOldDumpsAfterLabel: UILabel!
+    @IBOutlet private var deleteOldDumpsAfterStepper: TimeUntilStepper!
+
+    private var hiddenIndexPaths = Set<IndexPath>()
+
+    private lazy var durationFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.maximumUnitCount = 2
+        formatter.unitsStyle = .short
+        formatter.zeroFormattingBehavior = .dropAll
+        return formatter
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViews()
+    }
+
+    @IBAction func done() {
+        delegate?.controllerDidFinish(self)
+    }
+
+    @IBAction func stepperChanged() {
+        settings.createNewDumpAfter = createNewDumpAfterStepper.dateValue
+        settings.deleteOldDumpsAfter = deleteOldDumpsAfterStepper.dateValue
+        updateViews()
+    }
+
+    @IBAction private func switchChanged() {
+        settings.isCreateNewDumpAfterEnabled = createNewDumpAfterSwitch.isOn
+        settings.isDeleteOldDumpsAfterEnabled = deleteOldDumpsAfterSwitch.isOn
+        updateViews()
+    }
+
+    private func updateViews() {
+        createNewDumpAfterSwitch.isOn = settings.isCreateNewDumpAfterEnabled
+        createNewDumpAfterStepper.dateValues = settings.createNewDumpAfterOptions
+        createNewDumpAfterStepper.dateValue = settings.createNewDumpAfter
+
+        deleteOldDumpsAfterSwitch.isOn = settings.isDeleteOldDumpsAfterEnabled
+        deleteOldDumpsAfterStepper.dateValues = settings.deleteOldDumpsAfterOptions
+        deleteOldDumpsAfterStepper.dateValue = settings.deleteOldDumpsAfter
+
+        showIndexPath(IndexPath(row: 1, section: 0), show: settings.isCreateNewDumpAfterEnabled)
+        showIndexPath(IndexPath(row: 1, section: 1), show: settings.isDeleteOldDumpsAfterEnabled)
+
+        createNewDumpAfterLabel.text = durationFormatter.string(from: createNewDumpAfterStepper.dateValue)
+        deleteOldDumpsAfterLabel.text = durationFormatter.string(from: deleteOldDumpsAfterStepper.dateValue)
+    }
+
+    private func showIndexPath(_ indexPath: IndexPath, show: Bool) {
+        if show {
+            hiddenIndexPaths.remove(indexPath)
+        } else {
+            hiddenIndexPaths.insert(indexPath)
+        }
+
+        // Update cell heights.
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return hiddenIndexPaths.contains(indexPath) ? 0 : UITableView.automaticDimension
+    }
+
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section > 1
+    }
+}

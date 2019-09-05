@@ -2,6 +2,7 @@ import UIKit
 
 protocol DumpsViewControllerDelegate: class {
     func controllerDidFinish(_ controller: DumpsViewController)
+    func controllerDidSelectShowSettings(_ controller: DumpsViewController)
     func controller(_ controller: DumpsViewController, didSelectDump dump: Dump)
     func controllerDidSelectCreateNewDump(_ controller: DumpsViewController)
 }
@@ -47,6 +48,10 @@ class DumpsViewController: UITableViewController {
 
     @IBAction private func done() {
         delegate?.controllerDidFinish(self)
+    }
+
+    @IBAction private func showSettings() {
+        delegate?.controllerDidSelectShowSettings(self)
     }
 
     @IBAction private func createNewDump() {

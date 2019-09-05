@@ -66,19 +66,31 @@ class EditorDataSource {
     }
 
     @objc private func archiveDumpIfNecessary() {
-        if let date = settings.createNewDumpDate, date <= Date() {
+        if settings.isCreateNewDumpAfterEnabled,
+            let date = settings.createNewDumpOn,
+            date <= Date() {
+
             archiveDump()
         }
 
-        settings.createNewDumpDate = nil
+        settings.createNewDumpOn = nil
     }
 
     @objc private func didEnterBackground() {
-        settings.createNewDumpDate = settings.createNewDumpAfter.flatMap(Date().addingTimeInterval)
+        if settings.isCreateNewDumpAfterEnabled {
+            let date = Calendar.current.date(byAdding: settings.createNewDumpAfter, to: Date())
+            settings.createNewDumpOn = date
+        } else {
+            settings.createNewDumpOn = nil
+        }
+    }
+
+    @objc private func willEnterForeground() {
+        archiveDumpIfNecessary()
     }
 
     private func subscribeToNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(archiveDumpIfNecessary), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 }

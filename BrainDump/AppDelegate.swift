@@ -10,11 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var purger: DumpsPurger?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserDefaults.standard.createNewDumpAfter = 30 * 60
-        UserDefaults.standard.deleteArchivedDumpsAfter = 24 * 60 * 60
-
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().barTintColor = .white
+        configureAppeareance()
 
         store = CoreDataStore(name: "BrainDump")
 
@@ -25,5 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+
+    private func configureAppeareance() {
+        let cellSelectionColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().barTintColor = .white
+        UITableViewCell.appearance().selectedBackgroundView = UIView()
+        UITableViewCell.appearance().selectedBackgroundView?.backgroundColor = cellSelectionColor
     }
 }
