@@ -179,6 +179,9 @@ class DumpsViewController: UITableViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = dataSource?.searcher
 
+        let barColor = UINavigationBar.appearance().barTintColor ?? .white
+        _hackToHideGoddamnNavigationBarBottomBorderWhenUsingSearchController(with: searchController.searchBar, barColor: barColor)
+
         dataSource?.searcher.resultsDidUpdate = { [weak self] _ in
             self?.tableView.reloadData()
         }
@@ -236,5 +239,30 @@ private extension DumpsViewController {
 
         action.backgroundColor = pinActionColor
         return action
+    }
+}
+
+// #MARK: Hack
+
+private extension DumpsViewController {
+
+    /// When using UISearchController a bottom border appears that is unhideable using the
+    /// conventional approach (hiding shadow image of the navigation bar).
+    /// Overlay a colored view that blends with the rest of the navigation/search bar.
+    /// - Warning: This might break in future iOS releases.
+    func _hackToHideGoddamnNavigationBarBottomBorderWhenUsingSearchController(with searchBar: UISearchBar, barColor: UIColor) {
+        // Border is outside the search bar, starts at y, not y-1.
+        let frame = CGRect(x: 0, y: searchBar.frame.maxY, width: searchBar.frame.width, height: 1)
+        let border = UIView(frame: frame)
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.backgroundColor = barColor
+        searchBar.addSubview(border)
+
+        // If using non translucent bar with the same intended border color, colors will
+        // be off since the translucency changes the appearance of the color.
+        navigationController?.navigationBar.isTranslucent = false
+        // But non-translucency adds lunacy snapping bar behaviour so disable that.
+        extendedLayoutIncludesOpaqueBars = true
+        // Fuck this shit.
     }
 }
