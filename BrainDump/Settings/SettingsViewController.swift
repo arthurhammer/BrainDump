@@ -21,24 +21,31 @@ class SettingsViewController: UITableViewController {
     private var hiddenIndexPaths = Set<IndexPath>()
     private lazy var afterTimeFormatter = AfterTimeFormatter()
 
+    // Changing deletion date is potentially destructive. Delay until "done".
+    private lazy var modifiedIsDeleteOldDumpsAfterEnabled = settings.isDeleteOldDumpsAfterEnabled
+    private lazy var modifiedDeleteOldDumpsAfter = settings.deleteOldDumpsAfter
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
     }
 
     @IBAction func done() {
+        // Save changes now.
+        settings.isDeleteOldDumpsAfterEnabled = modifiedIsDeleteOldDumpsAfterEnabled
+        settings.deleteOldDumpsAfter = modifiedDeleteOldDumpsAfter
         delegate?.controllerDidFinish(self)
     }
 
     @IBAction func stepperChanged() {
         settings.createNewDumpAfter = createNewDumpAfterStepper.dateValue
-        settings.deleteOldDumpsAfter = deleteOldDumpsAfterStepper.dateValue
+        modifiedDeleteOldDumpsAfter = deleteOldDumpsAfterStepper.dateValue
         updateLabels()
     }
 
     @IBAction private func switchChanged() {
         settings.isCreateNewDumpAfterEnabled = createNewDumpAfterSwitch.isOn
-        settings.isDeleteOldDumpsAfterEnabled = deleteOldDumpsAfterSwitch.isOn
+        modifiedIsDeleteOldDumpsAfterEnabled = deleteOldDumpsAfterSwitch.isOn
         updateHiddenCells()
     }
 
@@ -47,9 +54,9 @@ class SettingsViewController: UITableViewController {
         createNewDumpAfterStepper.dateValues = settings.createNewDumpAfterOptions
         createNewDumpAfterStepper.dateValue = settings.createNewDumpAfter
 
-        deleteOldDumpsAfterSwitch.isOn = settings.isDeleteOldDumpsAfterEnabled
+        deleteOldDumpsAfterSwitch.isOn = modifiedIsDeleteOldDumpsAfterEnabled
         deleteOldDumpsAfterStepper.dateValues = settings.deleteOldDumpsAfterOptions
-        deleteOldDumpsAfterStepper.dateValue = settings.deleteOldDumpsAfter
+        deleteOldDumpsAfterStepper.dateValue = modifiedDeleteOldDumpsAfter
 
         updateHiddenCells()
         updateLabels()
@@ -57,7 +64,7 @@ class SettingsViewController: UITableViewController {
 
     private func updateHiddenCells() {
         showIndexPath(IndexPath(row: 1, section: 0), show: settings.isCreateNewDumpAfterEnabled)
-        showIndexPath(IndexPath(row: 1, section: 1), show: settings.isDeleteOldDumpsAfterEnabled)
+        showIndexPath(IndexPath(row: 1, section: 1), show: modifiedIsDeleteOldDumpsAfterEnabled)
     }
 
     private func updateLabels() {
