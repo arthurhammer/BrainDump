@@ -1,10 +1,10 @@
 import UIKit
 
 /// A terrible abuse of `UIStepper` for stepping through nominal date component values.
-/// You should not modify the `value`, `minimumValue`, `maximumValue` properties.
+/// Do not modify the `value`, `minimumValue`, `maximumValue` properties.
 class TimeUntilStepper: UIStepper {
 
-    /// The date values the stepper will step through.
+    /// The date values the stepper steps through.
     var dateValues = [DateComponents]() {
         didSet {
             guard !dateValues.isEmpty else { fatalError("Nonempty `dateValues` is required.") }

@@ -19,6 +19,8 @@ class DumpCell: UITableViewCell {
         super.awakeFromNib()
         isPinned = false
         isPinnedImageView.tintColor = .lightGray
+        selectedBackgroundView = UIView()
+        selectedBackgroundView?.backgroundColor = Style.cellSelectionColor
     }
 
     override func prepareForReuse() {
