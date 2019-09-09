@@ -44,12 +44,12 @@ extension Dump {
             .flatMap(String.init)
     }
 
-    var body: String? {
+    var previewText: String? {
         return text?
             .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "\n+", with: "\n", options: .regularExpression, range: nil)
             .split(separator: "\n", maxSplits: 1)
             .dropFirst()
             .joined(separator: "\n")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

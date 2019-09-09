@@ -89,7 +89,7 @@ class DumpsViewController: UITableViewController {
     private func configure(cell: DumpCell, for dump: Dump) {
         let emptyTitle = NSLocalizedString("New Dump", comment: "Default title for an empty dump")
         cell.titleLabel.text = dump.title ?? emptyTitle
-        cell.bodyLabel.text = dump.body
+        cell.bodyLabel.text = dump.previewText
         cell.dateLabel.text = dateFormatter.string(from: dump.dateModified)
         cell.isPinned = dump.isPinned
 
