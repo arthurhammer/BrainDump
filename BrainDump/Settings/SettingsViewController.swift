@@ -19,15 +19,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var deleteOldDumpsAfterStepper: TimeUntilStepper!
 
     private var hiddenIndexPaths = Set<IndexPath>()
-
-    private lazy var durationFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.day, .hour, .minute]
-        formatter.maximumUnitCount = 2
-        formatter.unitsStyle = .short
-        formatter.zeroFormattingBehavior = .dropAll
-        return formatter
-    }()
+    private lazy var afterTimeFormatter = AfterTimeFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +61,8 @@ class SettingsViewController: UITableViewController {
     }
 
     private func updateLabels() {
-        createNewDumpAfterLabel.text = durationFormatter.string(from: createNewDumpAfterStepper.dateValue)
-        deleteOldDumpsAfterLabel.text = durationFormatter.string(from: deleteOldDumpsAfterStepper.dateValue)
+        createNewDumpAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: createNewDumpAfterStepper.dateValue)
+        deleteOldDumpsAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: deleteOldDumpsAfterStepper.dateValue)
     }
 
     private func showIndexPath(_ indexPath: IndexPath, show: Bool) {

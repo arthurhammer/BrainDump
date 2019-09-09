@@ -35,3 +35,25 @@ class TimeRemainingFormatter {
         return formatter.string(from: from, to: to)
     }
 }
+
+class AfterTimeFormatter {
+
+    private lazy var formatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.maximumUnitCount = 2
+        formatter.unitsStyle = .short
+        formatter.zeroFormattingBehavior = .dropAll
+        return formatter
+    }()
+
+    func string(from components: DateComponents) -> String? {
+        return formatter.string(from: components)
+    }
+
+    func localizedPhrasedString(from components: DateComponents) -> String? {
+        guard let string = self.string(from: components) else { return nil }
+        let format = NSLocalizedString("formatter.afterTimeUnit", value: "After %@", comment: "After <time interval>.")
+        return String.localizedStringWithFormat(format, string)
+    }
+}

@@ -65,29 +65,18 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8E2-6Z-BBI">
                                                     <rect key="frame" x="20" y="11" width="374" height="22"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="After" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNY-6B-RPH">
-                                                            <rect key="frame" x="0.0" y="1" width="38" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Time&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcS-Um-QsQ">
+                                                            <rect key="frame" x="0.0" y="1" width="59.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="z37-v6-i5o">
-                                                            <rect key="frame" x="212.5" y="0.0" width="161.5" height="22"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Time&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcS-Um-QsQ">
-                                                                    <rect key="frame" x="0.0" y="1" width="59.5" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="9i0-Lc-5ry" customClass="TimeUntilStepper" customModule="BrainDump" customModuleProvider="target">
-                                                                    <rect key="frame" x="67.5" y="0.0" width="94" height="29"/>
-                                                                    <connections>
-                                                                        <action selector="stepperChanged" destination="net-Nb-KaR" eventType="valueChanged" id="Ugy-ub-OXq"/>
-                                                                    </connections>
-                                                                </stepper>
-                                                            </subviews>
-                                                        </stackView>
+                                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="9i0-Lc-5ry" customClass="TimeUntilStepper" customModule="BrainDump" customModuleProvider="target">
+                                                            <rect key="frame" x="280" y="0.0" width="94" height="29"/>
+                                                            <connections>
+                                                                <action selector="stepperChanged" destination="net-Nb-KaR" eventType="valueChanged" id="Ugy-ub-OXq"/>
+                                                            </connections>
+                                                        </stepper>
                                                     </subviews>
                                                     <viewLayoutGuide key="safeArea" id="j4h-vC-4y1"/>
                                                 </stackView>
@@ -148,29 +137,18 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8cv-Yd-q7r">
                                                     <rect key="frame" x="20" y="11" width="374" height="22"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="After" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFt-6d-4tJ">
-                                                            <rect key="frame" x="0.0" y="1" width="38" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Time&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8A-nB-90q">
+                                                            <rect key="frame" x="0.0" y="1" width="59.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="67R-HY-Rt9">
-                                                            <rect key="frame" x="212.5" y="0.0" width="161.5" height="22"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Time&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8A-nB-90q">
-                                                                    <rect key="frame" x="0.0" y="1" width="59.5" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="lpQ-F7-kU9" customClass="TimeUntilStepper" customModule="BrainDump" customModuleProvider="target">
-                                                                    <rect key="frame" x="67.5" y="0.0" width="94" height="29"/>
-                                                                    <connections>
-                                                                        <action selector="stepperChanged" destination="net-Nb-KaR" eventType="valueChanged" id="mAl-B6-ScF"/>
-                                                                    </connections>
-                                                                </stepper>
-                                                            </subviews>
-                                                        </stackView>
+                                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="lpQ-F7-kU9" customClass="TimeUntilStepper" customModule="BrainDump" customModuleProvider="target">
+                                                            <rect key="frame" x="280" y="0.0" width="94" height="29"/>
+                                                            <connections>
+                                                                <action selector="stepperChanged" destination="net-Nb-KaR" eventType="valueChanged" id="mAl-B6-ScF"/>
+                                                            </connections>
+                                                        </stepper>
                                                     </subviews>
                                                     <viewLayoutGuide key="safeArea" id="k9r-Xq-uxH"/>
                                                 </stackView>
