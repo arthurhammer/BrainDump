@@ -24,10 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func configureAppeareance() {
-        let cellSelectionColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().barTintColor = .white
-        UITableViewCell.appearance().selectedBackgroundView = UIView()
-        UITableViewCell.appearance().selectedBackgroundView?.backgroundColor = cellSelectionColor
+        UITableView.appearance().backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1.00)
     }
 }

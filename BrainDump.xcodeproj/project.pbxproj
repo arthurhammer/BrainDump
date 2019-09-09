@@ -42,6 +42,7 @@
 		00C4A0F123055D4E009494A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0EF23055D4E009494A0 /* Main.storyboard */; };
 		00C4A0F323055D50009494A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0F223055D50009494A0 /* Assets.xcassets */; };
 		00C4A0F623055D50009494A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0F423055D50009494A0 /* LaunchScreen.storyboard */; };
+		00E6360E2326504400F3BBF5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E6360D2326504400F3BBF5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		00C4A0F223055D50009494A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00C4A0F523055D50009494A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00C4A0F723055D50009494A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00E6360D2326504400F3BBF5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 				00C4A0F423055D50009494A0 /* LaunchScreen.storyboard */,
 				00C4A0EF23055D4E009494A0 /* Main.storyboard */,
 				00C4A0EB23055D4E009494A0 /* AppDelegate.swift */,
+				00E6360D2326504400F3BBF5 /* Constants.swift */,
 				00B20B4B231866CB002F5DD6 /* Coordinator.swift */,
 				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
 				001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */,
@@ -305,6 +308,7 @@
 				00434C49231D4945007844E1 /* EditorTextView.swift in Sources */,
 				00B050E4230D33370075B3D3 /* BrainDump.xcdatamodeld in Sources */,
 				00B20B4E2318884D002F5DD6 /* SlideInteractor.swift in Sources */,
+				00E6360E2326504400F3BBF5 /* Constants.swift in Sources */,
 				00B20B4723180012002F5DD6 /* SlideAnimator.swift in Sources */,
 				00B050EB230D752A0075B3D3 /* Dump.swift in Sources */,
 				00456167230C44AC009B50DB /* UITextView.swift in Sources */,

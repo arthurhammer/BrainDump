@@ -27,7 +27,7 @@ class DumpsViewController: UITableViewController {
 
     private let pinActionColor = UIColor(red: 0.42, green: 0.53, blue: 0.93, alpha: 1.00)
     private let sectionSeparatorColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
-    private let sectionHeaderHeight: CGFloat = 5
+    private let sectionHeaderHeight: CGFloat = 7
     private let cellIdentifier = "Cell"
 
     override func viewDidLoad() {
