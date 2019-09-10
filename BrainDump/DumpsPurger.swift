@@ -13,9 +13,11 @@ class DumpsPurger {
         self.timer = BackgroundPausingTimer(interval: purgeInterval, tolerance: tolerance) { [weak self] in
             self?.purge()
         }
+
+        observeSettings()
     }
 
-    private func purge() {
+    @objc private func purge() {
         let deleteAfter = settings.deleteDumpsAfter
 
         guard deleteAfter.isEnabled,
@@ -29,5 +31,10 @@ class DumpsPurger {
 
         results.forEach(context.delete)
         try? context.save()
+    }
+
+    private func observeSettings() {
+        // Purge immediately when purge settings change.
+        settings.addObserver(self, selector: #selector(purge), name: Settings.Notifications.deleteDumpsAfter)
     }
 }
