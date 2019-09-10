@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		001A4A7D231542A9006E22D3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7C231542A9006E22D3 /* Settings.swift */; };
-		001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */; };
+		001A4A7F2315AF26006E22D3 /* Purger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7E2315AF26006E22D3 /* Purger.swift */; };
 		00434C43231C8F96007844E1 /* DumpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C42231C8F96007844E1 /* DumpCell.swift */; };
 		00434C45231C920C007844E1 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C44231C920C007844E1 /* Formatters.swift */; };
 		00434C49231D4945007844E1 /* EditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C48231D4945007844E1 /* EditorTextView.swift */; };
@@ -49,8 +49,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		001A4A7C231542A9006E22D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = BrainDump/Settings/Settings.swift; sourceTree = SOURCE_ROOT; };
-		001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpsPurger.swift; sourceTree = "<group>"; };
+		001A4A7C231542A9006E22D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = BrainDump/Application/Settings.swift; sourceTree = SOURCE_ROOT; };
+		001A4A7E2315AF26006E22D3 /* Purger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purger.swift; sourceTree = "<group>"; };
 		00434C42231C8F96007844E1 /* DumpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpCell.swift; sourceTree = "<group>"; };
 		00434C44231C920C007844E1 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		00434C48231D4945007844E1 /* EditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTextView.swift; sourceTree = "<group>"; };
@@ -115,6 +115,7 @@
 		0063F218230FC8CD005A91A6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0058B2BB231FEE1A004BB65A /* Alerts.swift */,
 				00434C4A231E6638007844E1 /* BackgroundPausingTimer.swift */,
 				00E636132327D42F00F3BBF5 /* Date.swift */,
 				0058B2B9231FEC32004BB65A /* Diagnostic.swift */,
@@ -204,13 +205,7 @@
 			children = (
 				00C4A0F423055D50009494A0 /* LaunchScreen.storyboard */,
 				00C4A0EF23055D4E009494A0 /* Main.storyboard */,
-				00C4A0EB23055D4E009494A0 /* AppDelegate.swift */,
-				00B20B4B231866CB002F5DD6 /* Coordinator.swift */,
-				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
-				001A4A7C231542A9006E22D3 /* Settings.swift */,
-				001A4A7E2315AF26006E22D3 /* DumpsPurger.swift */,
-				0058B2BB231FEE1A004BB65A /* Alerts.swift */,
-				00E6360D2326504400F3BBF5 /* Constants.swift */,
+				00E636152327E25300F3BBF5 /* Application */,
 				0063F221230FE6AB005A91A6 /* Dumps Library */,
 				0063F21A230FC91C005A91A6 /* Dump Editor */,
 				00BDCB7C231EC88900E060F6 /* Settings */,
@@ -220,6 +215,19 @@
 				00456165230C3193009B50DB /* Resources */,
 			);
 			path = BrainDump;
+			sourceTree = "<group>";
+		};
+		00E636152327E25300F3BBF5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				00C4A0EB23055D4E009494A0 /* AppDelegate.swift */,
+				00B20B4B231866CB002F5DD6 /* Coordinator.swift */,
+				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
+				00E6360D2326504400F3BBF5 /* Constants.swift */,
+				001A4A7E2315AF26006E22D3 /* Purger.swift */,
+				001A4A7C231542A9006E22D3 /* Settings.swift */,
+			);
+			path = Application;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,7 +321,7 @@
 				00E636142327D42F00F3BBF5 /* Date.swift in Sources */,
 				00B20B452317FB56002F5DD6 /* SlidePresentationController.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
-				001A4A7F2315AF26006E22D3 /* DumpsPurger.swift in Sources */,
+				001A4A7F2315AF26006E22D3 /* Purger.swift in Sources */,
 				00BDCB79231EC0BD00E060F6 /* FetchedResultsControllerSearcher.swift in Sources */,
 				0058B2BA231FEC32004BB65A /* Diagnostic.swift in Sources */,
 				00434C49231D4945007844E1 /* EditorTextView.swift in Sources */,

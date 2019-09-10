@@ -19,6 +19,26 @@ class Dump: NSManagedObject {
 
 extension Dump {
 
+    var title: String? {
+        return text?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: "\n", maxSplits: 1)
+            .first
+            .flatMap(String.init)
+    }
+
+    var previewText: String? {
+        return text?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "\n+", with: "\n", options: .regularExpression, range: nil)
+            .split(separator: "\n", maxSplits: 1)
+            .dropFirst()
+            .joined(separator: "\n")
+    }
+}
+
+extension Dump {
+
     static func defaultFetchRequest() -> NSFetchRequest<Dump> {
         return NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
     }
@@ -44,25 +64,5 @@ extension Dump {
         }
 
         return request
-    }
-}
-
-extension Dump {
-
-    var title: String? {
-        return text?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .split(separator: "\n", maxSplits: 1)
-            .first
-            .flatMap(String.init)
-    }
-
-    var previewText: String? {
-        return text?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .replacingOccurrences(of: "\n+", with: "\n", options: .regularExpression, range: nil)
-            .split(separator: "\n", maxSplits: 1)
-            .dropFirst()
-            .joined(separator: "\n")
     }
 }

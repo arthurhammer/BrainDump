@@ -4,7 +4,7 @@ class Coordinator {
 
     let store: CoreDataStore
     let settings: Settings
-    let purger: DumpsPurger
+    let purger: Purger
 
     let editorViewController: EditorViewController
 
@@ -21,7 +21,7 @@ class Coordinator {
 
     lazy var transitionController = SlideTransitionController()
 
-    init(store: CoreDataStore, purger: DumpsPurger, settings: Settings, editorViewController: EditorViewController) {
+    init(store: CoreDataStore, purger: Purger, settings: Settings, editorViewController: EditorViewController) {
         self.store = store
         self.purger = purger
         self.settings = settings
@@ -29,7 +29,7 @@ class Coordinator {
         self.editorViewController = editorViewController
         self.editorViewController.delegate = self
         self.editorViewController.dataSource = EditorDataSource(store: store, settings: settings)
-        
+
         configureSlideToLibraryGesture()
     }
 }
@@ -57,7 +57,7 @@ private extension Coordinator {
         guard let settingsContainer = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
             let settingsViewController = settingsContainer.topViewController as? SettingsViewController else { fatalError("Wrong storyboard id or controller type.") }
 
-        settingsContainer.modalPresentationStyle = .custom   // TODO
+        settingsContainer.modalPresentationStyle = .custom   // TODO: Document
         settingsViewController.delegate = self
         settingsViewController.settings = settings
         libraryViewController.present(settingsContainer, animated: true)

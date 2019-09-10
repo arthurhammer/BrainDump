@@ -1,6 +1,8 @@
 import CoreData
 
-class DumpsPurger {
+/// Purges expired dumps at regular intervals. Currently, fetching and purging is
+/// performed on the main queue.
+class Purger {
 
     private let context: NSManagedObjectContext
     private let settings: Settings

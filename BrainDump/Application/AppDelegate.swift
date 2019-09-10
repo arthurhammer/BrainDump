@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         store.loadStore {
             let settings = Settings()
-            let purger = DumpsPurger(context: store.viewContext, settings: settings)
+            let purger = Purger(context: store.viewContext, settings: settings)
             let editorViewController = (self.window!.rootViewController as! UINavigationController).topViewController as! EditorViewController
 
             self.coordinator = Coordinator(store: store, purger: purger, settings: settings, editorViewController: editorViewController)

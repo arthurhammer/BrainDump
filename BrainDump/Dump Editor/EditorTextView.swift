@@ -6,6 +6,8 @@ class EditorTextView: UITextView {
     private let fontSize: CGFloat = 16  // TODO: size categories
     private let lineHeightMultiple: CGFloat = 1.2
 
+    private let notificationCenter: NotificationCenter = .default
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -33,8 +35,8 @@ class EditorTextView: UITextView {
 private extension EditorTextView {
 
     func subscribeToNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {

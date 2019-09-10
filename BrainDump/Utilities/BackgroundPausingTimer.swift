@@ -10,13 +10,14 @@ class BackgroundPausingTimer {
         didSet { timer?.tolerance = tolerance }
     }
 
+    private let center: NotificationCenter
     private var timer: Timer?
     private var lastAction = Date.distantPast
-    /// Whether the timer was stopped explicitly and not due to background events.
-    private var isStopped = false
+    private var isStoppedExplicitly = false
 
     /// The timer is running on initialization. The action is executed once initially.
-    init(interval: TimeInterval, tolerance: TimeInterval, action: @escaping () -> ()) {
+    init(interval: TimeInterval, tolerance: TimeInterval, center: NotificationCenter = .default, action: @escaping () -> ()) {
+        self.center = center
         self.interval = interval
         self.tolerance = tolerance
         self.action = action
@@ -30,12 +31,12 @@ class BackgroundPausingTimer {
     }
 
     func start() {
-        isStopped = false
+        isStoppedExplicitly = false
         performStart()
     }
 
     func stop() {
-        isStopped = true
+        isStoppedExplicitly = true
         performStop()
     }
 
@@ -45,7 +46,7 @@ class BackgroundPausingTimer {
     }
 
     @objc private func performStart() {
-        guard !isStopped,
+        guard !isStoppedExplicitly,
             timer == nil else { return }
 
         if lastAction.addingTimeInterval(interval) <= Date() {
@@ -65,7 +66,7 @@ class BackgroundPausingTimer {
     }
 
     private func subscribeToNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(performStop), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(performStart), name: UIApplication.willEnterForegroundNotification, object: nil)
+        center.addObserver(self, selector: #selector(performStop), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        center.addObserver(self, selector: #selector(performStart), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 }
