@@ -4,20 +4,19 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
     private var coordinator: Coordinator!
-    private var store: CoreDataStore!
-    private var purger: DumpsPurger?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         configureAppeareance()
 
-        store = CoreDataStore(name: "BrainDump")
+        let store = CoreDataStore(name: "BrainDump")
 
         store.loadStore {
+            let settings = Settings()
+            let purger = DumpsPurger(context: store.viewContext, settings: settings)
             let editorViewController = (self.window!.rootViewController as! UINavigationController).topViewController as! EditorViewController
-            self.coordinator = Coordinator(store: self.store, editorViewController: editorViewController)
-            self.purger = DumpsPurger(context: self.store.viewContext)
+
+            self.coordinator = Coordinator(store: store, purger: purger, settings: settings, editorViewController: editorViewController)
         }
 
         return true

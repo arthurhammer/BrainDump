@@ -103,8 +103,8 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="M4v-O6-tnc">
                                                     <rect key="frame" x="20" y="11" width="374" height="22"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Old Dumps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOl-aN-f4C">
-                                                            <rect key="frame" x="0.0" y="1" width="139.5" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expire Old Dumps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOl-aN-f4C">
+                                                            <rect key="frame" x="0.0" y="1" width="137.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -201,12 +201,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createNewDumpAfterLabel" destination="IcS-Um-QsQ" id="hFJ-Re-aAj"/>
-                        <outlet property="createNewDumpAfterStepper" destination="9i0-Lc-5ry" id="Oqd-Cv-fcg"/>
-                        <outlet property="createNewDumpAfterSwitch" destination="nic-VD-i33" id="ru2-m6-VgS"/>
-                        <outlet property="deleteOldDumpsAfterLabel" destination="K8A-nB-90q" id="OWd-uz-9T4"/>
-                        <outlet property="deleteOldDumpsAfterStepper" destination="lpQ-F7-kU9" id="l2g-PW-nNB"/>
-                        <outlet property="deleteOldDumpsAfterSwitch" destination="nhy-o0-j5A" id="0RQ-Vc-CAh"/>
+                        <outlet property="createDumpAfterLabel" destination="IcS-Um-QsQ" id="Hj8-8e-93x"/>
+                        <outlet property="createDumpAfterStepper" destination="9i0-Lc-5ry" id="9hb-1A-kwy"/>
+                        <outlet property="createDumpAfterSwitch" destination="nic-VD-i33" id="bSw-w9-3wX"/>
+                        <outlet property="deleteDumpsAfterLabel" destination="K8A-nB-90q" id="PdY-wV-pkP"/>
+                        <outlet property="deleteDumpsAfterStepper" destination="lpQ-F7-kU9" id="gkM-3d-6aM"/>
+                        <outlet property="deleteDumpsAfterSwitch" destination="nhy-o0-j5A" id="v1Y-Vs-vLQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dze-M8-ZdB" userLabel="First Responder" sceneMemberID="firstResponder"/>

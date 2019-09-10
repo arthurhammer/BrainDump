@@ -3,11 +3,14 @@ import UIKit
 class Coordinator {
 
     let store: CoreDataStore
+    let settings: Settings
+    let purger: DumpsPurger
+
     let editorViewController: EditorViewController
 
     lazy var libraryContainer: UINavigationController = {
-        let librarStoryboardId = "Library"
-        guard let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: librarStoryboardId) as? UINavigationController else { fatalError("Wrong controller id or type.") }
+        let storyboardId = "Library"
+        guard let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: storyboardId) as? UINavigationController else { fatalError("Wrong controller id or type.") }
         return controller
     }()
 
@@ -18,11 +21,15 @@ class Coordinator {
 
     lazy var transitionController = SlideTransitionController()
 
-    init(store: CoreDataStore, editorViewController: EditorViewController) {
+    init(store: CoreDataStore, purger: DumpsPurger, settings: Settings, editorViewController: EditorViewController) {
         self.store = store
+        self.purger = purger
+        self.settings = settings
+
         self.editorViewController = editorViewController
         self.editorViewController.delegate = self
-        self.editorViewController.dataSource = EditorDataSource(store: store)
+        self.editorViewController.dataSource = EditorDataSource(store: store, settings: settings)
+        
         configureSlideToLibraryGesture()
     }
 }
@@ -31,7 +38,7 @@ private extension Coordinator {
 
     func showLibrary() {
         if libraryViewController.dataSource == nil {
-            libraryViewController.dataSource = DumpsDataSource(store: store)
+            libraryViewController.dataSource = DumpsDataSource(store: store, settings: settings)
         }
 
         libraryViewController.delegate = self
@@ -52,6 +59,7 @@ private extension Coordinator {
 
         settingsContainer.modalPresentationStyle = .custom   // TODO
         settingsViewController.delegate = self
+        settingsViewController.settings = settings
         libraryViewController.present(settingsContainer, animated: true)
     }
 

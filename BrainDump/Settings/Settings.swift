@@ -1,67 +1,89 @@
 import Foundation
 
-extension UserDefaults {
+class Settings: NotificationCenterObservable {
 
-    struct Key {
-        static let lastEditedDump = "LastEditedDump"
-        static let isCreateNewDumpAfterEnabled = "IsCreateNewDumpAfterEnabled"
-        static let createNewDumpAfter = "CreateNewDumpAfter"
-        static let createNewDumpOn = "CreateNewDumpOn"
-        static let isDeleteOldDumpsAfterEnabled = "IsDeleteOldDumpsAfterEnabled"
-        static let deleteOldDumpsAfter = "DeleteOldDumpsAfter"
+    private struct Keys {
+        static let lastEditedDumpURI = "LastEditedDumpURI"
+        static let createDumpOn = "CreateDumpOn"
+        static let createDumpAfter = "CreateDumpAfter"
+        static let deleteDumpsAfter = "DeleteDumpsAfter"
+    }
+
+    private let store: UserDefaults
+
+    /// Value change notifications for the respective properties.
+    struct Notifications {
+        static let lastEditedDumpURI = Notification.Name(Keys.lastEditedDumpURI)
+        static let createDumpOn = Notification.Name(Keys.createDumpOn)
+        static let createDumpAfter = Notification.Name(Keys.createDumpAfter)
+        static let deleteDumpsAfter = Notification.Name(Keys.deleteDumpsAfter)
+    }
+
+    let center: NotificationCenter
+
+    init(store: UserDefaults = .standard, notificationCenter: NotificationCenter = .default) {
+        self.store = store
+        self.center = notificationCenter
     }
 
     var lastEditedDumpURI: URL? {
-        get { return url(forKey: Key.lastEditedDump) }
-        set { set(newValue, forKey: Key.lastEditedDump) }
+        get { return store.url(forKey: Keys.lastEditedDumpURI) }
+        set {
+            store.set(newValue, forKey: Keys.lastEditedDumpURI)
+            post(Notifications.lastEditedDumpURI)
+        }
     }
 
-    var isCreateNewDumpAfterEnabled: Bool {
-        get { return boolIfPresent(forKey: Key.isCreateNewDumpAfterEnabled) ?? true }
-        set { set(newValue, forKey: Key.isCreateNewDumpAfterEnabled) }
+    var createDumpOn: Date? {
+        get { return store.object(forKey: Keys.createDumpOn) as? Date }
+        set {
+            store.set(newValue, forKey: Keys.createDumpOn)
+            post(Notifications.createDumpOn)
+        }
     }
 
-    var createNewDumpAfter: DateComponents {
-        get { return dateComponents(forKey: Key.createNewDumpAfter) ?? UserDefaults.defaultCreateNewDumpAfterOption }
-        set { set(newValue, forKey: Key.createNewDumpAfter) }
+    var createDumpAfter: Feature<DateComponents> {
+        get {
+            return store.codableValue(forKey: Keys.createDumpAfter)
+                ?? Settings.defaultCreateDumpAfter
+        }
+        set {
+            store.setCodableValue(value: newValue, forKey: Keys.createDumpAfter)
+            post(Notifications.createDumpAfter)
+        }
     }
 
-    var createNewDumpOn: Date? {
-        get { return object(forKey: Key.createNewDumpOn) as? Date }
-        set { set(newValue, forKey: Key.createNewDumpOn) }
-    }
-
-    var isDeleteOldDumpsAfterEnabled: Bool {
-        get { return boolIfPresent(forKey: Key.isDeleteOldDumpsAfterEnabled) ?? true }
-        set { set(newValue, forKey: Key.isDeleteOldDumpsAfterEnabled) }
-    }
-
-    var deleteOldDumpsAfter: DateComponents {
-        get { return dateComponents(forKey: Key.deleteOldDumpsAfter) ?? UserDefaults.defaultDeleteOldDumpsAfterOption }
-        set { set(newValue, forKey: Key.deleteOldDumpsAfter) }
+    var deleteDumpsAfter: Feature<DateComponents> {
+        get {
+            return store.codableValue(forKey: Keys.deleteDumpsAfter)
+                ?? Settings.defaultDeleteDumpsAfter
+        }
+        set {
+            store.setCodableValue(value: newValue, forKey: Keys.deleteDumpsAfter)
+            post(Notifications.deleteDumpsAfter)
+        }
     }
 }
 
-extension UserDefaults {
 
-    static let defaultCreateNewDumpAfterOption = DateComponents(minute: 60)
-    static let defaultDeleteOldDumpsAfterOption = DateComponents(day: 3)
+extension Settings {
 
-    var createNewDumpAfterOptions: [DateComponents] {
+    static let defaultCreateDumpAfter = Feature(isEnabled: true, value: DateComponents(minute: 60))
+    static let defaultDeleteDumpsAfter = Feature(isEnabled: true, value: DateComponents(day: 3))
+
+    var createDumpAfterOptions: [DateComponents] {
         return [
-            .init(minute: 3), .init(minute: 5), .init(minute: 10), .init(minute: 15), .init(minute: 20), .init(minute: 30), .init(minute: 40), .init(minute: 50), .init(minute: 60),
-            .init(hour: 1, minute: 30),
+            .init(minute: 3), .init(minute: 5), .init(minute: 10), .init(minute: 15), .init(minute: 20), .init(minute: 30), .init(minute: 40), .init(minute: 50),
+            .init(hour: 1),
             .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
             .init(hour: 8), .init(hour: 10), .init(hour: 12), .init(hour: 14), .init(hour: 16), .init(hour: 18), .init(hour: 20), .init(hour: 22),
             .init(day: 1)
         ]
     }
 
-    var deleteOldDumpsAfterOptions: [DateComponents] {
+    var deleteDumpsAfterOptions: [DateComponents] {
         return [
-            .init(minute: 30), .init(minute: 40), .init(minute: 50), .init(minute: 60),
-            .init(hour: 1, minute: 30),
-            .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
+            .init(hour: 1), .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
             .init(hour: 8), .init(hour: 10), .init(hour: 12), .init(hour: 14), .init(hour: 16), .init(hour: 18), .init(hour: 20), .init(hour: 22),
             .init(day: 1),
             .init(day: 1, hour: 12),
@@ -71,28 +93,14 @@ extension UserDefaults {
     }
 }
 
-extension UserDefaults {
+private extension UserDefaults {
 
-    func hasKey(_ key: String) -> Bool {
-        return object(forKey: key) != nil
-    }
-
-    /// In contrast to `double(forKey:)` returns nil if the key was not found.
-    func doubleIfPresent(forKey key: String) -> Double? {
-        return hasKey(key) ? double(forKey: key) : nil
-    }
-
-    /// In contrast to `bool(forKey:)` returns nil if the key was not found.
-    func boolIfPresent(forKey key: String) -> Bool? {
-        return hasKey(key) ? bool(forKey: key) : nil
-    }
-
-    func dateComponents(forKey key: String) -> DateComponents? {
+    func codableValue<T: Codable>(forKey key: String) -> T? {
         guard let data = data(forKey: key) else { return nil }
-        return try? JSONDecoder().decode(DateComponents.self, from: data)
+        return try? JSONDecoder().decode(T.self, from: data)
     }
 
-    func set(_ value: DateComponents?, forKey key: String) {
+    func setCodableValue<T: Codable>(value: T?, forKey key: String) {
         let data = try? value.flatMap(JSONEncoder().encode)
         set(data, forKey: key)
     }

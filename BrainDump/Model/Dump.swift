@@ -32,6 +32,19 @@ extension Dump {
         ]
         return request
     }
+
+    static func purgeRequest(before: Date, excludingCurrentDump currentDump: Dump?) -> NSFetchRequest<Dump> {
+        let request = defaultFetchRequest()
+        request.includesPropertyValues = false
+
+        if let currentDump = currentDump {
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@) AND (SELF != %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), before as NSDate, currentDump)
+        } else {
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), before as NSDate)
+        }
+
+        return request
+    }
 }
 
 extension Dump {

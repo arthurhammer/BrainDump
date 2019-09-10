@@ -2,36 +2,39 @@ import CoreData
 
 class DumpsDataSource: NSObject {
 
-    var dumpsWillChange: (() -> ())?
+    var dumpsWillChange: ((_ hasIncrementalChanges: Bool) -> ())?
     var sectionDidChange: ((FetchedResultsControllerSectionChange) -> ())?
     var dumpDidChange: ((FetchedResultsControllerObjectChange) -> ())?
-    var dumpsDidChange: (() -> ())?
+    var dumpsDidChange: ((_ hasIncrementalChanges: Bool) -> ())?
 
     lazy var searcher = FetchedResultsControllerSearcher<Dump>(frc: frc, searchKeyPath: #keyPath(Dump.text), debounceBy: 0.25)
 
     private let store: CoreDataStore
-    private let settings: UserDefaults
+    private let settings: Settings
     private let frc: NSFetchedResultsController<Dump>
 
-    init(store: CoreDataStore, fetchRequest: NSFetchRequest<Dump> = Dump.libraryFetchRequest(), settings: UserDefaults = .standard) {
+    init(store: CoreDataStore, settings: Settings, fetchRequest: NSFetchRequest<Dump> = Dump.libraryFetchRequest()) {
         self.store = store
         self.settings = settings
-        let sectionKey = fetchRequest.sortDescriptors?.first?.key ?? ""
+
+        let sectionKey = fetchRequest.sortDescriptors?.first?.key
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: store.viewContext, sectionNameKeyPath: sectionKey, cacheName: nil)
 
         super.init()
+
+        observeSettings()
 
         frc.delegate = self
         try? frc.performFetch()
     }
 
-    /// nil if the dump is set to not expire.
     func expirationDate(for dump: Dump) -> Date? {
-        guard settings.isDeleteOldDumpsAfterEnabled,
+        let deleteAfter = settings.deleteDumpsAfter
+
+        guard deleteAfter.isEnabled,
             !dump.isPinned else { return nil }
 
-        let delay = settings.deleteOldDumpsAfter
-        return Calendar.current.date(byAdding: delay, to: dump.dateModified)
+        return dump.dateModified.adding(deleteAfter.value)
     }
 
     func showsHeader(forSection section: Int) -> Bool {
@@ -70,12 +73,20 @@ class DumpsDataSource: NSObject {
     func save() {
         store.save()
     }
+
+    private func observeSettings() {
+         settings.addObserver(self, selector: #selector(deleteDumpsAfterSettingDidChange), name: Settings.Notifications.deleteDumpsAfter)
+    }
+
+    @objc private func deleteDumpsAfterSettingDidChange() {
+        dumpsDidChange?(false)
+    }
 }
 
 extension DumpsDataSource: NSFetchedResultsControllerDelegate {
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        dumpsWillChange?()
+        dumpsWillChange?(true)
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
@@ -87,6 +98,6 @@ extension DumpsDataSource: NSFetchedResultsControllerDelegate {
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        dumpsDidChange?()
+        dumpsDidChange?(true)
     }
 }

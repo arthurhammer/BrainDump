@@ -3,18 +3,12 @@ import UIKit
 
 class CoreDataStore: NSPersistentContainer {
 
-    var lastEditedDumpDataSource = UserDefaults.standard
-
-    // TODO
-    func fetchLastEditedDump() throws -> Dump? {
-        guard let uri = lastEditedDumpDataSource.lastEditedDumpURI else { return nil }
-        return try viewContext.fetchObject(withURI: uri)
+    var storeURL: URL {
+        let fileName = "\(name).sqlite"
+        return NSPersistentContainer.defaultDirectoryURL().appendingPathComponent(fileName)
     }
 
-    func setLastEditedDump(_ dump: Dump?) {
-        assert(!(dump?.objectID.isTemporaryID == true))
-        lastEditedDumpDataSource.lastEditedDumpURI = dump?.objectID.uriRepresentation()
-    }
+    private let center: NotificationCenter = .default
 
     /// Loads the store asynchronously.
     func loadStore(completion: @escaping () -> ()) {
@@ -35,14 +29,6 @@ class CoreDataStore: NSPersistentContainer {
             completion()
         }
     }
-}
-
-extension NSPersistentContainer {
-
-    var storeURL: URL {
-        let fileName = "\(name).sqlite"
-        return NSPersistentContainer.defaultDirectoryURL().appendingPathComponent(fileName)
-    }
 
     /// Saves the `viewContext`.
     @objc func save() {
@@ -57,9 +43,9 @@ extension NSPersistentContainer {
     }
 
     func subscribeToNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willTerminateNotification, object: nil)
+        center.addObserver(self, selector: #selector(save), name: UIApplication.willResignActiveNotification, object: nil)
+        center.addObserver(self, selector: #selector(save), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        center.addObserver(self, selector: #selector(save), name: UIApplication.willTerminateNotification, object: nil)
     }
 }
 

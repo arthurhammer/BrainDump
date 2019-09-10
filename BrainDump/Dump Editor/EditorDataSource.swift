@@ -6,24 +6,27 @@ class EditorDataSource {
     var dump: Dump? {
         didSet {
             guard dump != oldValue else { return }
-            store.setLastEditedDump(dump)
+            saveLastEditedDump()
             configureObserver()
             dumpDidUpdate?()
         }
     }
 
+    /// Called when any of `dump`'s properties change or it is replaced with another instance.
     var dumpDidUpdate: (() -> ())?
 
     private let store: CoreDataStore
-    private let settings: UserDefaults
+    private let settings: Settings
+    private let center: NotificationCenter
     private var observer: ManagedObjectObserver<Dump>?
 
-    init(store: CoreDataStore, settings: UserDefaults = .standard) {
+    init(store: CoreDataStore, settings: Settings, center: NotificationCenter = .default) {
         self.store = store
         self.settings = settings
-        self.dump = try? store.fetchLastEditedDump()  // TODO
+        self.center = center
+        self.dump = fetchLastEditedDump()
 
-        archiveDumpIfNecessary()  // TODO
+        archiveDumpIfNecessary()
         configureObserver()
         subscribeToNotifications()
     }
@@ -65,23 +68,34 @@ class EditorDataSource {
         }
     }
 
+    private func saveLastEditedDump() {
+        assert(!(dump?.objectID.isTemporaryID ?? false))
+        settings.lastEditedDumpURI = dump?.objectID.uriRepresentation()
+    }
+
+    private func fetchLastEditedDump() -> Dump? {
+        guard let uri = settings.lastEditedDumpURI else { return nil }
+        return try? store.viewContext.fetchObject(withURI: uri)
+    }
+
     @objc private func archiveDumpIfNecessary() {
-        if settings.isCreateNewDumpAfterEnabled,
-            let date = settings.createNewDumpOn,
+        if settings.createDumpAfter.isEnabled,
+            let date = settings.createDumpOn,
             date <= Date() {
 
             archiveDump()
         }
 
-        settings.createNewDumpOn = nil
+        settings.createDumpOn = nil
     }
 
     @objc private func didEnterBackground() {
-        if settings.isCreateNewDumpAfterEnabled {
-            let date = Calendar.current.date(byAdding: settings.createNewDumpAfter, to: Date())
-            settings.createNewDumpOn = date
+        let createAfter = settings.createDumpAfter
+
+        if createAfter.isEnabled {
+            settings.createDumpOn = Date().adding(createAfter.value)
         } else {
-            settings.createNewDumpOn = nil
+            settings.createDumpOn = nil
         }
     }
 
@@ -90,7 +104,7 @@ class EditorDataSource {
     }
 
     private func subscribeToNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        center.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        center.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 }

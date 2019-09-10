@@ -155,15 +155,28 @@ class DumpsViewController: UITableViewController {
     }
 
     private func configureDataSource() {
-        dataSource?.dumpsWillChange = tableView.beginUpdates
-        dataSource?.dumpsDidChange = tableView.endUpdates
-        dataSource?.sectionDidChange = tableView.applyChange
+        dataSource?.dumpsWillChange = { [weak self] hasIncrementalChanges in
+            guard hasIncrementalChanges else { return }
+            self?.tableView.beginUpdates()
+        }
+
+        dataSource?.sectionDidChange = { [weak self]  change in
+            self?.tableView.applyChange(change)
+        }
 
         dataSource?.dumpDidChange = { [weak self] change in
             self?.tableView.applyChange(change, cellUpdater: { object, indexPath in
                 guard let dump = object as? Dump else { return }
                 self?.reconfigure(cellAt: indexPath, for: dump)
             })
+        }
+
+        dataSource?.dumpsDidChange = { [weak self] hasIncrementalChanges in
+            if hasIncrementalChanges {
+                self?.tableView.endUpdates()
+            } else {
+                self?.tableView.reloadData()
+            }
         }
 
         tableView.reloadData()
