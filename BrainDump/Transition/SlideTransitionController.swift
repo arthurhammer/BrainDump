@@ -18,7 +18,7 @@ class SlideTransitionController: NSObject, UIViewControllerTransitioningDelegate
     }()
 
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return SlidePresentationController(presentedViewController: presented, presenting: presenting, interactor: interactionController)
+        return SlidePresentationController(presentedViewController: presented, presenting: presenting, source: source, interactor: interactionController)
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

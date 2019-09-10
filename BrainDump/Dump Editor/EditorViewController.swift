@@ -18,7 +18,8 @@ class EditorViewController: UIViewController {
     private lazy var toolbarWrapper = self.toolbar.flatMap(SafeAreaInputAccessoryViewWrapperView.init)
 
     override var canBecomeFirstResponder: Bool {
-        return true
+        // No inputAccessoryView when presenting.
+        return presentedViewController == nil
     }
 
     override var inputAccessoryView: UIView? {
@@ -107,5 +108,35 @@ extension EditorViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDump(withText: textView.text)
+    }
+}
+
+// #MARK: - Micromanaging `inputAccessoryView`
+
+// For the input accessory view to show, the controller needs to be first responder.
+// UIKit automatically manages the input accessory view/first responder status during
+// default transitions but fails for custom interactive transitions. Specifically when
+// cancelling an interactive dismissal, the accessory re-appears where it shouldn't.
+
+extension EditorViewController: SlideTransitionable {
+
+    func presentationTransitionWillBegin() {
+        resignFirstResponder()
+    }
+
+    func presentationTransitionDidEnd(completed: Bool) {
+        // Delay because `presentedViewController` is not updated until after this returns.
+        DispatchQueue.main.async {
+            self.becomeFirstResponder(!completed)
+        }
+    }
+
+    func dismissalTransitionDidEnd(completed: Bool) {
+        DispatchQueue.main.async {
+            // If editor/keyboard is active, don't steal (this happens when hitting
+            // "create new dump" in the library).
+            let editorEditing = self.editor?.isFirstResponder ?? false
+            self.becomeFirstResponder(completed && !editorEditing)
+        }
     }
 }
