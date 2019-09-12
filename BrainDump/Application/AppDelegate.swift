@@ -23,8 +23,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func configureAppeareance() {
+        window?.tintColor = Style.mainTint
+        UIWindow.appearance().tintColor = Style.mainTint
+
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().barTintColor = .white
-        UITableView.appearance().backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1.00)
+        UINavigationBar.appearance().tintColor = Style.mainTint
+
+        UIToolbar.appearance().setShadowImage(UIImage(), forToolbarPosition: .any)
+        UIToolbar.appearance().tintColor = Style.mainTint
+        UIToolbar.appearance().barTintColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.00)
+        UIToolbar.appearance().isTranslucent = false
+
+        UITableView.appearance().backgroundColor = Style.staticTableViewBackgroundColor
+        UISwitch.appearance().onTintColor = Style.mainTint
     }
 }

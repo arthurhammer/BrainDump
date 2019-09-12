@@ -83,10 +83,6 @@ extension Coordinator: EditorViewControllerDelegate {
 
 extension Coordinator: DumpsViewControllerDelegate {
 
-    func controllerDidFinish(_ controller: DumpsViewController) {
-        hideLibrary()
-    }
-
     func controllerDidSelectShowSettings(_ controller: DumpsViewController) {
         showSettings()
     }

@@ -1,7 +1,6 @@
 import UIKit
 
 protocol DumpsViewControllerDelegate: class {
-    func controllerDidFinish(_ controller: DumpsViewController)
     func controllerDidSelectShowSettings(_ controller: DumpsViewController)
     func controller(_ controller: DumpsViewController, didSelectDump dump: Dump)
     func controllerDidSelectCreateNewDump(_ controller: DumpsViewController)
@@ -19,35 +18,33 @@ class DumpsViewController: UITableViewController {
         didSet { selectDump(selectedDump) }
     }
 
+    @IBOutlet private var emptyView: UIView!
+
     private lazy var dateFormatter = DateModifiedFormatter()
     private lazy var expirationFormatter = TimeRemainingFormatter()
     private lazy var updateLabelsTimer = BackgroundPausingTimer(interval: 60, tolerance: 15) { [weak self] in
         self?.reconfigureVisibleCells()
     }
 
-    private let pinActionColor = UIColor(red: 0.42, green: 0.53, blue: 0.93, alpha: 1.00)
     private let sectionSeparatorColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
-    private let sectionHeaderHeight: CGFloat = 7
+    private let sectionHeaderHeight: CGFloat = 12
     private let cellIdentifier = "Cell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSearchController()
+        configureViews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateLabelsTimer.start()
+        updateViews()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         updateLabelsTimer.stop()
         tableView.setEditing(false, animated: true)
-    }
-
-    @IBAction private func done() {
-        delegate?.controllerDidFinish(self)
     }
 
     @IBAction private func showSettings() {
@@ -177,27 +174,25 @@ class DumpsViewController: UITableViewController {
             } else {
                 self?.tableView.reloadData()
             }
+            self?.updateViews()
         }
 
         tableView.reloadData()
+        updateViews()
     }
 
-    private func configureSearchController() {
-        definesPresentationContext = true
+    private func configureViews() {
+        tableView.backgroundColor = .white
+        tableView.backgroundView = emptyView
 
+        definesPresentationContext = true
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
-        searchController.searchBar.tintColor = view.tintColor
         searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = dataSource?.searcher
+        searchController.searchResultsUpdater = dataSource
 
-        let barColor = UINavigationBar.appearance().barTintColor ?? .white
-        _hackToHideGoddamnNavigationBarBottomBorderWhenUsingSearchController(with: searchController.searchBar, barColor: barColor)
-
-        dataSource?.searcher.resultsDidUpdate = { [weak self] _ in
-            self?.tableView.reloadData()
-        }
+        _hackToHideGoddamnNavigationBarBottomBorder(for: searchController)
     }
 
     private func selectDump(_ dump: Dump?) {
@@ -209,6 +204,11 @@ class DumpsViewController: UITableViewController {
 
         tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
     }
+
+    private func updateViews() {
+        selectDump(selectedDump)
+        tableView.backgroundView = (dataSource?.isEmpty ?? true) ? emptyView : nil
+    }
 }
 
 // #MARK: Swipe Actions
@@ -216,9 +216,7 @@ class DumpsViewController: UITableViewController {
 private extension DumpsViewController {
 
     func deleteAction(for indexPath: IndexPath) -> UIContextualAction {
-        let title = NSLocalizedString("Delete", comment: "")
-
-        return UIContextualAction(style: .destructive, title: title) { [weak self] action, _, completion in
+        let action = UIContextualAction(style: .destructive, title: title) { [weak self] action, _, completion in
             guard let dataSource = self?.dataSource else {
                 completion(false)
                 return
@@ -227,22 +225,26 @@ private extension DumpsViewController {
             dataSource.deleteDump(at: indexPath)
             completion(true)
         }
+
+        action.image = #imageLiteral(resourceName: "trash-large")
+        return action
     }
 
     func shareAction(for indexPath: IndexPath) -> UIContextualAction {
-        let title = NSLocalizedString("Share", comment: "")
-
-        return UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
+        let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
             let text = self?.dataSource?.dump(at: indexPath).text ?? ""
             let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
             self?.present(controller, animated: true)
             completion(true)
         }
+
+        action.image = #imageLiteral(resourceName: "share-large")
+        action.backgroundColor = Style.mainTint
+        return action
     }
 
     func pinAction(for indexPath: IndexPath) -> UIContextualAction? {
         guard let dump = dataSource?.dump(at: indexPath) else { return nil }
-        let title = dump.isPinned ? NSLocalizedString("Unpin", comment: "") : NSLocalizedString("Pin", comment: "")
 
         let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
             dump.isPinned = !dump.isPinned
@@ -250,31 +252,8 @@ private extension DumpsViewController {
             completion(true)
         }
 
-        action.backgroundColor = pinActionColor
+        action.image = dump.isPinned ? #imageLiteral(resourceName: "unpin-large") : #imageLiteral(resourceName: "pin-large")
+        action.backgroundColor = Style.orange
         return action
-    }
-}
-
-// #MARK: Hack
-
-private extension DumpsViewController {
-
-    /// When using UISearchController a bottom border appears that is unhideable using the
-    /// conventional approach (hiding shadow image of the navigation bar).
-    /// Overlay a colored view that blends with the rest of the navigation/search bar.
-    /// - Warning: This might break in future iOS releases.
-    func _hackToHideGoddamnNavigationBarBottomBorderWhenUsingSearchController(with searchBar: UISearchBar, barColor: UIColor) {
-        // Border is outside the search bar, starts at y, not y-1.
-        let frame = CGRect(x: 0, y: searchBar.frame.maxY, width: searchBar.frame.width, height: 1)
-        let border = UIView(frame: frame)
-        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
-        border.backgroundColor = barColor
-        searchBar.addSubview(border)
-
-        // If using non translucent bar with the same intended border color, colors will
-        // be off since the translucency changes the appearance of the color.
-        navigationController?.navigationBar.isTranslucent = false
-        // But non-translucency adds lunacy snapping bar behaviour so disable that.
-        extendedLayoutIncludesOpaqueBars = true
     }
 }

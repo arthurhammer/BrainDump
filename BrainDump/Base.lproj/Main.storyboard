@@ -45,25 +45,28 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
-                        <barButtonItem systemItem="organize" id="hPx-zj-ArU">
+                        <barButtonItem image="library" id="hPx-zj-ArU">
                             <connections>
                                 <action selector="showLibrary" destination="BYZ-38-t0r" id="ANn-WJ-Iuq"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ixk-KB-mXe"/>
-                        <barButtonItem systemItem="trash" id="2fs-ZY-PRO">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="JF4-aZ-ngg"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Hhr-Jf-qIi"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="LGj-QE-Kl3"/>
+                        <barButtonItem image="trash" id="2fs-ZY-PRO">
                             <connections>
                                 <action selector="deleteDump" destination="BYZ-38-t0r" id="plo-BP-eAU"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="30" style="plain" systemItem="fixedSpace" id="EPU-c8-9C2"/>
-                        <barButtonItem systemItem="action" id="iGY-UJ-19Q">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="JP4-7X-8nM"/>
+                        <barButtonItem image="share" id="iGY-UJ-19Q">
                             <connections>
                                 <action selector="shareDump" destination="BYZ-38-t0r" id="BY5-x6-2fQ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem width="30" style="plain" systemItem="fixedSpace" id="V2q-kq-iLq"/>
-                        <barButtonItem systemItem="compose" id="Bvw-zA-NY9">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="RCs-v0-vla"/>
+                        <barButtonItem image="plus" id="Bvw-zA-NY9">
                             <connections>
                                 <action selector="createNewDump" destination="BYZ-38-t0r" id="b8C-As-9V9"/>
                             </connections>
@@ -73,11 +76,11 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="-1315.1785714285713"/>
         </scene>
-        <!--Brain Dumps-->
+        <!--Thoughts-->
         <scene sceneID="bnf-Mx-a2T">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="avn-7g-eKo" customClass="DumpsViewController" customModule="BrainDump" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" estimatedSectionFooterHeight="28" id="tvF-Pd-xIN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" estimatedSectionFooterHeight="28" id="tvF-Pd-xIN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -163,46 +166,76 @@
                             <outlet property="delegate" destination="avn-7g-eKo" id="QF7-Of-GS1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Brain Dumps" id="VYI-Yq-fyW">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="P6J-F7-eqq">
+                    <toolbarItems>
+                        <barButtonItem image="trash" id="amN-rJ-D9S">
+                            <connections>
+                                <action selector="deleteAllUnpinnedDumps" destination="avn-7g-eKo" id="xow-pR-OA7"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gAz-2J-Z9C"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="BIc-42-Fba"/>
+                        <barButtonItem image="plus" id="0TA-oB-D1u">
+                            <connections>
+                                <action selector="createNewDump" destination="avn-7g-eKo" id="voA-Z6-twM"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Thoughts" id="VYI-Yq-fyW">
+                        <barButtonItem key="leftBarButtonItem" image="settings" id="P6J-F7-eqq">
                             <connections>
                                 <action selector="showSettings" destination="avn-7g-eKo" id="84P-8n-KIZ"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem style="done" systemItem="done" id="csr-sr-Mtq">
-                                <connections>
-                                    <action selector="done" destination="avn-7g-eKo" id="ulO-Og-l7I"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="compose" id="0TA-oB-D1u">
-                                <connections>
-                                    <action selector="createNewDump" destination="avn-7g-eKo" id="voA-Z6-twM"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="trash" id="amN-rJ-D9S">
-                                <connections>
-                                    <action selector="deleteAllUnpinnedDumps" destination="avn-7g-eKo" id="xow-pR-OA7"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="emptyView" destination="3h4-SL-XE6" id="zN5-kL-oAG"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFt-s0-3Vu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="3h4-SL-XE6">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="175"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="pZ1-Q3-j9G">
+                            <rect key="frame" x="39.5" y="72" width="161" height="31.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing Here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOa-Cy-KM4">
+                                    <rect key="frame" x="0.0" y="0.0" width="161" height="31.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                    <color key="textColor" white="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="ple-tA-K9T"/>
+                        </stackView>
+                    </subviews>
+                    <color key="tintColor" white="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="pZ1-Q3-j9G" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3h4-SL-XE6" secondAttribute="top" constant="8" id="0JI-Gg-HgH"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pZ1-Q3-j9G" secondAttribute="bottom" constant="8" id="CQH-qd-ais"/>
+                        <constraint firstItem="pZ1-Q3-j9G" firstAttribute="centerX" secondItem="3h4-SL-XE6" secondAttribute="centerX" id="Jnl-ie-qwL"/>
+                        <constraint firstItem="pZ1-Q3-j9G" firstAttribute="centerY" secondItem="3h4-SL-XE6" secondAttribute="centerY" id="ig7-z6-byq"/>
+                        <constraint firstItem="pZ1-Q3-j9G" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="X3x-nr-bjV" secondAttribute="leading" constant="8" id="lmF-rN-3aU"/>
+                        <constraint firstItem="X3x-nr-bjV" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pZ1-Q3-j9G" secondAttribute="trailing" constant="8" id="qsr-5j-GxT"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="X3x-nr-bjV"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="-615.40178571428567"/>
+            <point key="canvasLocation" x="1047.8260869565217" y="-518.30357142857144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KyF-cg-RXk">
             <objects>
-                <navigationController storyboardIdentifier="Library" automaticallyAdjustsScrollViewInsets="NO" id="lTg-r8-oLr" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Library" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="lTg-r8-oLr" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="wbV-1Y-fV5">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wbV-1Y-fV5">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cAx-Ii-oTg">
+                        <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -211,7 +244,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X4M-q7-aPR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="-615"/>
+            <point key="canvasLocation" x="138" y="-518"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Asi-jS-Gsr">
@@ -232,7 +265,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="library" width="26.666666030883789" height="26.666666030883789"/>
         <image name="pin" width="11" height="17"/>
+        <image name="plus" width="26.666666030883789" height="26.666666030883789"/>
+        <image name="settings" width="24.666666030883789" height="24"/>
+        <image name="share" width="21" height="26.666666030883789"/>
+        <image name="trash" width="22.666666030883789" height="26"/>
     </resources>
-    <color key="tintColor" red="0.42352941176470588" green="0.53333333333333333" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
 </document>

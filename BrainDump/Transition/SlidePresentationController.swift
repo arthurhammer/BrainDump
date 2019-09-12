@@ -12,8 +12,8 @@ class SlidePresentationController: UIPresentationController {
     }
 
     private let widthFraction: CGFloat = 0.85
-    private let dimmingOpacity: CGFloat = 0.35
-    private let cornerRadius: CGFloat = 16
+    private let dimmingOpacity: CGFloat = 0.4
+    private let cornerRadius: CGFloat = 0
 
     private lazy var tapToDismissRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
     private lazy var panToDismissRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan))

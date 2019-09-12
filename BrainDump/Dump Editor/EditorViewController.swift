@@ -28,8 +28,6 @@ class EditorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        toolbar?.setShadowImage(UIImage(), forToolbarPosition: .bottom)
         editor?.delegate = self
     }
 

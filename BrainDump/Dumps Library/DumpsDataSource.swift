@@ -41,6 +41,10 @@ class DumpsDataSource: NSObject {
         return (section == 1) && (numberOfSections > 0) && (numberOfDumps(inSection: 1) > 0)
     }
 
+    var isEmpty: Bool {
+        return frc.fetchedObjects?.isEmpty ?? true
+    }
+
     var numberOfSections: Int {
         return frc.sections?.count ?? 0
     }
@@ -99,5 +103,17 @@ extension DumpsDataSource: NSFetchedResultsControllerDelegate {
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         dumpsDidChange?(true)
+    }
+}
+
+import UIKit
+
+extension DumpsDataSource: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        searcher.resultsDidUpdate = { [weak self] _ in
+            self?.dumpsDidChange?(false)
+        }
+
+        searcher.updateSearchResults(for: searchController)
     }
 }
