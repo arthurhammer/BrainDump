@@ -13,7 +13,7 @@ class DumpsDataSource: NSObject {
     private let settings: Settings
     private let frc: NSFetchedResultsController<Dump>
 
-    init(store: CoreDataStore, settings: Settings, fetchRequest: NSFetchRequest<Dump> = Dump.libraryFetchRequest()) {
+    init(store: CoreDataStore, settings: Settings, fetchRequest: NSFetchRequest<Dump> = Dump.libraryRequest()) {
         self.store = store
         self.settings = settings
 

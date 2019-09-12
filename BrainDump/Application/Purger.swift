@@ -1,7 +1,7 @@
 import CoreData
 
-/// Purges expired dumps at regular intervals. Currently, fetching and purging is
-/// performed on the main queue.
+/// Purges expired dumps at regular intervals. Currently, only context associated with the
+/// main queue are supported. Fetching and purging is perfomed on the main queue.
 class Purger {
 
     private let context: NSManagedObjectContext

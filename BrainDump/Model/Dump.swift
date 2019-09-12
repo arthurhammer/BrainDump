@@ -39,12 +39,12 @@ extension Dump {
 
 extension Dump {
 
-    static func defaultFetchRequest() -> NSFetchRequest<Dump> {
+    static func defaultRequest() -> NSFetchRequest<Dump> {
         return NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
     }
 
-    static func libraryFetchRequest() -> NSFetchRequest<Dump> {
-        let request = defaultFetchRequest()
+    static func libraryRequest() -> NSFetchRequest<Dump> {
+        let request = defaultRequest()
         request.fetchBatchSize = 30
         request.sortDescriptors = [
             NSSortDescriptor(key: #keyPath(Dump.isPinned), ascending: false),
@@ -54,7 +54,7 @@ extension Dump {
     }
 
     static func purgeRequest(before: Date, excludingCurrentDump currentDump: Dump?) -> NSFetchRequest<Dump> {
-        let request = defaultFetchRequest()
+        let request = defaultRequest()
         request.includesPropertyValues = false
 
         if let currentDump = currentDump {

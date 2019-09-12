@@ -276,6 +276,5 @@ private extension DumpsViewController {
         navigationController?.navigationBar.isTranslucent = false
         // But non-translucency adds lunacy snapping bar behaviour so disable that.
         extendedLayoutIncludesOpaqueBars = true
-        // Fuck this shit.
     }
 }
