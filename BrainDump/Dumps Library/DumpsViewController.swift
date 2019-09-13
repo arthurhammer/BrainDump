@@ -45,6 +45,7 @@ class DumpsViewController: UITableViewController {
         super.viewWillDisappear(animated)
         updateLabelsTimer.stop()
         tableView.setEditing(false, animated: true)
+        navigationItem.searchController?.searchBar.endEditing(true)
     }
 
     @IBAction private func showSettings() {
