@@ -79,29 +79,15 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DumpCell else { fatalError("Wrong cell id or type.") }
 
         if let dump = dataSource?.dump(at: indexPath) {
-            configure(cell: cell, for: dump)
+            cell.configure(with: dump, expirationDate: dataSource?.expirationDate(for: dump))
         }
 
         return cell
     }
 
-    private func configure(cell: DumpCell, for dump: Dump) {
-        let emptyTitle = NSLocalizedString("New Dump", comment: "Default title for an empty dump")
-        cell.titleLabel.text = dump.title ?? emptyTitle
-        cell.bodyLabel.text = dump.previewText
-        cell.dateLabel.text = dateFormatter.string(from: dump.dateModified)
-        cell.isPinned = dump.isPinned
-
-        if let expiration = dataSource?.expirationDate(for: dump) {
-            cell.expirationLabel.text = expirationFormatter.string(from: Date(), to: expiration)
-        } else {
-            cell.expirationLabel.text = nil
-        }
-    }
-
     private func reconfigure(cellAt indexPath: IndexPath, for dump: Dump) {
         guard let cell = tableView.cellForRow(at: indexPath) as? DumpCell else { return }
-        configure(cell: cell, for: dump)
+        cell.configure(with: dump, expirationDate: dataSource?.expirationDate(for: dump))
     }
 
     private func reconfigureVisibleCells() {

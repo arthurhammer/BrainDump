@@ -28,3 +28,25 @@ class DumpCell: UITableViewCell {
         isPinned = false
     }
 }
+
+// #MARK: - Configuring
+
+extension DumpCell {
+
+    static let dateFormatter = DateModifiedFormatter()
+    static let expirationFormatter = TimeRemainingFormatter()
+
+    func configure(with dump: Dump, expirationDate: Date?) {
+        let emptyTitle = NSLocalizedString("New Dump", comment: "Default title for an empty dump")
+        titleLabel.text = dump.title ?? emptyTitle
+        bodyLabel.text = dump.previewText
+        dateLabel.text = DumpCell.dateFormatter.string(from: dump.dateModified)
+        isPinned = dump.isPinned
+
+        if let date = expirationDate {
+            expirationLabel.text = DumpCell.expirationFormatter.string(from: Date(), to: date)
+        } else {
+            expirationLabel.text = nil
+        }
+    }
+}
