@@ -46,6 +46,13 @@ class SlidePresentationController: UIPresentationController {
         return CGSize(width: parentSize.width * widthFraction, height: parentSize.height)
     }
 
+    override func containerViewWillLayoutSubviews() {
+        super.containerViewWillLayoutSubviews()
+        let target = frameOfPresentedViewInContainerView
+        guard presentedView?.frame != target else { return }
+        presentedView?.frame = target
+    }
+
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
 
