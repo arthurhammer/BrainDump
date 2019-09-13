@@ -67,10 +67,12 @@ class DumpsDataSource: NSObject {
         store.save()
     }
 
+    func unpinnedDumps() -> [Dump] {
+        return frc.fetchedObjects?.filter { !$0.isPinned } ?? []
+    }
+
     func deleteAllUnpinnedDumps() {
-        frc.fetchedObjects?
-            .filter { !$0.isPinned }
-            .forEach(store.viewContext.delete)
+        unpinnedDumps().forEach(store.viewContext.delete)
         store.save()
     }
 

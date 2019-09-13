@@ -20,6 +20,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet private var emptyView: UIView!
+    @IBOutlet private var deleteBarItem: UIBarButtonItem!
 
     private lazy var dateFormatter = DateModifiedFormatter()
     private lazy var expirationFormatter = TimeRemainingFormatter()
@@ -58,7 +59,9 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     @IBAction private func deleteAllUnpinnedDumps() {
-        dataSource?.deleteAllUnpinnedDumps()
+        presentAlert(.deleteAllUnpinnedDumps { _ in
+            self.dataSource?.deleteAllUnpinnedDumps()
+        })
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -202,6 +205,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     private func updateViews() {
         selectDump(selectedDump)
         emptyView.isHidden = dataSource?.isEmpty == false
+        deleteBarItem.isEnabled = dataSource?.unpinnedDumps().isEmpty == false
     }
 
     private func stopEditing() {
