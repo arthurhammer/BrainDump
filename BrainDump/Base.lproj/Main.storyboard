@@ -85,7 +85,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ACX-HA-YZK">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="xrA-Eq-HCs" userLabel="Footer to Hide Extra Cell Separators">
                                     <rect key="frame" x="0.0" y="158" width="414" height="1"/>
@@ -161,11 +161,17 @@
                             <constraint firstItem="ACX-HA-YZK" firstAttribute="leading" secondItem="7aR-60-NeY" secondAttribute="leading" id="pO3-kW-VYh"/>
                             <constraint firstItem="ACX-HA-YZK" firstAttribute="trailing" secondItem="7aR-60-NeY" secondAttribute="trailing" id="rCq-vu-QYe"/>
                             <constraint firstAttribute="bottom" secondItem="ACX-HA-YZK" secondAttribute="bottom" id="tqp-Ju-UMa"/>
-                            <constraint firstItem="ACX-HA-YZK" firstAttribute="top" secondItem="504-a8-afv" secondAttribute="top" id="zQg-LT-aav"/>
+                            <constraint firstItem="ACX-HA-YZK" firstAttribute="top" secondItem="7aR-60-NeY" secondAttribute="top" id="zQg-LT-aav"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7aR-60-NeY"/>
                     </view>
                     <toolbarItems>
+                        <barButtonItem image="settings" id="P6J-F7-eqq">
+                            <connections>
+                                <action selector="showSettings" destination="WmP-1A-7pm" id="Wxc-ra-vhY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="YGO-sg-ULG"/>
                         <barButtonItem image="trash" id="amN-rJ-D9S">
                             <connections>
                                 <action selector="deleteAllUnpinnedDumps" destination="WmP-1A-7pm" id="Ueo-9k-n0b"/>
@@ -178,13 +184,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Thoughts" id="6zc-0P-nRB">
-                        <barButtonItem key="leftBarButtonItem" image="settings" id="P6J-F7-eqq">
-                            <connections>
-                                <action selector="showSettings" destination="WmP-1A-7pm" id="Wxc-ra-vhY"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Thoughts" id="6zc-0P-nRB"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="deleteBarItem" destination="amN-rJ-D9S" id="A70-bt-Vbe"/>
@@ -227,10 +227,9 @@
         <!--Navigation Controller-->
         <scene sceneID="KyF-cg-RXk">
             <objects>
-                <navigationController storyboardIdentifier="Library" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="lTg-r8-oLr" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Library" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" toolbarHidden="NO" id="lTg-r8-oLr" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wbV-1Y-fV5">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

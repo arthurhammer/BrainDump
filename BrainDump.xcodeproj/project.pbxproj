@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		001A4A7D231542A9006E22D3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7C231542A9006E22D3 /* Settings.swift */; };
 		001A4A7F2315AF26006E22D3 /* Purger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001A4A7E2315AF26006E22D3 /* Purger.swift */; };
-		0029DD2C232B81B200D7993C /* SearchBarBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029DD2B232B81B200D7993C /* SearchBarBorder.swift */; };
 		0029DD2E232BA5BE00D7993C /* LibrarySectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0029DD2D232BA5BE00D7993C /* LibrarySectionHeader.xib */; };
 		0029DD30232BA91200D7993C /* LibrarySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029DD2F232BA91200D7993C /* LibrarySectionHeader.swift */; };
 		00434C43231C8F96007844E1 /* DumpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00434C42231C8F96007844E1 /* DumpCell.swift */; };
@@ -56,7 +55,6 @@
 /* Begin PBXFileReference section */
 		001A4A7C231542A9006E22D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = BrainDump/Application/Settings.swift; sourceTree = SOURCE_ROOT; };
 		001A4A7E2315AF26006E22D3 /* Purger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purger.swift; sourceTree = "<group>"; };
-		0029DD2B232B81B200D7993C /* SearchBarBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarBorder.swift; sourceTree = "<group>"; };
 		0029DD2D232BA5BE00D7993C /* LibrarySectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LibrarySectionHeader.xib; sourceTree = "<group>"; };
 		0029DD2F232BA91200D7993C /* LibrarySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySectionHeader.swift; sourceTree = "<group>"; };
 		00434C42231C8F96007844E1 /* DumpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumpCell.swift; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 				00434C42231C8F96007844E1 /* DumpCell.swift */,
 				0029DD2F232BA91200D7993C /* LibrarySectionHeader.swift */,
 				0029DD2D232BA5BE00D7993C /* LibrarySectionHeader.xib */,
-				0029DD2B232B81B200D7993C /* SearchBarBorder.swift */,
 			);
 			path = "Dumps Library";
 			sourceTree = "<group>";
@@ -339,7 +336,6 @@
 				00B20B452317FB56002F5DD6 /* SlidePresentationController.swift in Sources */,
 				00B050E6230D3FDA0075B3D3 /* CoreDataStore.swift in Sources */,
 				001A4A7F2315AF26006E22D3 /* Purger.swift in Sources */,
-				0029DD2C232B81B200D7993C /* SearchBarBorder.swift in Sources */,
 				00BDCB79231EC0BD00E060F6 /* FetchedResultsControllerSearcher.swift in Sources */,
 				0058B2BA231FEC32004BB65A /* Diagnostic.swift in Sources */,
 				00434C49231D4945007844E1 /* EditorTextView.swift in Sources */,

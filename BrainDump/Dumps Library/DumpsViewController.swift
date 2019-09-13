@@ -22,8 +22,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet private var emptyView: UIView!
     @IBOutlet private var deleteBarItem: UIBarButtonItem!
 
-    private lazy var dateFormatter = DateModifiedFormatter()
-    private lazy var expirationFormatter = TimeRemainingFormatter()
+    private lazy var searchController = UISearchController(searchResultsController: nil)
     private lazy var updateLabelsTimer = BackgroundPausingTimer(interval: 60, tolerance: 15) { [weak self] in
         self?.reconfigureVisibleCells()
     }
@@ -168,19 +167,19 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     private func configureViews() {
         navigationController?.navigationBar.barTintColor = Style.mainBackgroundColor
+        view.backgroundColor = Style.mainBackgroundColor
         tableView.backgroundColor = Style.mainBackgroundColor
         tableView.backgroundView = emptyView
         tableView.register(LibrarySectionHeader.nib, forHeaderFooterViewReuseIdentifier: headerIdentifier)
 
         definesPresentationContext = true
-        let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = dataSource
         searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        navigationItem.searchController = searchController
-        // Don't commit yet. See if I want this behaviour.
-        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-        _hackToHideGoddamnNavigationBarBottomBorder(for: searchController)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.backgroundColor = Style.mainBackgroundColor
+        tableView.tableHeaderView = searchController.searchBar
 
         updateViews()
     }
@@ -205,7 +204,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     private func stopEditing() {
         tableView.setEditing(false, animated: true)
-        navigationItem.searchController?.searchBar.endEditing(true)
+        searchController.searchBar.endEditing(true)
     }
 }
 
