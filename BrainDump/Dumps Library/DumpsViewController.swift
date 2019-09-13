@@ -6,7 +6,7 @@ protocol DumpsViewControllerDelegate: class {
     func controllerDidSelectCreateNewDump(_ controller: DumpsViewController)
 }
 
-class DumpsViewController: UITableViewController {
+class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     weak var delegate: DumpsViewControllerDelegate?
 
@@ -18,6 +18,7 @@ class DumpsViewController: UITableViewController {
         didSet { selectDump(selectedDump) }
     }
 
+    @IBOutlet var tableView: UITableView!
     @IBOutlet private var emptyView: UIView!
 
     private lazy var dateFormatter = DateModifiedFormatter()
@@ -32,6 +33,7 @@ class DumpsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDataSource()
         configureViews()
     }
 
@@ -44,8 +46,7 @@ class DumpsViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         updateLabelsTimer.stop()
-        tableView.setEditing(false, animated: true)
-        navigationItem.searchController?.searchBar.endEditing(true)
+        stopEditing()
     }
 
     @IBAction private func showSettings() {
@@ -60,21 +61,21 @@ class DumpsViewController: UITableViewController {
         dataSource?.deleteAllUnpinnedDumps()
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let dump = dataSource?.dump(at: indexPath) else { return }
         selectedDump = dump
         delegate?.controller(self, didSelectDump: dump)
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource?.numberOfSections ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource?.numberOfDumps(inSection: section) ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DumpCell else { fatalError("Wrong cell id or type.") }
 
         if let dump = dataSource?.dump(at: indexPath) {
@@ -111,25 +112,25 @@ class DumpsViewController: UITableViewController {
             .forEach(reconfigure)
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard dataSource?.showsHeader(forSection: section) == true else { return nil }
         let view = UIView(frame: .zero)
         view.backgroundColor = sectionSeparatorColor
         return view
     }
 
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard dataSource?.showsHeader(forSection: section) == true else { return 0 }
         return sectionHeaderHeight
     }
 
-    override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
         DispatchQueue.main.async {  // Doesn't seem to work without.
-            self.selectDump(self.selectedDump)
+            self.updateViews()
         }
     }
 
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let actions = [
             deleteAction(for: indexPath),
             pinAction(for: indexPath),
@@ -139,20 +140,22 @@ class DumpsViewController: UITableViewController {
         return UISwipeActionsConfiguration(actions: actions.compactMap { $0 })
     }
 
-    override func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    override func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+    func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         return action == #selector(UIResponder.copy(_:))
     }
 
-    override func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+    func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
         guard action == #selector(UIResponder.copy(_:)) else { return }
         UIPasteboard.general.string = dataSource?.dump(at: indexPath).text
     }
 
     private func configureDataSource() {
+        guard isViewLoaded else { return }
+
         dataSource?.dumpsWillChange = { [weak self] hasIncrementalChanges in
             guard hasIncrementalChanges else { return }
             self?.tableView.beginUpdates()
@@ -178,8 +181,7 @@ class DumpsViewController: UITableViewController {
             self?.updateViews()
         }
 
-        tableView.reloadData()
-        updateViews()
+        dataSource?.dumpsDidChange?(false)
     }
 
     private func configureViews() {
@@ -188,15 +190,20 @@ class DumpsViewController: UITableViewController {
 
         definesPresentationContext = true
         let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = dataSource
         searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = dataSource
-
+        navigationItem.searchController = searchController
+        // Don't commit yet. See if I want this behaviour.
+        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
         _hackToHideGoddamnNavigationBarBottomBorder(for: searchController)
+
+        updateViews()
     }
 
     private func selectDump(_ dump: Dump?) {
+        guard isViewLoaded else { return }
+
         guard let dump = dump,
             let indexPath = dataSource?.indexPath(of: dump) else {
                 tableView.selectRow(at: nil, animated: true, scrollPosition: .none)
@@ -208,7 +215,12 @@ class DumpsViewController: UITableViewController {
 
     private func updateViews() {
         selectDump(selectedDump)
-        tableView.backgroundView = (dataSource?.isEmpty ?? true) ? emptyView : nil
+        emptyView.isHidden = dataSource?.isEmpty == false
+    }
+
+    private func stopEditing() {
+        tableView.setEditing(false, animated: true)
+        navigationItem.searchController?.searchBar.endEditing(true)
     }
 }
 
