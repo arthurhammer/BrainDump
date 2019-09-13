@@ -20,7 +20,6 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet private var emptyView: UIView!
-    @IBOutlet private var deleteBarItem: UIBarButtonItem!
 
     private lazy var searchController = UISearchController(searchResultsController: nil)
     private lazy var updateLabelsTimer = BackgroundPausingTimer(interval: 60, tolerance: 15) { [weak self] in
@@ -101,7 +100,11 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerIdentifier) as? LibrarySectionHeader else { fatalError("Wrong header id or type") }
-        dataSource?.sectionType(for: section).flatMap(header.configure)
+
+        if let type = dataSource?.sectionType(for: section) {
+            header.configure(with: type, actionTarget: self, action: #selector(deleteAllUnpinnedDumps))
+        }
+
         return header
     }
 
@@ -177,6 +180,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
         searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = NSLocalizedString("Search Thoughts", comment: "")
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.backgroundColor = Style.mainBackgroundColor
         tableView.tableHeaderView = searchController.searchBar
@@ -199,7 +203,6 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     private func updateViews() {
         selectDump(selectedDump)
         emptyView.isHidden = dataSource?.isEmpty == false
-        deleteBarItem.isEnabled = dataSource?.unpinnedDumps().isEmpty == false
     }
 
     private func stopEditing() {

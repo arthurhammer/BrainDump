@@ -27,12 +27,22 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECTION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aJ-Xq-ham">
-                            <rect key="frame" x="30" y="14" width="256" height="16"/>
+                            <rect key="frame" x="30" y="14" width="208" height="16"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8IH-WC-jxI">
+                            <rect key="frame" x="246" y="0.0" width="40" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="1qx-pa-0GD"/>
+                            </constraints>
+                            <state key="normal" image="clear"/>
+                        </button>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="8IH-WC-jxI" firstAttribute="height" secondItem="d8h-17-Fii" secondAttribute="height" id="0nx-Nm-qPK"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <constraints>
@@ -44,6 +54,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="6n0-FW-m4a"/>
             <connections>
+                <outlet property="actionButton" destination="8IH-WC-jxI" id="vB4-jt-oeZ"/>
                 <outlet property="imageView" destination="yZd-vs-iuC" id="6BK-UY-ceH"/>
                 <outlet property="titleLabel" destination="3aJ-Xq-ham" id="SRy-cs-C5Y"/>
             </connections>
@@ -51,6 +62,7 @@
         </view>
     </objects>
     <resources>
+        <image name="clear" width="19" height="22"/>
         <image name="pin-filled" width="30" height="30"/>
     </resources>
 </document>

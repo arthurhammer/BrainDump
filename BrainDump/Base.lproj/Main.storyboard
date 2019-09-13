@@ -172,12 +172,6 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="YGO-sg-ULG"/>
-                        <barButtonItem image="trash" id="amN-rJ-D9S">
-                            <connections>
-                                <action selector="deleteAllUnpinnedDumps" destination="WmP-1A-7pm" id="Ueo-9k-n0b"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gAz-2J-Z9C"/>
                         <barButtonItem image="plus" id="0TA-oB-D1u">
                             <connections>
                                 <action selector="createNewDump" destination="WmP-1A-7pm" id="y2X-rA-OD1"/>
@@ -187,7 +181,6 @@
                     <navigationItem key="navigationItem" title="Thoughts" id="6zc-0P-nRB"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="deleteBarItem" destination="amN-rJ-D9S" id="A70-bt-Vbe"/>
                         <outlet property="emptyView" destination="3h4-SL-XE6" id="Mcs-hc-K2N"/>
                         <outlet property="tableView" destination="ACX-HA-YZK" id="zHi-AC-YFc"/>
                     </connections>
