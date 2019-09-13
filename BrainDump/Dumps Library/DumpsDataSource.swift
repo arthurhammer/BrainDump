@@ -1,5 +1,10 @@
 import CoreData
 
+enum LibrarySectionType: String {
+    case pinned = "1"  // To matches frc's section names for boolean section keys.
+    case unpinned = "0"
+}
+
 class DumpsDataSource: NSObject {
 
     var dumpsWillChange: ((_ hasIncrementalChanges: Bool) -> ())?
@@ -37,10 +42,6 @@ class DumpsDataSource: NSObject {
         return dump.dateModified.adding(deleteAfter.value)
     }
 
-    func showsHeader(forSection section: Int) -> Bool {
-        return (section == 1) && (numberOfSections > 0) && (numberOfDumps(inSection: 1) > 0)
-    }
-
     var isEmpty: Bool {
         return frc.fetchedObjects?.isEmpty ?? true
     }
@@ -51,6 +52,10 @@ class DumpsDataSource: NSObject {
 
     func numberOfDumps(inSection section: Int) -> Int {
         return frc.sections?[section].numberOfObjects ?? 0
+    }
+
+    func sectionType(for section: Int) -> LibrarySectionType? {
+        return (frc.sections?[section].name).flatMap(LibrarySectionType.init)
     }
 
     func dump(at indexPath: IndexPath) -> Dump {

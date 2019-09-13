@@ -28,9 +28,8 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
         self?.reconfigureVisibleCells()
     }
 
-    private let sectionSeparatorColor = UIColor(red: 0.94, green: 0.94, blue: 0.97, alpha: 1.00)
-    private let sectionHeaderHeight: CGFloat = 12
     private let cellIdentifier = "Cell"
+    private let headerIdentifier = "Header"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,15 +101,9 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard dataSource?.showsHeader(forSection: section) == true else { return nil }
-        let view = UIView(frame: .zero)
-        view.backgroundColor = sectionSeparatorColor
-        return view
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard dataSource?.showsHeader(forSection: section) == true else { return 0 }
-        return sectionHeaderHeight
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerIdentifier) as? LibrarySectionHeader else { fatalError("Wrong header id or type") }
+        dataSource?.sectionType(for: section).flatMap(header.configure)
+        return header
     }
 
     func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
@@ -174,8 +167,10 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     private func configureViews() {
-        tableView.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = Style.mainBackgroundColor
+        tableView.backgroundColor = Style.mainBackgroundColor
         tableView.backgroundView = emptyView
+        tableView.register(LibrarySectionHeader.nib, forHeaderFooterViewReuseIdentifier: headerIdentifier)
 
         definesPresentationContext = true
         let searchController = UISearchController(searchResultsController: nil)

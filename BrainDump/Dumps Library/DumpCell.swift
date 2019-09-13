@@ -6,26 +6,17 @@ class DumpCell: UITableViewCell {
     @IBOutlet var bodyLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var expirationLabel: UILabel!
-    @IBOutlet var isPinnedImageView: UIImageView!
-
-    var isPinned: Bool = false {
-        didSet {
-            isPinnedImageView.isHidden = !isPinned
-            expirationLabel.isHidden = isPinned
-        }
-    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        isPinned = false
-        isPinnedImageView.tintColor = .lightGray
+        expirationLabel.text = nil
         selectedBackgroundView = UIView()
         selectedBackgroundView?.backgroundColor = Style.cellSelectionColor
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        isPinned = false
+        expirationLabel.text = nil
     }
 }
 
@@ -41,7 +32,6 @@ extension DumpCell {
         titleLabel.text = dump.title ?? emptyTitle
         bodyLabel.text = dump.previewText
         dateLabel.text = DumpCell.dateFormatter.string(from: dump.dateModified)
-        isPinned = dump.isPinned
 
         if let date = expirationDate {
             expirationLabel.text = DumpCell.expirationFormatter.string(from: Date(), to: date)
