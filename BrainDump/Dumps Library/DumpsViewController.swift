@@ -213,6 +213,10 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     private func stopEditing() {
         tableView.setEditing(false, animated: true)
         searchController.searchBar.endEditing(true)
+        
+        if searchController.searchBar.text == "" {
+            searchController.isActive = false
+        }
     }
 }
 
