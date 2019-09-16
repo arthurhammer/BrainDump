@@ -20,16 +20,14 @@ class Note: NSManagedObject {
 extension Note {
 
     var title: String? {
-        return text?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        text?.trimmingCharacters(in: .whitespacesAndNewlines)
             .split(separator: "\n", maxSplits: 1)
             .first
             .flatMap(String.init)
     }
 
     var previewText: String? {
-        return text?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        text?.trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: "\n+", with: "\n", options: .regularExpression, range: nil)
             .split(separator: "\n", maxSplits: 1)
             .dropFirst()
@@ -40,7 +38,7 @@ extension Note {
 extension Note {
 
     static func defaultRequest() -> NSFetchRequest<Note> {
-        return NSFetchRequest<Note>(entityName: String(describing: Note.self))
+        NSFetchRequest(entityName: String(describing: Note.self))
     }
 
     static func libraryRequest() -> NSFetchRequest<Note> {

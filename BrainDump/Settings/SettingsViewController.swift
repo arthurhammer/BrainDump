@@ -83,11 +83,11 @@ class SettingsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return hiddenIndexPaths.contains(indexPath) ? 0 : UITableView.automaticDimension
+        hiddenIndexPaths.contains(indexPath) ? 0 : UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section > 1
+        indexPath.section > 1
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

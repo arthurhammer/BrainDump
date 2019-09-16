@@ -38,6 +38,6 @@ public class SafeAreaInputAccessoryViewWrapperView: UIView {
     public override var intrinsicContentSize: CGSize {
         // Allow 'self' to be sized based on autolayout constraints. Without
         // this, the frame would have to be set manually.
-        return .zero
+        .zero
     }
 }

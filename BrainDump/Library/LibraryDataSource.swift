@@ -47,27 +47,27 @@ class LibraryDataSource: NSObject {
     }
 
     var isEmpty: Bool {
-        return frc.fetchedObjects?.isEmpty ?? true
+        frc.fetchedObjects?.isEmpty ?? true
     }
 
     var numberOfSections: Int {
-        return frc.sections?.count ?? 0
+        frc.sections?.count ?? 0
     }
 
     func numberOfNotes(inSection section: Int) -> Int {
-        return frc.sections?[section].numberOfObjects ?? 0
+        frc.sections?[section].numberOfObjects ?? 0
     }
 
     func sectionType(for section: Int) -> LibrarySectionType? {
-        return (frc.sections?[section].name).flatMap(LibrarySectionType.init)
+        (frc.sections?[section].name).flatMap(LibrarySectionType.init)
     }
 
     func note(at indexPath: IndexPath) -> Note {
-        return frc.object(at: indexPath)
+        frc.object(at: indexPath)
     }
 
     func indexPath(of note: Note) -> IndexPath? {
-        return frc.indexPath(forObject: note)
+        frc.indexPath(forObject: note)
     }
 
     func deleteNote(at indexPath: IndexPath) {

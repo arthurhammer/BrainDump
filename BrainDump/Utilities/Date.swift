@@ -3,11 +3,11 @@ import Foundation
 extension Date {
     
     func adding(_ components: DateComponents, in calendar: Calendar = .current) -> Date? {
-        return calendar.date(byAdding: components, to: self)
+        calendar.date(byAdding: components, to: self)
     }
 
     func subtracting(_ components: DateComponents, in calendar: Calendar = .current) -> Date? {
-        return adding(components.negated)
+        adding(components.negated)
     }
 }
 

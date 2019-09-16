@@ -26,7 +26,7 @@ class Settings: NotificationCenterObservable {
     }
 
     var lastEditedNoteURI: URL? {
-        get { return store.url(forKey: Keys.lastEditedNoteURI) }
+        get { store.url(forKey: Keys.lastEditedNoteURI) }
         set {
             store.set(newValue, forKey: Keys.lastEditedNoteURI)
             post(Notifications.lastEditedNoteURI)
@@ -34,7 +34,7 @@ class Settings: NotificationCenterObservable {
     }
 
     var createNoteOn: Date? {
-        get { return store.object(forKey: Keys.createNoteOn) as? Date }
+        get { store.object(forKey: Keys.createNoteOn) as? Date }
         set {
             store.set(newValue, forKey: Keys.createNoteOn)
             post(Notifications.createNoteOn)
@@ -43,7 +43,7 @@ class Settings: NotificationCenterObservable {
 
     var createNoteAfter: Feature<DateComponents> {
         get {
-            return store.codableValue(forKey: Keys.createNoteAfter)
+            store.codableValue(forKey: Keys.createNoteAfter)
                 ?? Settings.defaultCreateNoteAfter
         }
         set {
@@ -54,7 +54,7 @@ class Settings: NotificationCenterObservable {
 
     var deleteNotesAfter: Feature<DateComponents> {
         get {
-            return store.codableValue(forKey: Keys.deleteNotesAfter)
+            store.codableValue(forKey: Keys.deleteNotesAfter)
                 ?? Settings.defaultDeleteNotesAfter
         }
         set {
@@ -66,26 +66,22 @@ class Settings: NotificationCenterObservable {
 
 extension Settings {
 
-    static let defaultCreateNoteAfter = Feature(isEnabled: true, value: DateComponents(minute: 60))
-    static let defaultDeleteNotesAfter = Feature(isEnabled: true, value: DateComponents(day: 3))
+    static let defaultCreateNoteAfter = Feature(value: DateComponents(minute: 60))
+    static let defaultDeleteNotesAfter = Feature(value: DateComponents(day: 3))
 
     var createNoteAfterOptions: [DateComponents] {
-        return [
-            .init(minute: 3), .init(minute: 5), .init(minute: 10), .init(minute: 15), .init(minute: 20), .init(minute: 30), .init(minute: 40), .init(minute: 50),
-            .init(hour: 1), .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
-            .init(hour: 8)
-        ]
+        [.init(minute: 3), .init(minute: 5), .init(minute: 10), .init(minute: 15), .init(minute: 20), .init(minute: 30), .init(minute: 40), .init(minute: 50),
+         .init(hour: 1), .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
+         .init(hour: 8)]
     }
 
     var deleteNotesAfterOptions: [DateComponents] {
-        return [
-            .init(hour: 1), .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
-            .init(hour: 8), .init(hour: 10), .init(hour: 12), .init(hour: 14), .init(hour: 16), .init(hour: 18), .init(hour: 20), .init(hour: 22),
-            .init(day: 1),
-            .init(day: 1, hour: 12),
-            .init(day: 2), .init(day: 3), .init(day: 4), .init(day: 5), .init(day: 6), .init(day: 7),
-            .init(day: 10), .init(day: 14), .init(day: 30), .init(day: 60), .init(day: 90)
-        ]
+        [.init(hour: 1), .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
+         .init(hour: 8), .init(hour: 10), .init(hour: 12), .init(hour: 14), .init(hour: 16), .init(hour: 18), .init(hour: 20), .init(hour: 22),
+         .init(day: 1),
+        .init(day: 1, hour: 12),
+        .init(day: 2), .init(day: 3), .init(day: 4), .init(day: 5), .init(day: 6), .init(day: 7),
+        .init(day: 10), .init(day: 14), .init(day: 30), .init(day: 60), .init(day: 90)]
     }
 }
 

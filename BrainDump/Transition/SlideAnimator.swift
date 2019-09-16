@@ -13,7 +13,7 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return duration
+        duration
     }
 
     func animateTransition(using context: UIViewControllerContextTransitioning) {
@@ -22,7 +22,7 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     // Required when using UIPercentDrivenInteractiveTransition, I think...
     func interruptibleAnimator(using context: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
-        return animator(using: context)
+        animator(using: context)
     }
 
     /// - Note: Mutates self.animator.
@@ -67,10 +67,10 @@ class SlideAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 private extension UIViewControllerContextTransitioning {
 
     func presentedView(for type: TransitionType) -> UIView? {
-        return (type == .presentation) ? view(forKey: .to) : view(forKey: .from)
+        (type == .presentation) ? view(forKey: .to) : view(forKey: .from)
     }
 
     func presentedViewController(for type: TransitionType) -> UIViewController? {
-        return (type == .presentation) ? viewController(forKey: .to) : viewController(forKey: .from)
+        (type == .presentation) ? viewController(forKey: .to) : viewController(forKey: .from)
     }
 }

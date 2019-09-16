@@ -73,11 +73,11 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource?.numberOfSections ?? 0
+        dataSource?.numberOfSections ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.numberOfNotes(inSection: section) ?? 0
+        dataSource?.numberOfNotes(inSection: section) ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -134,11 +134,11 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
-        return true
+        true
     }
 
     func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return action == #selector(UIResponder.copy(_:))
+        action == #selector(UIResponder.copy(_:))
     }
 
     func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {

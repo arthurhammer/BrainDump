@@ -4,12 +4,12 @@ extension UIFont {
 
     /// Returns `lineSpacing` such that `lineHeight * lineHeightMultiple = lineHeight + lineSpacing`.
     func lineSpacing(matchingLineHeightMultiple multiple: CGFloat) -> CGFloat {
-        return lineHeight * multiple - lineHeight
+        lineHeight * multiple - lineHeight
     }
 
     /// Returns `lineHeightMultiple` such that `lineHeight * lineHeightMultiple = lineHeight + lineSpacing`.
     func lineHeightMultiple(matchingLineSpacing lineSpacing: CGFloat) -> CGFloat {
-        return (lineHeight + lineSpacing) / lineHeight
+        (lineHeight + lineSpacing) / lineHeight
     }
 
     /// For a given line height multiple returns an adjusted multiple and a line spacing

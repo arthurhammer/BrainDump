@@ -1,5 +1,5 @@
 struct Feature<T> {
-    var isEnabled: Bool
+    var isEnabled: Bool = true
     var value: T
 }
 

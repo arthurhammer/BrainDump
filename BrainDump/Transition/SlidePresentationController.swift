@@ -43,7 +43,7 @@ class SlidePresentationController: UIPresentationController {
     }
 
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        return CGSize(width: parentSize.width * widthFraction, height: parentSize.height)
+        CGSize(width: parentSize.width * widthFraction, height: parentSize.height)
     }
 
     override func containerViewWillLayoutSubviews() {

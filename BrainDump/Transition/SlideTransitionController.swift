@@ -18,25 +18,25 @@ class SlideTransitionController: NSObject, UIViewControllerTransitioningDelegate
     }()
 
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return SlidePresentationController(presentedViewController: presented, presenting: presenting, source: source, interactor: interactionController)
+        SlidePresentationController(presentedViewController: presented, presenting: presenting, source: source, interactor: interactionController)
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SlideAnimator(type: .presentation)
+        SlideAnimator(type: .presentation)
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SlideAnimator(type: .dismissal)
+        SlideAnimator(type: .dismissal)
     }
 
     func interactionControllerForPresentation(using _animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         // By some magic, when returning a `UIPercentDrivenInteractiveTransition` here, it
         // will drive the animator returned in `animationController(forPresented:presenting:source:)`.
-        return interactionController.wantsInteractiveStart ? interactionController : nil
+        interactionController.wantsInteractiveStart ? interactionController : nil
     }
 
     func interactionControllerForDismissal(using _animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactionController.wantsInteractiveStart ? interactionController : nil
+        interactionController.wantsInteractiveStart ? interactionController : nil
     }
 }
 

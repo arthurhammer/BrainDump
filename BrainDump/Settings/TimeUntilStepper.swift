@@ -31,7 +31,7 @@ class TimeUntilStepper: UIStepper {
 
     /// Index of the current date value, represented by the actual numeric value.
     private var index: Int {
-        get { return Int(value) }
+        get { Int(value) }
         set { value = Double(newValue) }
     }
 

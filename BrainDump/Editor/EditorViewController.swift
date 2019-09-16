@@ -19,11 +19,11 @@ class EditorViewController: UIViewController {
 
     override var canBecomeFirstResponder: Bool {
         // No inputAccessoryView when presenting.
-        return presentedViewController == nil
+        presentedViewController == nil
     }
 
     override var inputAccessoryView: UIView? {
-        return toolbarWrapper
+        toolbarWrapper
     }
 
     override func viewDidLoad() {

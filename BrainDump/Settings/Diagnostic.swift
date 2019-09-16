@@ -3,15 +3,15 @@ import Foundation
 extension Bundle {
 
     var name: String {
-        return info(for: "CFBundleDisplayName") ?? info(for: "CFBundleName") ?? ""
+        info(for: "CFBundleDisplayName") ?? info(for: "CFBundleName") ?? ""
     }
 
     var version: String {
-        return info(for: "CFBundleShortVersionString") ?? ""
+        info(for: "CFBundleShortVersionString") ?? ""
     }
 
     var build: String {
-        return info(for: "CFBundleVersion") ?? ""
+        info(for: "CFBundleVersion") ?? ""
     }
 
     var formattedVersion: String {
@@ -20,7 +20,7 @@ extension Bundle {
     }
 
     private func info<T>(for key: String) -> T? {
-        return (localizedInfoDictionary?[key] as? T)
+        (localizedInfoDictionary?[key] as? T)
             ?? (infoDictionary?[key] as? T)
     }
 }
@@ -33,7 +33,7 @@ extension UIDevice {
     ///   iOS 12.3.1
     ///   iPhone7,2
     func formattedDiagnostics(forBundle bundle: Bundle = .main) -> String {
-        return "\(bundle.formattedVersion)\n\(systemName) \(systemVersion)\n\(type ?? model)"
+        "\(bundle.formattedVersion)\n\(systemName) \(systemVersion)\n\(type ?? model)"
     }
 }
 
