@@ -186,22 +186,31 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rCi-Ax-OA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="3h4-SL-XE6">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="221"/>
+                <view contentMode="scaleToFill" id="3h4-SL-XE6" customClass="EmptyLibraryView" customModule="BrainDump" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="358"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="pZ1-Q3-j9G">
-                            <rect key="frame" x="129" y="24" width="156.5" height="173"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="pZ1-Q3-j9G">
+                            <rect key="frame" x="16" y="57.5" width="382" height="243"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bulb-large" translatesAutoresizingMaskIntoConstraints="NO" id="Y5A-S0-pDs">
-                                    <rect key="frame" x="17" y="0.0" width="122" height="116.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="116.5"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Thoughts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOa-Cy-KM4">
-                                    <rect key="frame" x="0.0" y="141.5" width="156.5" height="31.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Thoughts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOa-Cy-KM4">
+                                    <rect key="frame" x="0.0" y="141.5" width="382" height="31.5"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                     <color key="textColor" white="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="em6-lq-oFg">
+                                    <rect key="frame" x="0.0" y="198" width="382" height="45"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                    <inset key="contentEdgeInsets" minX="16" minY="12" maxX="16" maxY="12"/>
+                                    <state key="normal" title="&lt;Button&gt;"/>
+                                    <connections>
+                                        <action selector="createNewDumpFromSuggestion" destination="WmP-1A-7pm" eventType="touchUpInside" id="SJd-6U-73f"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="ple-tA-K9T"/>
                         </stackView>
@@ -212,10 +221,13 @@
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pZ1-Q3-j9G" secondAttribute="bottom" constant="8" id="CQH-qd-ais"/>
                         <constraint firstItem="pZ1-Q3-j9G" firstAttribute="centerX" secondItem="3h4-SL-XE6" secondAttribute="centerX" id="Jnl-ie-qwL"/>
                         <constraint firstItem="pZ1-Q3-j9G" firstAttribute="centerY" secondItem="3h4-SL-XE6" secondAttribute="centerY" id="ig7-z6-byq"/>
-                        <constraint firstItem="pZ1-Q3-j9G" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="X3x-nr-bjV" secondAttribute="leading" constant="8" id="lmF-rN-3aU"/>
-                        <constraint firstItem="X3x-nr-bjV" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pZ1-Q3-j9G" secondAttribute="trailing" constant="8" id="qsr-5j-GxT"/>
+                        <constraint firstItem="pZ1-Q3-j9G" firstAttribute="leading" secondItem="X3x-nr-bjV" secondAttribute="leading" constant="16" id="lmF-rN-3aU"/>
+                        <constraint firstItem="X3x-nr-bjV" firstAttribute="trailing" secondItem="pZ1-Q3-j9G" secondAttribute="trailing" constant="16" id="qsr-5j-GxT"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="X3x-nr-bjV"/>
+                    <connections>
+                        <outlet property="button" destination="em6-lq-oFg" id="bmm-Uk-6UH"/>
+                    </connections>
                 </view>
             </objects>
             <point key="canvasLocation" x="1048" y="-518"/>

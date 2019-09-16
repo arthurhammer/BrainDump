@@ -3,7 +3,7 @@ import UIKit
 protocol DumpsViewControllerDelegate: class {
     func controllerDidSelectShowSettings(_ controller: DumpsViewController)
     func controller(_ controller: DumpsViewController, didSelectDump dump: Dump)
-    func controllerDidSelectCreateNewDump(_ controller: DumpsViewController)
+    func controller(_ controller: DumpsViewController, didSelectCreateNewDumpWithText text: String?)
 }
 
 class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -19,7 +19,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     @IBOutlet var tableView: UITableView!
-    @IBOutlet private var emptyView: UIView!
+    @IBOutlet private var emptyView: EmptyLibraryView!
 
     private lazy var searchController = UISearchController(searchResultsController: nil)
     private lazy var updateLabelsTimer = BackgroundPausingTimer(interval: 60, tolerance: 15) { [weak self] in
@@ -52,7 +52,12 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     @IBAction private func createNewDump() {
-        delegate?.controllerDidSelectCreateNewDump(self)
+        delegate?.controller(self, didSelectCreateNewDumpWithText: nil)
+    }
+
+    @IBAction private func createNewDumpFromSuggestion() {
+        let text = searchController.searchBar.text?.trimmedOrNil
+        delegate?.controller(self, didSelectCreateNewDumpWithText: text)
     }
 
     @IBAction private func deleteAllUnpinnedDumps() {
@@ -206,7 +211,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     private func updateViews() {
         selectDump(selectedDump)
-        emptyView.isHidden = dataSource?.isEmpty == false
+        emptyView.configure(with: searchController.searchBar.text, isEmpty: dataSource?.isEmpty ?? true)
         reconfigureHeaders()
     }
 
@@ -224,6 +229,10 @@ extension DumpsViewController: UISearchBarDelegate {
                 (searchBar.text == "") || (searchBar.text == nil) else { return }
             self.searchController.isActive = false
         }
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        updateViews()  
     }
 }
 

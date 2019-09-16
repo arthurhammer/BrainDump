@@ -57,3 +57,19 @@ class AfterTimeFormatter {
         return String.localizedStringWithFormat(format, string)
     }
 }
+
+class ThoughtSuggestionFormatter {
+
+    let locale = Locale.autoupdatingCurrent
+
+    func string(from suggestion: String?) -> String? {
+        if let text = suggestion?.trimmedOrNil {
+            let start = locale.quotationBeginDelimiter ?? "“"
+            let end = locale.quotationEndDelimiter ?? "”"
+            let format = NSLocalizedString("formatter.suggestion.searchBar", value: "Create \(start)%@\(end)", comment: "Create a new thought with search bar suggestion.")
+            return String.localizedStringWithFormat(format, text)
+        } else {
+            return NSLocalizedString("formatter.suggestion.default", value: "Create Thought", comment: "Create a new empty thought suggestion.")
+        }
+    }
+}

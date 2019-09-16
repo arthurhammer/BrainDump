@@ -92,9 +92,9 @@ extension Coordinator: DumpsViewControllerDelegate {
         editorViewController.dataSource?.dump = dump
     }
 
-    func controllerDidSelectCreateNewDump(_ controller: DumpsViewController) {
+    func controller(_ controller: DumpsViewController, didSelectCreateNewDumpWithText text: String?) {
         hideLibrary()
-        editorViewController.createNewDump()
+        editorViewController.dataSource?.createNewDump(withText: text)
     }
 }
 
