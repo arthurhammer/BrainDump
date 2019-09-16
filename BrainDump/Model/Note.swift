@@ -1,7 +1,7 @@
 import CoreData
 
-@objc(Dump)
-class Dump: NSManagedObject {
+@objc(Note)
+class Note: NSManagedObject {
 
     @NSManaged var text: String?
     @NSManaged var dateCreated: Date
@@ -17,7 +17,7 @@ class Dump: NSManagedObject {
     }
 }
 
-extension Dump {
+extension Note {
 
     var title: String? {
         return text?
@@ -37,30 +37,30 @@ extension Dump {
     }
 }
 
-extension Dump {
+extension Note {
 
-    static func defaultRequest() -> NSFetchRequest<Dump> {
-        return NSFetchRequest<Dump>(entityName: String(describing: Dump.self))
+    static func defaultRequest() -> NSFetchRequest<Note> {
+        return NSFetchRequest<Note>(entityName: String(describing: Note.self))
     }
 
-    static func libraryRequest() -> NSFetchRequest<Dump> {
+    static func libraryRequest() -> NSFetchRequest<Note> {
         let request = defaultRequest()
         request.fetchBatchSize = 30
         request.sortDescriptors = [
-            NSSortDescriptor(key: #keyPath(Dump.isPinned), ascending: false),
-            NSSortDescriptor(key: #keyPath(Dump.dateModified), ascending: false)
+            NSSortDescriptor(key: #keyPath(Note.isPinned), ascending: false),
+            NSSortDescriptor(key: #keyPath(Note.dateModified), ascending: false)
         ]
         return request
     }
 
-    static func purgeRequest(before: Date, excludingCurrentDump currentDump: Dump?) -> NSFetchRequest<Dump> {
+    static func purgeRequest(before: Date, excludingCurrentNote current: Note?) -> NSFetchRequest<Note> {
         let request = defaultRequest()
         request.includesPropertyValues = false
 
-        if let currentDump = currentDump {
-            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@) AND (SELF != %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), before as NSDate, currentDump)
+        if let current = current {
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@) AND (SELF != %@)", #keyPath(Note.isPinned), #keyPath(Note.dateModified), before as NSDate, current)
         } else {
-            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@)", #keyPath(Dump.isPinned), #keyPath(Dump.dateModified), before as NSDate)
+            request.predicate = NSPredicate(format: "(%K = false) AND (%K <= %@)", #keyPath(Note.isPinned), #keyPath(Note.dateModified), before as NSDate)
         }
 
         return request

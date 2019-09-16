@@ -14,8 +14,8 @@ class Coordinator {
         return controller
     }()
 
-    lazy var libraryViewController: DumpsViewController = {
-        guard let controller = libraryContainer.viewControllers.first as? DumpsViewController else { fatalError("Wrong root controller.") }
+    lazy var libraryViewController: LibraryViewController = {
+        guard let controller = libraryContainer.viewControllers.first as? LibraryViewController else { fatalError("Wrong root controller.") }
         return controller
     }()
 
@@ -38,11 +38,11 @@ private extension Coordinator {
 
     func showLibrary() {
         if libraryViewController.dataSource == nil {
-            libraryViewController.dataSource = DumpsDataSource(store: store, settings: settings)
+            libraryViewController.dataSource = LibraryDataSource(store: store, settings: settings)
         }
 
         libraryViewController.delegate = self
-        libraryViewController.selectedDump = editorViewController.dataSource?.dump
+        libraryViewController.selectedNote = editorViewController.dataSource?.note
 
         transitionController.prepareTransition(for: libraryContainer)
         editorViewController.view.endEditing(true)
@@ -57,7 +57,7 @@ private extension Coordinator {
         guard let settingsContainer = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
             let settingsViewController = settingsContainer.topViewController as? SettingsViewController else { fatalError("Wrong storyboard id or controller type.") }
 
-        settingsContainer.modalPresentationStyle = .custom   // TODO: Document
+        settingsContainer.modalPresentationStyle = .custom  
         settingsViewController.delegate = self
         settingsViewController.settings = settings
         libraryViewController.present(settingsContainer, animated: true)
@@ -81,20 +81,20 @@ extension Coordinator: EditorViewControllerDelegate {
     }
 }
 
-extension Coordinator: DumpsViewControllerDelegate {
+extension Coordinator: LibraryViewControllerDelegate {
 
-    func controllerDidSelectShowSettings(_ controller: DumpsViewController) {
+    func controllerDidSelectShowSettings(_ controller: LibraryViewController) {
         showSettings()
     }
 
-    func controller(_ controller: DumpsViewController, didSelectDump dump: Dump) {
+    func controller(_ controller: LibraryViewController, didSelectNote note: Note) {
         hideLibrary()
-        editorViewController.dataSource?.dump = dump
+        editorViewController.dataSource?.note = note
     }
 
-    func controller(_ controller: DumpsViewController, didSelectCreateNewDumpWithText text: String?) {
+    func controller(_ controller: LibraryViewController, didSelectCreateNewNoteWithText text: String?) {
         hideLibrary()
-        editorViewController.dataSource?.createNewDump(withText: text)
+        editorViewController.dataSource?.createNewNote(withText: text)
     }
 }
 

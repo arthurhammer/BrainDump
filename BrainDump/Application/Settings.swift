@@ -3,22 +3,21 @@ import Foundation
 class Settings: NotificationCenterObservable {
 
     private struct Keys {
-        static let lastEditedDumpURI = "LastEditedDumpURI"
-        static let createDumpOn = "CreateDumpOn"
-        static let createDumpAfter = "CreateDumpAfter"
-        static let deleteDumpsAfter = "DeleteDumpsAfter"
+        static let lastEditedNoteURI = "LastEditedNoteURI"
+        static let createNoteOn = "CreateNoteOn"
+        static let createNoteAfter = "CreateNoteAfter"
+        static let deleteNotesAfter = "DeleteNotesAfter"
     }
-
-    private let store: UserDefaults
 
     /// Value change notifications for the respective properties.
     struct Notifications {
-        static let lastEditedDumpURI = Notification.Name(Keys.lastEditedDumpURI)
-        static let createDumpOn = Notification.Name(Keys.createDumpOn)
-        static let createDumpAfter = Notification.Name(Keys.createDumpAfter)
-        static let deleteDumpsAfter = Notification.Name(Keys.deleteDumpsAfter)
+        static let lastEditedNoteURI = Notification.Name(Keys.lastEditedNoteURI)
+        static let createNoteOn = Notification.Name(Keys.createNoteOn)
+        static let createNoteAfter = Notification.Name(Keys.createNoteAfter)
+        static let deleteNotesAfter = Notification.Name(Keys.deleteNotesAfter)
     }
 
+    private let store: UserDefaults
     let center: NotificationCenter
 
     init(store: UserDefaults = .standard, notificationCenter: NotificationCenter = .default) {
@@ -26,59 +25,59 @@ class Settings: NotificationCenterObservable {
         self.center = notificationCenter
     }
 
-    var lastEditedDumpURI: URL? {
-        get { return store.url(forKey: Keys.lastEditedDumpURI) }
+    var lastEditedNoteURI: URL? {
+        get { return store.url(forKey: Keys.lastEditedNoteURI) }
         set {
-            store.set(newValue, forKey: Keys.lastEditedDumpURI)
-            post(Notifications.lastEditedDumpURI)
+            store.set(newValue, forKey: Keys.lastEditedNoteURI)
+            post(Notifications.lastEditedNoteURI)
         }
     }
 
-    var createDumpOn: Date? {
-        get { return store.object(forKey: Keys.createDumpOn) as? Date }
+    var createNoteOn: Date? {
+        get { return store.object(forKey: Keys.createNoteOn) as? Date }
         set {
-            store.set(newValue, forKey: Keys.createDumpOn)
-            post(Notifications.createDumpOn)
+            store.set(newValue, forKey: Keys.createNoteOn)
+            post(Notifications.createNoteOn)
         }
     }
 
-    var createDumpAfter: Feature<DateComponents> {
+    var createNoteAfter: Feature<DateComponents> {
         get {
-            return store.codableValue(forKey: Keys.createDumpAfter)
-                ?? Settings.defaultCreateDumpAfter
+            return store.codableValue(forKey: Keys.createNoteAfter)
+                ?? Settings.defaultCreateNoteAfter
         }
         set {
-            store.setCodableValue(value: newValue, forKey: Keys.createDumpAfter)
-            post(Notifications.createDumpAfter)
+            store.setCodableValue(value: newValue, forKey: Keys.createNoteAfter)
+            post(Notifications.createNoteAfter)
         }
     }
 
-    var deleteDumpsAfter: Feature<DateComponents> {
+    var deleteNotesAfter: Feature<DateComponents> {
         get {
-            return store.codableValue(forKey: Keys.deleteDumpsAfter)
-                ?? Settings.defaultDeleteDumpsAfter
+            return store.codableValue(forKey: Keys.deleteNotesAfter)
+                ?? Settings.defaultDeleteNotesAfter
         }
         set {
-            store.setCodableValue(value: newValue, forKey: Keys.deleteDumpsAfter)
-            post(Notifications.deleteDumpsAfter)
+            store.setCodableValue(value: newValue, forKey: Keys.deleteNotesAfter)
+            post(Notifications.deleteNotesAfter)
         }
     }
 }
 
 extension Settings {
 
-    static let defaultCreateDumpAfter = Feature(isEnabled: true, value: DateComponents(minute: 60))
-    static let defaultDeleteDumpsAfter = Feature(isEnabled: true, value: DateComponents(day: 3))
+    static let defaultCreateNoteAfter = Feature(isEnabled: true, value: DateComponents(minute: 60))
+    static let defaultDeleteNotesAfter = Feature(isEnabled: true, value: DateComponents(day: 3))
 
-    var createDumpAfterOptions: [DateComponents] {
+    var createNoteAfterOptions: [DateComponents] {
         return [
             .init(minute: 3), .init(minute: 5), .init(minute: 10), .init(minute: 15), .init(minute: 20), .init(minute: 30), .init(minute: 40), .init(minute: 50),
-            .init(hour: 1),
-            .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6), .init(hour: 8)
+            .init(hour: 1), .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
+            .init(hour: 8)
         ]
     }
 
-    var deleteDumpsAfterOptions: [DateComponents] {
+    var deleteNotesAfterOptions: [DateComponents] {
         return [
             .init(hour: 1), .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
             .init(hour: 8), .init(hour: 10), .init(hour: 12), .init(hour: 14), .init(hour: 16), .init(hour: 18), .init(hour: 20), .init(hour: 22),

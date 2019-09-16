@@ -4,7 +4,7 @@ typealias ActionHandler = (UIAlertAction) -> ()
 
 extension UIAlertController {
 
-    static func deleteAllUnpinnedDumps(cancelHandler: ActionHandler? = nil, deleteHandler: @escaping ActionHandler) -> UIAlertController {
+    static func deleteAllUnpinnedNotes(cancelHandler: ActionHandler? = nil, deleteHandler: @escaping ActionHandler) -> UIAlertController {
         let title = NSLocalizedString("alert.library.deleteUnpinned.title", value: "Clear Thoughts?", comment: "Unpinned thoughts deletion confirmation title")
         let message = NSLocalizedString("alert.library.deleteUnpinned.messge", value: "Give room to new ones.", comment: "Unpinned thoughts deletion confirmation message")
 

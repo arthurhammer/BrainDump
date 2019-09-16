@@ -1,6 +1,6 @@
 import CoreData
 
-/// Purges expired dumps at regular intervals. Currently, only context associated with the
+/// Purges expired notes at regular intervals. Currently, only context associated with the
 /// main queue are supported. Fetching and purging is perfomed on the main queue.
 class Purger {
 
@@ -20,13 +20,13 @@ class Purger {
     }
 
     @objc private func purge() {
-        let deleteAfter = settings.deleteDumpsAfter
+        let deleteAfter = settings.deleteNotesAfter
 
         guard deleteAfter.isEnabled,
             let deleteBefore = Date().subtracting(deleteAfter.value) else { return }
 
-        let currentDump: Dump? = try? settings.lastEditedDumpURI.flatMap(context.fetchObject(withURI:))
-        let request = Dump.purgeRequest(before: deleteBefore, excludingCurrentDump: currentDump)
+        let current: Note? = try? settings.lastEditedNoteURI.flatMap(context.fetchObject(withURI:))
+        let request = Note.purgeRequest(before: deleteBefore, excludingCurrentNote: current)
 
         guard let results = try? context.fetch(request),
             !results.isEmpty else { return }
@@ -37,6 +37,6 @@ class Purger {
 
     private func observeSettings() {
         // Purge immediately when purge settings change.
-        settings.addObserver(self, selector: #selector(purge), name: Settings.Notifications.deleteDumpsAfter)
+        settings.addObserver(self, selector: #selector(purge), name: Settings.Notifications.deleteNotesAfter)
     }
 }

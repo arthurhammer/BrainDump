@@ -47,46 +47,46 @@ class EditorViewController: UIViewController {
         delegate?.controllerDidSelectShowLibrary(self)
     }
 
-    @IBAction private func shareDump() {
+    @IBAction private func shareNote() {
         let text = editor?.text ?? ""
         let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         present(controller, animated: true)
     }
 
-    @IBAction private func deleteDump() {
-        dataSource?.deleteDump()
+    @IBAction private func deleteNote() {
+        dataSource?.deleteNote()
         editor?.startEditing(animated: true)
     }
 
-    @IBAction func createNewDump() {
-        // Create actual new dump only when user starts editing.
-        dataSource?.archiveDump()
+    @IBAction func createNewNote() {
+        // Create actual new note only when user starts editing.
+        dataSource?.archiveNote()
         editor?.startEditing(animated: true)
     }
 
-    private func showDump() {
+    private func showNote() {
         // Avoid setting text view again in response to change handler originating in
         // text view change.
-        guard editor?.text != dataSource?.dump?.text else { return }
-        editor?.text = dataSource?.dump?.text
+        guard editor?.text != dataSource?.note?.text else { return }
+        editor?.text = dataSource?.note?.text
     }
 
-    private func updateDump(withText text: String?) {
-        if dataSource?.dump == nil, text != nil, text != "" {
-            // Create actual new dump.
-            dataSource?.createNewDump(withText: text)
+    private func updateNote(withText text: String?) {
+        if dataSource?.note == nil, text != nil, text != "" {
+            // Create actual new note.
+            dataSource?.createNewNote(withText: text)
         } else {
-            dataSource?.dump?.text = text
-            dataSource?.dump?.dateModified = Date()
+            dataSource?.note?.text = text
+            dataSource?.note?.dateModified = Date()
         }
     }
 
     private func configureDataSource() {
-        dataSource?.dumpDidUpdate = { [weak self] in
-            self?.showDump()
+        dataSource?.noteDidUpdate = { [weak self] in
+            self?.showNote()
         }
 
-        showDump()
+        showNote()
         editor?.startEditing(animated: true)
     }
 }
@@ -97,15 +97,15 @@ extension EditorViewController: UITextViewDelegate {
         // Avoid changing `dateModified` if no changes happened. In `textViewDidChange`,
         // we accept any change though as the user might paste identical text which counts
         // as change.
-        if textView.text != dataSource?.dump?.text {
-            updateDump(withText: textView.text)
+        if textView.text != dataSource?.note?.text {
+            updateNote(withText: textView.text)
         }
 
         dataSource?.save()
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        updateDump(withText: textView.text)
+        updateNote(withText: textView.text)
     }
 }
 
@@ -132,7 +132,7 @@ extension EditorViewController: SlideTransitionable {
     func dismissalTransitionDidEnd(completed: Bool) {
         DispatchQueue.main.async {
             // If editor/keyboard is active, don't steal (this happens when hitting
-            // "create new dump" in the library).
+            // "create new note" in the library).
             let editorEditing = self.editor?.isFirstResponder ?? false
             self.becomeFirstResponder(completed && !editorEditing)
         }

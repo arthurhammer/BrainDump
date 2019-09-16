@@ -50,6 +50,8 @@ class CoreDataStore: NSPersistentContainer {
 }
 
 extension NSManagedObjectContext {
+    /// - Warning: this will throw an unhandled (in Swift) Objective-C exception if the URL
+    /// is not valid for the store. This can happen when the Core Data Model changes.
     func fetchObject<T: NSManagedObject>(withURI uri: URL) throws -> T? {
         guard let id = persistentStoreCoordinator?.managedObjectID(forURIRepresentation: uri) else { return nil }
         return try existingObject(with: id) as? T

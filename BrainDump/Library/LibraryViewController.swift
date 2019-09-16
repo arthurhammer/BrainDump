@@ -1,21 +1,21 @@
 import UIKit
 
-protocol DumpsViewControllerDelegate: class {
-    func controllerDidSelectShowSettings(_ controller: DumpsViewController)
-    func controller(_ controller: DumpsViewController, didSelectDump dump: Dump)
-    func controller(_ controller: DumpsViewController, didSelectCreateNewDumpWithText text: String?)
+protocol LibraryViewControllerDelegate: class {
+    func controllerDidSelectShowSettings(_ controller: LibraryViewController)
+    func controller(_ controller: LibraryViewController, didSelectNote note: Note)
+    func controller(_ controller: LibraryViewController, didSelectCreateNewNoteWithText text: String?)
 }
 
-class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class LibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    weak var delegate: DumpsViewControllerDelegate?
+    weak var delegate: LibraryViewControllerDelegate?
 
-    var dataSource: DumpsDataSource? {
+    var dataSource: LibraryDataSource? {
         didSet { configureDataSource() }
     }
 
-    var selectedDump: Dump?  {
-        didSet { selectDump(selectedDump) }
+    var selectedNote: Note?  {
+        didSet { selectNote(selectedNote) }
     }
 
     @IBOutlet var tableView: UITableView!
@@ -51,25 +51,25 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
         delegate?.controllerDidSelectShowSettings(self)
     }
 
-    @IBAction private func createNewDump() {
-        delegate?.controller(self, didSelectCreateNewDumpWithText: nil)
+    @IBAction private func createNewNote() {
+        delegate?.controller(self, didSelectCreateNewNoteWithText: nil)
     }
 
-    @IBAction private func createNewDumpFromSuggestion() {
+    @IBAction private func createNewNoteFromSuggestion() {
         let text = searchController.searchBar.text?.trimmedOrNil
-        delegate?.controller(self, didSelectCreateNewDumpWithText: text)
+        delegate?.controller(self, didSelectCreateNewNoteWithText: text)
     }
 
-    @IBAction private func deleteAllUnpinnedDumps() {
-        presentAlert(.deleteAllUnpinnedDumps { _ in
-            self.dataSource?.deleteAllUnpinnedDumps()
+    @IBAction private func deleteAllUnpinnedNotes() {
+        presentAlert(.deleteAllUnpinnedNotes { _ in
+            self.dataSource?.deleteAllUnpinnedNotes()
         })
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let dump = dataSource?.dump(at: indexPath) else { return }
-        selectedDump = dump
-        delegate?.controller(self, didSelectDump: dump)
+        guard let note = dataSource?.note(at: indexPath) else { return }
+        selectedNote = note
+        delegate?.controller(self, didSelectNote: note)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,23 +77,23 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.numberOfDumps(inSection: section) ?? 0
+        return dataSource?.numberOfNotes(inSection: section) ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DumpCell else { fatalError("Wrong cell id or type.") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NoteCell else { fatalError("Wrong cell id or type.") }
         configureCell(cell, for: indexPath)
         return cell
     }
 
-    private func configureCell(_ cell: DumpCell, for indexPath: IndexPath) {
-        guard let dump = dataSource?.dump(at: indexPath) else { return }
-        cell.configure(with: dump, expirationDate: dataSource?.expirationDate(for: dump))
+    private func configureCell(_ cell: NoteCell, for indexPath: IndexPath) {
+        guard let note = dataSource?.note(at: indexPath) else { return }
+        cell.configure(with: note, expirationDate: dataSource?.expirationDate(for: note))
     }
 
     private func reconfigureVisibleCells() {
         tableView.indexPathsForVisibleRows?.forEach {
-            guard let cell = tableView.cellForRow(at: $0) as? DumpCell else { return }
+            guard let cell = tableView.cellForRow(at: $0) as? NoteCell else { return }
             configureCell(cell, for: $0)
         }
     }
@@ -106,8 +106,8 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     private func configureHeader(_ header:LibrarySectionHeader, for section: Int) {
         guard let type = dataSource?.sectionType(for: section) else { return }
-        let items = dataSource?.numberOfDumps(inSection: section) ?? 0
-        header.configure(with: type, numberOfItems: items, actionTarget: self, action: #selector(deleteAllUnpinnedDumps))
+        let items = dataSource?.numberOfNotes(inSection: section) ?? 0
+        header.configure(with: type, numberOfItems: items, actionTarget: self, action: #selector(deleteAllUnpinnedNotes))
     }
 
     private func reconfigureHeaders() {
@@ -143,13 +143,13 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
         guard action == #selector(UIResponder.copy(_:)) else { return }
-        UIPasteboard.general.string = dataSource?.dump(at: indexPath).text
+        UIPasteboard.general.string = dataSource?.note(at: indexPath).text
     }
 
     private func configureDataSource() {
         guard isViewLoaded else { return }
 
-        dataSource?.dumpsWillChange = { [weak self] hasIncrementalChanges in
+        dataSource?.notesWillChange = { [weak self] hasIncrementalChanges in
             guard hasIncrementalChanges else { return }
             self?.tableView.beginUpdates()
         }
@@ -158,14 +158,14 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
             self?.tableView.applyChange(change)
         }
 
-        dataSource?.dumpDidChange = { [weak self] change in
+        dataSource?.noteDidChange = { [weak self] change in
             self?.tableView.applyChange(change, cellUpdater: { object, indexPath in
-                guard let cell = self?.tableView.cellForRow(at: indexPath) as? DumpCell else { return }
+                guard let cell = self?.tableView.cellForRow(at: indexPath) as? NoteCell else { return }
                 self?.configureCell(cell, for: indexPath)
             })
         }
 
-        dataSource?.dumpsDidChange = { [weak self] hasIncrementalChanges in
+        dataSource?.notesDidChange = { [weak self] hasIncrementalChanges in
             if hasIncrementalChanges {
                 self?.tableView.endUpdates()
             } else {
@@ -174,7 +174,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
             self?.updateViews()
         }
 
-        dataSource?.dumpsDidChange?(false)
+        dataSource?.notesDidChange?(false)
     }
 
     private func configureViews() {
@@ -197,11 +197,11 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
         updateViews()
     }
 
-    private func selectDump(_ dump: Dump?) {
+    private func selectNote(_ note: Note?) {
         guard isViewLoaded else { return }
 
-        guard let dump = dump,
-            let indexPath = dataSource?.indexPath(of: dump) else {
+        guard let note = note,
+            let indexPath = dataSource?.indexPath(of: note) else {
                 tableView.selectRow(at: nil, animated: true, scrollPosition: .none)
                 return
         }
@@ -210,7 +210,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
     private func updateViews() {
-        selectDump(selectedDump)
+        selectNote(selectedNote)
         emptyView.configure(with: searchController.searchBar.text, isEmpty: dataSource?.isEmpty ?? true)
         reconfigureHeaders()
     }
@@ -221,7 +221,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 }
 
-extension DumpsViewController: UISearchBarDelegate {
+extension LibraryViewController: UISearchBarDelegate {
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         DispatchQueue.main.async {  // Timing issue with `isActive`.
@@ -238,7 +238,7 @@ extension DumpsViewController: UISearchBarDelegate {
 
 // #MARK: Swipe Actions
 
-private extension DumpsViewController {
+private extension LibraryViewController {
 
     func deleteAction(for indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: title) { [weak self] action, _, completion in
@@ -247,7 +247,7 @@ private extension DumpsViewController {
                 return
             }
 
-            dataSource.deleteDump(at: indexPath)
+            dataSource.deleteNote(at: indexPath)
             completion(true)
         }
 
@@ -258,7 +258,7 @@ private extension DumpsViewController {
 
     func shareAction(for indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
-            let text = self?.dataSource?.dump(at: indexPath).text ?? ""
+            let text = self?.dataSource?.note(at: indexPath).text ?? ""
             let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
             self?.present(controller, animated: true)
             completion(true)
@@ -270,15 +270,15 @@ private extension DumpsViewController {
     }
 
     func pinAction(for indexPath: IndexPath) -> UIContextualAction? {
-        guard let dump = dataSource?.dump(at: indexPath) else { return nil }
+        guard let note = dataSource?.note(at: indexPath) else { return nil }
 
         let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
-            dump.isPinned = !dump.isPinned
+            note.isPinned = !note.isPinned
             self?.dataSource?.save()
             completion(true)
         }
 
-        action.image = dump.isPinned ? #imageLiteral(resourceName: "unpin-large") : #imageLiteral(resourceName: "pin-large")
+        action.image = note.isPinned ? #imageLiteral(resourceName: "unpin-large") : #imageLiteral(resourceName: "pin-large")
         action.backgroundColor = Style.orange
         return action
     }

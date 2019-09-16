@@ -10,19 +10,19 @@ class SettingsViewController: UITableViewController {
 
     var settings: Settings!
 
-    @IBOutlet private var createDumpAfterSwitch: UISwitch!
-    @IBOutlet private var createDumpAfterLabel: UILabel!
-    @IBOutlet private var createDumpAfterStepper: TimeUntilStepper!
+    @IBOutlet private var createNoteAfterSwitch: UISwitch!
+    @IBOutlet private var createNoteAfterLabel: UILabel!
+    @IBOutlet private var createNoteAfterStepper: TimeUntilStepper!
 
-    @IBOutlet private var deleteDumpsAfterSwitch: UISwitch!
-    @IBOutlet private var deleteDumpsAfterLabel: UILabel!
-    @IBOutlet private var deleteDumpsAfterStepper: TimeUntilStepper!
+    @IBOutlet private var deleteNotesAfterSwitch: UISwitch!
+    @IBOutlet private var deleteNotesAfterLabel: UILabel!
+    @IBOutlet private var deleteNotesAfterStepper: TimeUntilStepper!
 
     private var hiddenIndexPaths = Set<IndexPath>()
     private lazy var afterTimeFormatter = AfterTimeFormatter()
 
     // Changing deletion date is potentially destructive. Delay until "done".
-    private lazy var modifiedDeleteDumpsAfter = settings.deleteDumpsAfter
+    private lazy var modifiedDeleteNotesAfter = settings.deleteNotesAfter
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,43 +31,43 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func done() {
         // Save changes now.
-        settings.deleteDumpsAfter = modifiedDeleteDumpsAfter
+        settings.deleteNotesAfter = modifiedDeleteNotesAfter
         delegate?.controllerDidFinish(self)
     }
 
     @IBAction func stepperChanged() {
-        settings.createDumpAfter.value = createDumpAfterStepper.dateValue
-        modifiedDeleteDumpsAfter.value = deleteDumpsAfterStepper.dateValue
+        settings.createNoteAfter.value = createNoteAfterStepper.dateValue
+        modifiedDeleteNotesAfter.value = deleteNotesAfterStepper.dateValue
         updateLabels()
     }
 
     @IBAction private func switchChanged() {
-        settings.createDumpAfter.isEnabled = createDumpAfterSwitch.isOn
-        modifiedDeleteDumpsAfter.isEnabled = deleteDumpsAfterSwitch.isOn
+        settings.createNoteAfter.isEnabled = createNoteAfterSwitch.isOn
+        modifiedDeleteNotesAfter.isEnabled = deleteNotesAfterSwitch.isOn
         updateHiddenCells()
     }
 
     private func configureViews() {
-        createDumpAfterSwitch.isOn = settings.createDumpAfter.isEnabled
-        createDumpAfterStepper.dateValues = settings.createDumpAfterOptions
-        createDumpAfterStepper.dateValue = settings.createDumpAfter.value
+        createNoteAfterSwitch.isOn = settings.createNoteAfter.isEnabled
+        createNoteAfterStepper.dateValues = settings.createNoteAfterOptions
+        createNoteAfterStepper.dateValue = settings.createNoteAfter.value
 
-        deleteDumpsAfterSwitch.isOn = modifiedDeleteDumpsAfter.isEnabled
-        deleteDumpsAfterStepper.dateValues = settings.deleteDumpsAfterOptions
-        deleteDumpsAfterStepper.dateValue = modifiedDeleteDumpsAfter.value
+        deleteNotesAfterSwitch.isOn = modifiedDeleteNotesAfter.isEnabled
+        deleteNotesAfterStepper.dateValues = settings.deleteNotesAfterOptions
+        deleteNotesAfterStepper.dateValue = modifiedDeleteNotesAfter.value
 
         updateHiddenCells()
         updateLabels()
     }
 
     private func updateHiddenCells() {
-        showIndexPath(IndexPath(row: 1, section: 0), show: settings.createDumpAfter.isEnabled)
-        showIndexPath(IndexPath(row: 1, section: 1), show: modifiedDeleteDumpsAfter.isEnabled)
+        showIndexPath(IndexPath(row: 1, section: 0), show: settings.createNoteAfter.isEnabled)
+        showIndexPath(IndexPath(row: 1, section: 1), show: modifiedDeleteNotesAfter.isEnabled)
     }
 
     private func updateLabels() {
-        createDumpAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: createDumpAfterStepper.dateValue)
-        deleteDumpsAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: deleteDumpsAfterStepper.dateValue)
+        createNoteAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: createNoteAfterStepper.dateValue)
+        deleteNotesAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: deleteNotesAfterStepper.dateValue)
     }
 
     private func showIndexPath(_ indexPath: IndexPath, show: Bool) {

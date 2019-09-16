@@ -29,7 +29,7 @@ import UIKit
 
 extension UIDevice {
     /// A string of the form:
-    ///   Brain Dumps 1.0 (4)
+    ///   Brain Dump 1.0 (4)
     ///   iOS 12.3.1
     ///   iPhone7,2
     func formattedDiagnostics(forBundle bundle: Bundle = .main) -> String {
