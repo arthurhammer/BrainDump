@@ -65,7 +65,6 @@ class Settings: NotificationCenterObservable {
     }
 }
 
-
 extension Settings {
 
     static let defaultCreateDumpAfter = Feature(isEnabled: true, value: DateComponents(minute: 60))
@@ -75,9 +74,7 @@ extension Settings {
         return [
             .init(minute: 3), .init(minute: 5), .init(minute: 10), .init(minute: 15), .init(minute: 20), .init(minute: 30), .init(minute: 40), .init(minute: 50),
             .init(hour: 1),
-            .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6),
-            .init(hour: 8), .init(hour: 10), .init(hour: 12), .init(hour: 14), .init(hour: 16), .init(hour: 18), .init(hour: 20), .init(hour: 22),
-            .init(day: 1)
+            .init(hour: 2), .init(hour: 3), .init(hour: 4), .init(hour: 5), .init(hour: 6), .init(hour: 8)
         ]
     }
 

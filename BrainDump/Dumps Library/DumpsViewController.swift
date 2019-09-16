@@ -181,9 +181,9 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
         definesPresentationContext = true
         searchController.searchResultsUpdater = dataSource
-        searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = NSLocalizedString("Search Thoughts", comment: "")
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.backgroundColor = Style.mainBackgroundColor
@@ -213,9 +213,16 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     private func stopEditing() {
         tableView.setEditing(false, animated: true)
         searchController.searchBar.endEditing(true)
-        
-        if searchController.searchBar.text == "" {
-            searchController.isActive = false
+    }
+}
+
+extension DumpsViewController: UISearchBarDelegate {
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        DispatchQueue.main.async {  // Timing issue with `isActive`.
+            guard self.searchController.isActive,
+                (searchBar.text == "") || (searchBar.text == nil) else { return }
+            self.searchController.isActive = false
         }
     }
 }
@@ -236,6 +243,7 @@ private extension DumpsViewController {
         }
 
         action.image = #imageLiteral(resourceName: "trash-large")
+        action.backgroundColor = Style.red
         return action
     }
 

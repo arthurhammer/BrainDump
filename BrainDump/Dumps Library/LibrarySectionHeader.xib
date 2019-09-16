@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="d8h-17-Fii">
-                    <rect key="frame" x="16" y="8" width="294" height="52"/>
+                    <rect key="frame" x="16" y="8" width="290" height="52"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin-filled" translatesAutoresizingMaskIntoConstraints="NO" id="yZd-vs-iuC">
                             <rect key="frame" x="0.0" y="14" width="24" height="24"/>
@@ -44,17 +44,15 @@
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="lIm-b4-Ynu" userLabel="Detail Label Spacer">
-                            <rect key="frame" x="161.5" y="1" width="84.5" height="50"/>
+                            <rect key="frame" x="161.5" y="1" width="80.5" height="50"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8IH-WC-jxI">
-                            <rect key="frame" x="254" y="6" width="40" height="40"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8IH-WC-jxI">
+                            <rect key="frame" x="250" y="6" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="GGN-9S-xNF"/>
                                 <constraint firstAttribute="width" constant="40" id="sae-X1-RRV"/>
                             </constraints>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                             <state key="normal" image="clear"/>
-                            <state key="selected" image="nil"/>
                         </button>
                     </subviews>
                 </stackView>
@@ -63,7 +61,7 @@
                 <constraint firstAttribute="bottom" secondItem="d8h-17-Fii" secondAttribute="bottom" priority="999" constant="8" id="0ni-3N-zji"/>
                 <constraint firstItem="d8h-17-Fii" firstAttribute="leading" secondItem="2Lp-Ad-JAE" secondAttribute="leading" multiplier="8" constant="16" id="VSD-Bj-A98"/>
                 <constraint firstItem="d8h-17-Fii" firstAttribute="top" secondItem="2Lp-Ad-JAE" secondAttribute="top" constant="8" id="g6A-u4-WwP"/>
-                <constraint firstAttribute="trailing" secondItem="d8h-17-Fii" secondAttribute="trailing" constant="8" id="j9U-dp-n7j"/>
+                <constraint firstAttribute="trailing" secondItem="d8h-17-Fii" secondAttribute="trailing" priority="999" constant="12" id="j9U-dp-n7j"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="6n0-FW-m4a"/>
@@ -73,12 +71,11 @@
                 <outlet property="imageView" destination="yZd-vs-iuC" id="6BK-UY-ceH"/>
                 <outlet property="titleLabel" destination="3aJ-Xq-ham" id="SRy-cs-C5Y"/>
             </connections>
-            <point key="canvasLocation" x="49.275362318840585" y="38.169642857142854"/>
+            <point key="canvasLocation" x="-46" y="28"/>
         </view>
     </objects>
     <resources>
-        <image name="clear" width="19" height="22"/>
-        <image name="nil" width="16" height="16"/>
+        <image name="clear" width="17.333333969116211" height="20"/>
         <image name="pin-filled" width="30" height="30"/>
     </resources>
 </document>

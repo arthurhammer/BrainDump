@@ -19,7 +19,7 @@ import UIKit
 extension UITableView {
 
     func applyChange(_ change: FetchedResultsControllerSectionChange) {
-        let animation = UITableView.RowAnimation.none
+        let animation = UITableView.RowAnimation.fade
 
         switch change.type {
         case .insert:
