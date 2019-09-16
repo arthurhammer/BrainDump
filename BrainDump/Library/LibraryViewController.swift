@@ -104,7 +104,7 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         return header
     }
 
-    private func configureHeader(_ header:LibrarySectionHeader, for section: Int) {
+    private func configureHeader(_ header: LibrarySectionHeader, for section: Int) {
         guard let type = dataSource?.sectionType(for: section) else { return }
         let items = dataSource?.numberOfNotes(inSection: section) ?? 0
         header.configure(with: type, numberOfItems: items, actionTarget: self, action: #selector(deleteAllUnpinnedNotes))
@@ -150,15 +150,20 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         guard isViewLoaded else { return }
 
         dataSource?.notesWillChange = { [weak self] hasIncrementalChanges in
-            guard hasIncrementalChanges else { return }
+            // Console warns we should not modify the table view if it's not being displayed.
+            guard self?.view.window != nil,
+                hasIncrementalChanges else { return }
             self?.tableView.beginUpdates()
         }
 
         dataSource?.sectionDidChange = { [weak self]  change in
+            guard self?.view.window != nil else { return }
             self?.tableView.applyChange(change)
         }
 
         dataSource?.noteDidChange = { [weak self] change in
+            guard self?.view.window != nil else { return }
+
             self?.tableView.applyChange(change, cellUpdater: { object, indexPath in
                 guard let cell = self?.tableView.cellForRow(at: indexPath) as? NoteCell else { return }
                 self?.configureCell(cell, for: indexPath)
@@ -166,6 +171,11 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         }
 
         dataSource?.notesDidChange = { [weak self] hasIncrementalChanges in
+            guard self?.view.window != nil else {
+                self?.tableView.reloadData()
+                return
+            }
+
             if hasIncrementalChanges {
                 self?.tableView.endUpdates()
             } else {

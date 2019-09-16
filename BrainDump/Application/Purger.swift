@@ -17,6 +17,7 @@ class Purger {
         }
 
         observeSettings()
+        purge()
     }
 
     @objc private func purge() {

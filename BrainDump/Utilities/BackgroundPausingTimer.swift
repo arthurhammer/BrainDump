@@ -12,10 +12,10 @@ class BackgroundPausingTimer {
 
     private let center: NotificationCenter
     private var timer: Timer?
-    private var lastAction = Date.distantPast
+    private var lastAction = Date()
     private var isStoppedExplicitly = false
 
-    /// The timer is running on initialization. The action is executed once initially.
+    /// The timer is running on initialization. 
     init(interval: TimeInterval, tolerance: TimeInterval, center: NotificationCenter = .default, action: @escaping () -> ()) {
         self.center = center
         self.interval = interval

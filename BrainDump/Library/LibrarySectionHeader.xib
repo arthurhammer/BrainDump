@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,9 +57,9 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="d8h-17-Fii" secondAttribute="bottom" priority="999" constant="8" id="0ni-3N-zji"/>
-                <constraint firstItem="d8h-17-Fii" firstAttribute="leading" secondItem="2Lp-Ad-JAE" secondAttribute="leading" multiplier="8" constant="16" id="VSD-Bj-A98"/>
+                <constraint firstItem="6n0-FW-m4a" firstAttribute="leading" secondItem="d8h-17-Fii" secondAttribute="leadingMargin" constant="-16" id="VSD-Bj-A98"/>
                 <constraint firstItem="d8h-17-Fii" firstAttribute="top" secondItem="2Lp-Ad-JAE" secondAttribute="top" constant="8" id="g6A-u4-WwP"/>
-                <constraint firstAttribute="trailing" secondItem="d8h-17-Fii" secondAttribute="trailing" priority="999" constant="12" id="j9U-dp-n7j"/>
+                <constraint firstItem="6n0-FW-m4a" firstAttribute="trailing" secondItem="d8h-17-Fii" secondAttribute="trailingMargin" priority="999" constant="12" id="j9U-dp-n7j"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="6n0-FW-m4a"/>

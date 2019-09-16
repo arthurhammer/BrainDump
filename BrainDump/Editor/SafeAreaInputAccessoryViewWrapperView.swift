@@ -24,8 +24,8 @@ public class SafeAreaInputAccessoryViewWrapperView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         defer {
-            view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
-            view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
+            view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
             view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
             view.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
         }
