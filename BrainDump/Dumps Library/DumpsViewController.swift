@@ -77,35 +77,39 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DumpCell else { fatalError("Wrong cell id or type.") }
-
-        if let dump = dataSource?.dump(at: indexPath) {
-            cell.configure(with: dump, expirationDate: dataSource?.expirationDate(for: dump))
-        }
-
+        configureCell(cell, for: indexPath)
         return cell
     }
 
-    private func reconfigure(cellAt indexPath: IndexPath, for dump: Dump) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? DumpCell else { return }
+    private func configureCell(_ cell: DumpCell, for indexPath: IndexPath) {
+        guard let dump = dataSource?.dump(at: indexPath) else { return }
         cell.configure(with: dump, expirationDate: dataSource?.expirationDate(for: dump))
     }
 
     private func reconfigureVisibleCells() {
-        guard let dataSource = dataSource else { return }
-
-        (tableView.indexPathsForVisibleRows ?? [])
-            .map { ($0, dataSource.dump(at: $0)) }
-            .forEach(reconfigure)
+        tableView.indexPathsForVisibleRows?.forEach {
+            guard let cell = tableView.cellForRow(at: $0) as? DumpCell else { return }
+            configureCell(cell, for: $0)
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerIdentifier) as? LibrarySectionHeader else { fatalError("Wrong header id or type") }
-
-        if let type = dataSource?.sectionType(for: section) {
-            header.configure(with: type, actionTarget: self, action: #selector(deleteAllUnpinnedDumps))
-        }
-
+        configureHeader(header, for: section)
         return header
+    }
+
+    private func configureHeader(_ header:LibrarySectionHeader, for section: Int) {
+        guard let type = dataSource?.sectionType(for: section) else { return }
+        let items = dataSource?.numberOfDumps(inSection: section) ?? 0
+        header.configure(with: type, numberOfItems: items, actionTarget: self, action: #selector(deleteAllUnpinnedDumps))
+    }
+
+    private func reconfigureHeaders() {
+        (0..<numberOfSections(in: tableView)).forEach {
+            guard let header = tableView.headerView(forSection: $0) as? LibrarySectionHeader else { return }
+            configureHeader(header, for: $0)
+        }
     }
 
     func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
@@ -151,8 +155,8 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
         dataSource?.dumpDidChange = { [weak self] change in
             self?.tableView.applyChange(change, cellUpdater: { object, indexPath in
-                guard let dump = object as? Dump else { return }
-                self?.reconfigure(cellAt: indexPath, for: dump)
+                guard let cell = self?.tableView.cellForRow(at: indexPath) as? DumpCell else { return }
+                self?.configureCell(cell, for: indexPath)
             })
         }
 
@@ -203,6 +207,7 @@ class DumpsViewController: UIViewController, UITableViewDataSource, UITableViewD
     private func updateViews() {
         selectDump(selectedDump)
         emptyView.isHidden = dataSource?.isEmpty == false
+        reconfigureHeaders()
     }
 
     private func stopEditing() {

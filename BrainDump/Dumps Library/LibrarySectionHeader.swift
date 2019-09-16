@@ -8,6 +8,7 @@ class LibrarySectionHeader: UITableViewHeaderFooterView {
 
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var detailLabel: UILabel!
     @IBOutlet var actionButton: UIButton!
 
     override func prepareForReuse() {
@@ -23,7 +24,7 @@ class LibrarySectionHeader: UITableViewHeaderFooterView {
 
 extension LibrarySectionHeader {
 
-    func configure(with type: LibrarySectionType, actionTarget: Any?, action: Selector?) {
+    func configure(with type: LibrarySectionType, numberOfItems: Int, actionTarget: Any?, action: Selector?) {
         switch type {
 
         case .pinned:
@@ -44,5 +45,6 @@ extension LibrarySectionHeader {
         }
 
         titleLabel.text = titleLabel.text?.uppercased()
+        detailLabel.text = NumberFormatter().string(from: numberOfItems as NSNumber)
     }
 }
