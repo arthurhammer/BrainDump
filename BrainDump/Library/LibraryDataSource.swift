@@ -37,6 +37,10 @@ class LibraryDataSource: NSObject {
         }
     }
 
+    func search(for term: String?) {
+        searcher.search(for: term)
+    }
+
     func expirationDate(for note: Note) -> Date? {
         let deleteAfter = settings.deleteNotesAfter
 
@@ -114,15 +118,5 @@ extension LibraryDataSource: NSFetchedResultsControllerDelegate {
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         notesDidChange?(true)
-    }
-}
-
-// #MARK: - Search
-
-import UIKit
-
-extension LibraryDataSource: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        searcher.updateSearchResults(for: searchController)
     }
 }

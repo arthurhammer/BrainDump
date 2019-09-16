@@ -83,7 +83,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ACX-HA-YZK">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="796"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="xrA-Eq-HCs" userLabel="Footer to Hide Extra Cell Separators">
                                     <rect key="frame" x="0.0" y="158" width="414" height="1"/>
@@ -153,13 +153,23 @@
                                     <outlet property="delegate" destination="WmP-1A-7pm" id="OIq-Ng-Mco"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Thoughts" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPt-fZ-C5m">
+                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="1T5-tf-qAX"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="sPt-fZ-C5m" firstAttribute="top" secondItem="7aR-60-NeY" secondAttribute="top" id="4aP-CE-Aat"/>
+                            <constraint firstItem="ACX-HA-YZK" firstAttribute="top" secondItem="sPt-fZ-C5m" secondAttribute="bottom" id="bLJ-u3-T9x"/>
+                            <constraint firstItem="sPt-fZ-C5m" firstAttribute="trailing" secondItem="7aR-60-NeY" secondAttribute="trailing" id="gNa-8E-12N"/>
                             <constraint firstItem="ACX-HA-YZK" firstAttribute="leading" secondItem="504-a8-afv" secondAttribute="leading" id="pO3-kW-VYh"/>
                             <constraint firstItem="ACX-HA-YZK" firstAttribute="trailing" secondItem="504-a8-afv" secondAttribute="trailing" id="rCq-vu-QYe"/>
                             <constraint firstAttribute="bottom" secondItem="ACX-HA-YZK" secondAttribute="bottom" id="tqp-Ju-UMa"/>
-                            <constraint firstItem="ACX-HA-YZK" firstAttribute="top" secondItem="7aR-60-NeY" secondAttribute="top" id="zQg-LT-aav"/>
+                            <constraint firstItem="sPt-fZ-C5m" firstAttribute="leading" secondItem="7aR-60-NeY" secondAttribute="leading" id="z9N-Rr-Tet"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7aR-60-NeY"/>
                     </view>
@@ -180,6 +190,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="emptyView" destination="3h4-SL-XE6" id="Mcs-hc-K2N"/>
+                        <outlet property="searchBar" destination="sPt-fZ-C5m" id="a2n-bl-VeT"/>
                         <outlet property="tableView" destination="ACX-HA-YZK" id="zHi-AC-YFc"/>
                     </connections>
                 </viewController>
@@ -228,7 +239,7 @@
                     </connections>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1048" y="-518"/>
+            <point key="canvasLocation" x="1047.8260869565217" y="-518.30357142857144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KyF-cg-RXk">

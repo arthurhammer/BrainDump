@@ -19,9 +19,9 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     @IBOutlet var tableView: UITableView!
+    @IBOutlet private var searchBar: UISearchBar!
     @IBOutlet private var emptyView: EmptyLibraryView!
 
-    private lazy var searchController = UISearchController(searchResultsController: nil)
     private lazy var updateLabelsTimer = BackgroundPausingTimer(interval: 60, tolerance: 15) { [weak self] in
         self?.reconfigureVisibleCells()
     }
@@ -194,15 +194,8 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.backgroundView = emptyView
         tableView.register(LibrarySectionHeader.nib, forHeaderFooterViewReuseIdentifier: headerIdentifier)
 
-        definesPresentationContext = true
-        searchController.searchResultsUpdater = dataSource
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = NSLocalizedString("Search Thoughts", comment: "")
-        searchController.searchBar.searchBarStyle = .minimal
-        searchController.searchBar.backgroundColor = Style.mainBackgroundColor
-        tableView.tableHeaderView = searchController.searchBar
+        searchBar.delegate = self
+        searchBar.backgroundColor = Style.mainBackgroundColor
 
         updateViews()
     }
@@ -221,28 +214,42 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
 
     private func updateViews() {
         selectNote(selectedNote)
-        emptyView.configure(with: searchController.searchBar.text, isEmpty: dataSource?.isEmpty ?? true)
+        emptyView.configure(with: searchBar.text, isEmpty: dataSource?.isEmpty ?? true)
         reconfigureHeaders()
     }
 
     private func stopEditing() {
         tableView.setEditing(false, animated: true)
-        searchController.searchBar.endEditing(true)
+        searchBar.endEditing(true)
     }
 }
 
 extension LibraryViewController: UISearchBarDelegate {
 
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        DispatchQueue.main.async {  // Timing issue with `isActive`.
-            guard self.searchController.isActive,
-                (searchBar.text == "") || (searchBar.text == nil) else { return }
-            self.searchController.isActive = false
-        }
+        searchBar.setShowsCancelButton(false, animated: true)
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        dataSource?.search(for: searchBar.text)
         updateViews()  
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        searchBar.text = nil
+        dataSource?.search(for: searchBar.text)
+        updateViews()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        dataSource?.search(for: searchBar.text)
+        updateViews()
     }
 }
 
