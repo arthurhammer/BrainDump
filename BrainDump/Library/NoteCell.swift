@@ -20,7 +20,7 @@ class NoteCell: UITableViewCell {
     }
 }
 
-// #MARK: - Configuring
+// MARK: - Configuring
 
 extension NoteCell {
 

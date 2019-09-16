@@ -12,7 +12,7 @@ struct FetchedResultsControllerObjectChange {
     let newIndexPath: IndexPath?
 }
 
-// #MARK: UITableView
+// MARK: UITableView
 
 import UIKit
 

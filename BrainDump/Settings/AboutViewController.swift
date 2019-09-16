@@ -43,7 +43,7 @@ class AboutViewController: UITableViewController {
     }
 }
 
-// #MARK: Actions
+// MARK: Actions
 
 extension AboutViewController {
 

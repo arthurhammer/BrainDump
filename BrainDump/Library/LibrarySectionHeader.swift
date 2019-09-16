@@ -20,7 +20,7 @@ class LibrarySectionHeader: UITableViewHeaderFooterView {
     }
 }
 
-// #MARK: - Configuring
+// MARK: - Configuring
 
 extension LibrarySectionHeader {
 

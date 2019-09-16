@@ -224,6 +224,8 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 }
 
+// MARK: - Search
+
 extension LibraryViewController: UISearchBarDelegate {
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -253,7 +255,7 @@ extension LibraryViewController: UISearchBarDelegate {
     }
 }
 
-// #MARK: Swipe Actions
+// MARK: - Swipe Actions
 
 private extension LibraryViewController {
 
