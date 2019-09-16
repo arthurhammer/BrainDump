@@ -94,7 +94,7 @@ extension Coordinator: LibraryViewControllerDelegate {
 
     func controller(_ controller: LibraryViewController, didSelectCreateNewNoteWithText text: String?) {
         hideLibrary()
-        editorViewController.dataSource?.createNewNote(withText: text)
+        editorViewController.createNewNote(with: text)
     }
 }
 

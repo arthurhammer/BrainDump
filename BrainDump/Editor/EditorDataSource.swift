@@ -31,7 +31,7 @@ class EditorDataSource {
         subscribeToNotifications()
     }
 
-    func createNewNote(withText text: String? = nil) {
+    func createNewNote(with text: String? = nil) {
         let note = Note(in: store.viewContext, text: text)
         save()
         self.note = note

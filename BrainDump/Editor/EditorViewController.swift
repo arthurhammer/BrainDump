@@ -59,8 +59,16 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func createNewNote() {
-        // Create actual new note only when user starts editing.
-        dataSource?.archiveNote()
+        createNewNote(with: nil)
+    }
+
+    func createNewNote(with text: String?) {
+        if let text = text?.trimmedOrNil {
+            dataSource?.createNewNote(with: text)
+        } else {
+            // Create actual new note only when user starts editing.
+            dataSource?.archiveNote()
+        }
         editor?.startEditing(animated: true)
     }
 
@@ -71,10 +79,10 @@ class EditorViewController: UIViewController {
         editor?.text = dataSource?.note?.text
     }
 
-    private func updateNote(withText text: String?) {
+    private func updateNote(with text: String?) {
         if dataSource?.note == nil, text != nil, text != "" {
             // Create actual new note.
-            dataSource?.createNewNote(withText: text)
+            dataSource?.createNewNote(with: text)
         } else {
             dataSource?.note?.text = text
             dataSource?.note?.dateModified = Date()
@@ -98,14 +106,14 @@ extension EditorViewController: UITextViewDelegate {
         // we accept any change though as the user might paste identical text which counts
         // as change.
         if textView.text != dataSource?.note?.text {
-            updateNote(withText: textView.text)
+            updateNote(with: textView.text)
         }
 
         dataSource?.save()
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        updateNote(withText: textView.text)
+        updateNote(with: textView.text)
     }
 }
 
