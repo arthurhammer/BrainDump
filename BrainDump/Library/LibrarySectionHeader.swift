@@ -11,6 +11,11 @@ class LibrarySectionHeader: UITableViewHeaderFooterView {
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var actionButton: UIButton!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .footnote).bold()
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
 

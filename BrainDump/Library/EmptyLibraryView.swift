@@ -8,6 +8,9 @@ class EmptyLibraryView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
+        button.titleLabel?.allowsDefaultTighteningForTruncation = true
+
         button.setTitleColor(Style.mainTint, for: .normal)
         button.tintColor = Style.mainTint
         button.layer.borderColor = Style.mainTint.cgColor

@@ -2,6 +2,22 @@ import UIKit
 
 extension UIFont {
 
+    func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        guard let descriptor = fontDescriptor.withSymbolicTraits(traits) else { return self }
+        return UIFont(descriptor: descriptor, size: 0)
+    }
+
+    func bold() -> UIFont {
+        return withTraits(traits: .traitBold)
+    }
+
+    func italic() -> UIFont {
+        return withTraits(traits: .traitItalic)
+    }
+}
+
+extension UIFont {
+
     /// Returns `lineSpacing` such that `lineHeight * lineHeightMultiple = lineHeight + lineSpacing`.
     func lineSpacing(matchingLineHeightMultiple multiple: CGFloat) -> CGFloat {
         lineHeight * multiple - lineHeight

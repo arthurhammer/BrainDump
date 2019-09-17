@@ -24,25 +24,25 @@
                                 <constraint firstAttribute="width" constant="24" id="grw-dK-cQx"/>
                             </constraints>
                         </imageView>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gNd-Xf-8dy">
-                            <rect key="frame" x="32" y="18" width="121.5" height="16"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gNd-Xf-8dy">
+                            <rect key="frame" x="32" y="18" width="119.5" height="16"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aJ-Xq-ham">
-                                    <rect key="frame" x="0.0" y="0.0" width="53.5" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;TITLE&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aJ-Xq-ham">
+                                    <rect key="frame" x="0.0" y="0.0" width="51.5" height="16"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Amount&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DfG-4v-LZx">
-                                    <rect key="frame" x="57.5" y="0.0" width="64" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="&lt;Amount&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DfG-4v-LZx">
+                                    <rect key="frame" x="55.5" y="0.0" width="64" height="16"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <color key="textColor" systemColor="tertiaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="lIm-b4-Ynu" userLabel="Detail Label Spacer">
-                            <rect key="frame" x="161.5" y="1" width="80.5" height="50"/>
+                            <rect key="frame" x="159.5" y="1" width="82.5" height="50"/>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8IH-WC-jxI">
                             <rect key="frame" x="250" y="6" width="40" height="40"/>

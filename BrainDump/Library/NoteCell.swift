@@ -1,11 +1,15 @@
 import UIKit
 
 class NoteCell: UITableViewCell {
-
+    
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var bodyLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var expirationLabel: UILabel!
+
+    private func configureFonts() {
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline).bold()
+    }
 }
 
 // MARK: - Configuring
@@ -26,5 +30,8 @@ extension NoteCell {
         } else {
             expirationLabel.text = nil
         }
+
+        // For some reason, it doesn't work in `awakeFromNib`.
+        configureFonts()
     }
 }

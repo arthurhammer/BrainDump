@@ -3,7 +3,7 @@ import UIKit
 class EditorTextView: UITextView {
 
     private let textInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
-    private let fontSize: CGFloat = 16  // TODO: size categories
+    private let baseFont = UIFont.systemFont(ofSize: 16)
     private let lineHeightMultiple: CGFloat = 1.2
 
     private let notificationCenter: NotificationCenter = .default
@@ -14,7 +14,9 @@ class EditorTextView: UITextView {
         subscribeToNotifications()
         textContainerInset = textInsets
 
-        let font = UIFont.systemFont(ofSize: fontSize)
+        let font = UIFontMetrics(forTextStyle: .body).scaledFont(for: baseFont)
+        adjustsFontForContentSizeCategory = true
+
         let style = NSMutableParagraphStyle()
         // When setting either line height or line spacing the caret and selection markers
         // will be off to the top or bottom. To center the caret, balance both spaces.
