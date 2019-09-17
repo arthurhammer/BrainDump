@@ -42,6 +42,7 @@
 		00B20B4E2318884D002F5DD6 /* SlideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B20B4D2318884D002F5DD6 /* SlideInteractor.swift */; };
 		00BDCB79231EC0BD00E060F6 /* FetchedResultsControllerSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BDCB78231EC0BD00E060F6 /* FetchedResultsControllerSearcher.swift */; };
 		00BDCB7B231EC88000E060F6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BDCB7A231EC88000E060F6 /* SettingsViewController.swift */; };
+		00C48FF42330C1260043494E /* TransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C48FF32330C1260043494E /* TransitionController.swift */; };
 		00C4A0EC23055D4E009494A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0EB23055D4E009494A0 /* AppDelegate.swift */; };
 		00C4A0EE23055D4E009494A0 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C4A0ED23055D4E009494A0 /* EditorViewController.swift */; };
 		00C4A0F123055D4E009494A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C4A0EF23055D4E009494A0 /* Main.storyboard */; };
@@ -89,6 +90,7 @@
 		00B20B4D2318884D002F5DD6 /* SlideInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInteractor.swift; sourceTree = "<group>"; };
 		00BDCB78231EC0BD00E060F6 /* FetchedResultsControllerSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FetchedResultsControllerSearcher.swift; path = BrainDump/Utilities/FetchedResultsControllerSearcher.swift; sourceTree = SOURCE_ROOT; };
 		00BDCB7A231EC88000E060F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		00C48FF32330C1260043494E /* TransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionController.swift; sourceTree = "<group>"; };
 		00C4A0E823055D4E009494A0 /* BrainDump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrainDump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C4A0EB23055D4E009494A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00C4A0ED23055D4E009494A0 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			children = (
 				00C4A0EB23055D4E009494A0 /* AppDelegate.swift */,
 				00B20B4B231866CB002F5DD6 /* Coordinator.swift */,
+				00C48FF32330C1260043494E /* TransitionController.swift */,
 				00B050E5230D3FDA0075B3D3 /* CoreDataStore.swift */,
 				001A4A7E2315AF26006E22D3 /* Purger.swift */,
 				001A4A7C231542A9006E22D3 /* Settings.swift */,
@@ -373,6 +376,7 @@
 				008DE532232FFAE700B55BF8 /* String.swift in Sources */,
 				008DE536232FFEFA00B55BF8 /* UIResponder.swift in Sources */,
 				0029DD30232BA91200D7993C /* LibrarySectionHeader.swift in Sources */,
+				00C48FF42330C1260043494E /* TransitionController.swift in Sources */,
 				00B20B4723180012002F5DD6 /* SlideAnimator.swift in Sources */,
 				00B050EB230D752A0075B3D3 /* Note.swift in Sources */,
 				00E6361723281EE400F3BBF5 /* SlideTransitionable.swift in Sources */,

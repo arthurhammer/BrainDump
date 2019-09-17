@@ -21,7 +21,7 @@ class Coordinator {
         return controller
     }()
 
-    lazy var transitionController = SlideTransitionController()
+    lazy var transitionController = TransitionController()
 
     init(store: CoreDataStore, purger: Purger, settings: Settings, editorViewController: EditorViewController) {
         self.store = store
@@ -40,8 +40,8 @@ private extension Coordinator {
 
     func showLibrary() {
         libraryViewController.selectedNote = editorViewController.dataSource?.note
-        transitionController.prepareTransition(for: libraryContainer)
         editorViewController.view.endEditing(true)
+        transitionController.prepareForLibraryTransition(for: libraryContainer)
         editorViewController.present(libraryContainer, animated: true)
     }
 
@@ -53,9 +53,9 @@ private extension Coordinator {
         guard let settingsContainer = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
             let settingsViewController = settingsContainer.topViewController as? SettingsViewController else { fatalError("Wrong storyboard id or controller type.") }
 
-        settingsContainer.modalPresentationStyle = .custom  
         settingsViewController.delegate = self
         settingsViewController.settings = settings
+        transitionController.prepareForSettingsTransition(for: settingsContainer)
         libraryViewController.present(settingsContainer, animated: true)
     }
 
@@ -66,7 +66,7 @@ private extension Coordinator {
     }
 
     @objc func handleSlideToLibraryPan(sender: UIPanGestureRecognizer) {
-        transitionController.interactionController.handlePan(for: sender, transitionType: .presentation, performTransition: showLibrary)
+        transitionController.libraryInteractionController.handlePan(for: sender, transitionType: .presentation, performTransition: showLibrary)
     }
 }
 
