@@ -15,7 +15,14 @@ class LibraryDataSource: NSObject {
     private let store: CoreDataStore
     private let settings: Settings
     private let frc: NSFetchedResultsController<Note>
-    private lazy var searcher = FetchedResultsControllerSearcher<Note>(frc: frc, searchKeyPath: #keyPath(Note.text), debounceBy: 0.25)
+
+    private lazy var searcher: FetchedResultsControllerSearcher<Note> = {
+        let searcher = FetchedResultsControllerSearcher(frc: frc, searchKeyPath: #keyPath(Note.text), debounceBy: 0.25)
+        searcher.resultsDidUpdate = { [weak self] _ in
+            self?.notesDidChange?(false)
+        }
+        return searcher
+    }()
 
     init(store: CoreDataStore, settings: Settings, fetchRequest: NSFetchRequest<Note> = Note.libraryRequest()) {
         self.store = store
@@ -28,13 +35,8 @@ class LibraryDataSource: NSObject {
         super.init()
 
         observeSettings()
-
         frc.delegate = self
         try? frc.performFetch()
-
-        searcher.resultsDidUpdate = { [weak self] _ in
-            self?.notesDidChange?(false)
-        }
     }
 
     func search(for term: String?) {

@@ -16,6 +16,8 @@ class Coordinator {
 
     lazy var libraryViewController: LibraryViewController = {
         guard let controller = libraryContainer.viewControllers.first as? LibraryViewController else { fatalError("Wrong root controller.") }
+        controller.delegate = self
+        controller.dataSource = LibraryDataSource(store: store, settings: settings)
         return controller
     }()
 
@@ -37,13 +39,7 @@ class Coordinator {
 private extension Coordinator {
 
     func showLibrary() {
-        if libraryViewController.dataSource == nil {
-            libraryViewController.dataSource = LibraryDataSource(store: store, settings: settings)
-        }
-
-        libraryViewController.delegate = self
         libraryViewController.selectedNote = editorViewController.dataSource?.note
-
         transitionController.prepareTransition(for: libraryContainer)
         editorViewController.view.endEditing(true)
         editorViewController.present(libraryContainer, animated: true)

@@ -31,8 +31,8 @@ class EditorViewController: UIViewController {
         editor?.delegate = self
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         // In some cases, inputAccessoryView vanishes, e.g. when showing full screen share
         // sheet action.
         becomeFirstResponder()
@@ -117,7 +117,7 @@ extension EditorViewController: UITextViewDelegate {
     }
 }
 
-// #MARK: - Micromanaging `inputAccessoryView`
+// MARK: - Micromanaging `inputAccessoryView`
 
 // For the input accessory view to show, the controller needs to be first responder.
 // UIKit automatically manages the input accessory view/first responder status during

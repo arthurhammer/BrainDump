@@ -30,7 +30,7 @@ class EditorTextView: UITextView {
     }
 }
 
-// #MARK: Keyboard Handling
+// MARK: Keyboard Handling
 
 private extension EditorTextView {
 
@@ -44,7 +44,7 @@ private extension EditorTextView {
             let keyboardHeight = (keyboardFrame as? NSValue)?.cgRectValue.size.height else { return }
 
         contentInset.bottom = keyboardHeight
-        scrollIndicatorInsets.bottom = keyboardHeight
+        verticalScrollIndicatorInsets.bottom = keyboardHeight
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {

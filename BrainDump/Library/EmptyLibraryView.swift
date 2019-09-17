@@ -21,7 +21,7 @@ class EmptyLibraryView: UIView {
         self.isHidden = !isEmpty
 
         UIView.performWithoutAnimation {
-            button.setTitle(formatter.string(from: suggestion), for: .normal)
+            button.setTitle(formatter.localizedString(from: suggestion), for: .normal)
             button.layoutIfNeeded()
         }
     }

@@ -66,8 +66,8 @@ class SettingsViewController: UITableViewController {
     }
 
     private func updateLabels() {
-        createNoteAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: createNoteAfterStepper.dateValue)
-        deleteNotesAfterLabel.text = afterTimeFormatter.localizedPhrasedString(from: deleteNotesAfterStepper.dateValue)
+        createNoteAfterLabel.text = afterTimeFormatter.localizedString(from: createNoteAfterStepper.dateValue)
+        deleteNotesAfterLabel.text = afterTimeFormatter.localizedString(from: deleteNotesAfterStepper.dateValue)
     }
 
     private func showIndexPath(_ indexPath: IndexPath, show: Bool) {

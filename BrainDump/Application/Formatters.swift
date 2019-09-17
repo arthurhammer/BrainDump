@@ -51,7 +51,7 @@ class AfterTimeFormatter {
         return formatter.string(from: components)
     }
 
-    func localizedPhrasedString(from components: DateComponents) -> String? {
+    func localizedString(from components: DateComponents) -> String? {
         guard let string = self.string(from: components) else { return nil }
         let format = NSLocalizedString("formatter.afterTimeUnit", value: "After %@", comment: "After <time interval>.")
         return String.localizedStringWithFormat(format, string)
@@ -62,7 +62,7 @@ class ThoughtSuggestionFormatter {
 
     let locale = Locale.autoupdatingCurrent
 
-    func string(from suggestion: String?) -> String? {
+    func localizedString(from suggestion: String?) -> String? {
         if let text = suggestion?.trimmedOrNil {
             let start = locale.quotationBeginDelimiter ?? "“"
             let end = locale.quotationEndDelimiter ?? "”"

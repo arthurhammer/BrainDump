@@ -66,7 +66,7 @@ class Settings: NotificationCenterObservable {
 
 extension Settings {
 
-    static let defaultCreateNoteAfter = Feature(value: DateComponents(minute: 60))
+    static let defaultCreateNoteAfter = Feature(value: DateComponents(hour: 1))
     static let defaultDeleteNotesAfter = Feature(value: DateComponents(day: 3))
 
     var createNoteAfterOptions: [DateComponents] {

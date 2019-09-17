@@ -31,8 +31,8 @@ extension LibrarySectionHeader {
             imageView.image = #imageLiteral(resourceName: "pin-filled")
             imageView.tintColor = Style.orange
             titleLabel.text = NSLocalizedString("Pinned", comment: "")
-            // Alpha instead if hiding to take the button into account when sizing the
-            // header. Otherwise, the header has the wrong size in some case when reloading.
+            // Alpha instead of hiding to take the button into account when sizing the
+            // header. Otherwise, the header has the wrong size in some cases when reloading.
             actionButton.alpha = 0
 
         case .unpinned:

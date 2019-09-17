@@ -56,7 +56,7 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     @IBAction private func createNewNoteFromSuggestion() {
-        let text = searchController.searchBar.text?.trimmedOrNil
+        let text = searchBar.text?.trimmedOrNil
         delegate?.controller(self, didSelectCreateNewNoteWithText: text)
     }
 
