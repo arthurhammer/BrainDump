@@ -6,18 +6,6 @@ class NoteCell: UITableViewCell {
     @IBOutlet var bodyLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var expirationLabel: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        expirationLabel.text = nil
-        selectedBackgroundView = UIView()
-        selectedBackgroundView?.backgroundColor = Style.cellSelectionColor
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        expirationLabel.text = nil
-    }
 }
 
 // MARK: - Configuring

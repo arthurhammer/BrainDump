@@ -89,9 +89,4 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         indexPath.section > 1
     }
-
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.selectedBackgroundView = UIView()
-        cell.selectedBackgroundView?.backgroundColor = Style.cellSelectionColor
-    }
 }

@@ -188,14 +188,13 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     private func configureViews() {
-        navigationController?.navigationBar.barTintColor = Style.mainBackgroundColor
-        view.backgroundColor = Style.mainBackgroundColor
-        tableView.backgroundColor = Style.mainBackgroundColor
+        view.backgroundColor = tableView.backgroundColor
+        searchBar.backgroundColor = tableView.backgroundColor
+
         tableView.backgroundView = emptyView
         tableView.register(LibrarySectionHeader.nib, forHeaderFooterViewReuseIdentifier: headerIdentifier)
 
         searchBar.delegate = self
-        searchBar.backgroundColor = Style.mainBackgroundColor
 
         updateViews()
     }

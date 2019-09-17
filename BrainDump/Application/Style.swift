@@ -1,14 +1,41 @@
 import UIKit
 
 struct Style {
-    static let mainTint = Style.purple
 
-    static let mainBackgroundColor = UIColor(red: 0.96, green: 0.97, blue: 0.98, alpha: 1.00) 
-    static let cellSelectionColor =  UIColor(red: 0.85, green: 0.85, blue: 0.87, alpha: 1.00)
+    static var mainTint: UIColor {
+        if #available(iOS 13, *) {
+            return .systemIndigo
+       } else {
+            return .systemPurple  // iOS 12 purple is iOS 13 indigo.
+       }
+    }
 
-    static let purple = UIColor(red: 0.35, green: 0.36, blue: 0.83, alpha: 1.00)
-    static let orange = UIColor(red: 1.00, green: 0.58, blue: 0.00, alpha: 1.00)
-    static let red = UIColor(red: 1.00, green: 0.19, blue: 0.41, alpha: 1.00)
+    static var mainBackgroundColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }
+
+    static var toolBarBackgroundColor: UIColor {
+        if #available(iOS 13, *) {
+            // Ideally we'd just use `systemGroupedBackground` but it seems to change
+            // shades not only with `userInterfaceStyle` but also based on whether its in
+            // a grouped table view or not. Hard-code, so editor and library share the
+            // same toolbar color.
+            return UIColor {
+                ($0.userInterfaceStyle == .light)
+                    ? .systemGroupedBackground
+                    : UIColor(red: 0.11, green: 0.11, blue: 0.12, alpha: 1.00)
+            }
+        } else {
+            return .groupTableViewBackground
+        }
+    }
+
+    static let orange = UIColor.systemOrange
+    static let red = UIColor.systemPink
 }
 
 extension Style {
@@ -17,16 +44,15 @@ extension Style {
         window?.tintColor = Style.mainTint
         UIWindow.appearance().tintColor = Style.mainTint
 
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().barTintColor = .white
         UINavigationBar.appearance().tintColor = Style.mainTint
+        UINavigationBar.appearance().barTintColor = Style.mainBackgroundColor
+        UINavigationBar.appearance().shadowImage = UIImage()
 
-        UIToolbar.appearance().setShadowImage(UIImage(), forToolbarPosition: .any)
         UIToolbar.appearance().tintColor = Style.mainTint
-        UIToolbar.appearance().barTintColor = Style.mainBackgroundColor
+        UIToolbar.appearance().barTintColor = Style.toolBarBackgroundColor
+        UIToolbar.appearance().setShadowImage(UIImage(), forToolbarPosition: .any)
         UIToolbar.appearance().isTranslucent = false
 
-        UITableView.appearance().backgroundColor = Style.mainBackgroundColor
         UISwitch.appearance().onTintColor = Style.mainTint
     }
 }
