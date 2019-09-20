@@ -2,35 +2,17 @@ import UIKit
 
 struct Style {
 
-    static var mainTint: UIColor {
-        if #available(iOS 13, *) {
-            return .systemIndigo
-       } else {
-            return .systemPurple  // iOS 12 purple is iOS 13 indigo.
-       }
-    }
-
-    static var mainBackgroundColor: UIColor {
-        if #available(iOS 13, *) {
-            return .systemBackground
-        } else {
-            return .white
-        }
-    }
+    static var mainTint: UIColor = .systemIndigo
 
     static var toolBarBackgroundColor: UIColor {
-        if #available(iOS 13, *) {
-            // Ideally we'd just use `systemGroupedBackground` but it seems to change
-            // shades not only with `userInterfaceStyle` but also based on whether its in
-            // a grouped table view or not. Hard-code, so editor and library share the
-            // same toolbar color.
-            return UIColor {
-                ($0.userInterfaceStyle == .light)
-                    ? .systemGroupedBackground
-                    : UIColor(red: 0.11, green: 0.11, blue: 0.12, alpha: 1.00)
-            }
-        } else {
-            return .groupTableViewBackground
+        // Ideally we'd just use `systemGroupedBackground` but it seems to change
+        // shades not only with `userInterfaceStyle` but also based on whether its in
+        // a grouped table view or not. Hard-code, so editor and library share the
+        // same toolbar color.
+        return UIColor {
+            ($0.userInterfaceStyle == .light)
+                ? .systemGroupedBackground
+                : UIColor(red: 0.11, green: 0.11, blue: 0.12, alpha: 1.00)
         }
     }
 
@@ -44,8 +26,6 @@ extension Style {
         window?.tintColor = Style.mainTint
         UIWindow.appearance().tintColor = Style.mainTint
 
-        UINavigationBar.appearance().tintColor = Style.mainTint
-        UINavigationBar.appearance().barTintColor = Style.mainBackgroundColor
         UINavigationBar.appearance().shadowImage = UIImage()
 
         UIToolbar.appearance().tintColor = Style.mainTint

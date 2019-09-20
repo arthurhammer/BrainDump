@@ -51,6 +51,6 @@ private extension EditorTextView {
 
     @objc func keyboardWillHide(notification: NSNotification) {
         contentInset = .zero
-        scrollIndicatorInsets = .zero
+        verticalScrollIndicatorInsets = .zero
     }
 }

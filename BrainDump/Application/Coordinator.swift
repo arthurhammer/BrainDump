@@ -55,7 +55,6 @@ private extension Coordinator {
 
         settingsViewController.delegate = self
         settingsViewController.settings = settings
-        transitionController.prepareForSettingsTransition(for: settingsContainer)
         libraryViewController.present(settingsContainer, animated: true)
     }
 
