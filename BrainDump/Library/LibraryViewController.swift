@@ -270,7 +270,7 @@ private extension LibraryViewController {
         }
 
         action.image = UIImage(systemName: "trash.fill", withConfiguration: Style.swipeActionImageConfiguration)
-        action.backgroundColor = Style.red
+        action.backgroundColor = .systemPink
         return action
     }
 
@@ -300,7 +300,7 @@ private extension LibraryViewController {
             ? UIImage(systemName: "pin.slash.fill", withConfiguration: Style.swipeActionImageConfiguration)
             : UIImage(systemName: "pin.fill", withConfiguration: Style.swipeActionImageConfiguration)
 
-        action.backgroundColor = Style.orange
+        action.backgroundColor = .systemOrange
         return action
     }
 }

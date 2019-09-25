@@ -15,9 +15,6 @@ struct Style {
                 : UIColor(red: 0.11, green: 0.11, blue: 0.12, alpha: 1.00)
         }
     }
-
-    static let orange = UIColor.systemOrange
-    static let red = UIColor.systemPink
 }
 
 extension Style {

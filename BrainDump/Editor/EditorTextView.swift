@@ -4,7 +4,7 @@ class EditorTextView: UITextView {
 
     private let textInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
     private let baseFont = UIFont.systemFont(ofSize: 16)
-    private let lineHeightMultiple: CGFloat = 1.2
+    private let lineHeightMultiple: CGFloat = 1.3
 
     private let notificationCenter: NotificationCenter = .default
 
