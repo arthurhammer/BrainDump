@@ -8,12 +8,16 @@ class Note: NSManagedObject {
     @NSManaged var dateModified: Date
     @NSManaged var isPinned: Bool
 
-    convenience init(in context: NSManagedObjectContext, text: String? = nil, dateCreated: Date = Date(), isPinned: Bool = false) {
+    convenience init(in context: NSManagedObjectContext, text: String? = nil, dateCreated: Date = Date(), dateModified: Date = Date(), isPinned: Bool = false) {
         self.init(context: context)
         self.text = text
         self.dateCreated = dateCreated
-        self.dateModified = dateCreated
+        self.dateModified = dateModified
         self.isPinned = isPinned
+    }
+
+    convenience init(in context: NSManagedObjectContext, note: Note) {
+        self.init(in: context, text: note.text, dateCreated: note.dateCreated, dateModified: note.dateModified, isPinned: note.isPinned)
     }
 }
 

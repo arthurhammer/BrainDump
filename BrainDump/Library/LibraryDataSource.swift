@@ -76,9 +76,17 @@ class LibraryDataSource: NSObject {
         frc.indexPath(forObject: note)
     }
 
-    func deleteNote(at indexPath: IndexPath) {
-        let note = frc.object(at: indexPath)
+    func delete(at indexPath: IndexPath) {
+        delete(frc.object(at: indexPath))
+    }
+
+    func delete(_ note: Note) {
         store.viewContext.delete(note)
+        store.save()
+    }
+
+    func duplicate(_ note: Note) {
+        let _ = Note(in: store.viewContext, note: note)
         store.save()
     }
 

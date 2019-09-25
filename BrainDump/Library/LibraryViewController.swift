@@ -123,27 +123,29 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
 
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let dataSource = dataSource else { return nil }
+        let note = dataSource.note(at: indexPath)
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            UIMenu(title: "", children: [
+                PinAction(note: note).menuAction(),
+                DuplicateAction(note: note, dataSource: dataSource).menuAction(),
+                ShareAction(note: note, presentingViewController: self).menuAction(),
+                DeleteAction(note: note, dataSource: dataSource).menuAction()
+            ])
+        }
+    }
+
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let actions = [
-            deleteAction(for: indexPath),
-            pinAction(for: indexPath),
-            shareAction(for: indexPath)
-        ]
+        guard let dataSource = dataSource else { return nil }
+        let note = dataSource.note(at: indexPath)
 
-        return UISwipeActionsConfiguration(actions: actions.compactMap { $0 })
-    }
-
-    func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
-        true
-    }
-
-    func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        action == #selector(UIResponder.copy(_:))
-    }
-
-    func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
-        guard action == #selector(UIResponder.copy(_:)) else { return }
-        UIPasteboard.general.string = dataSource?.note(at: indexPath).text
+        return UISwipeActionsConfiguration(actions: [
+            DeleteAction(note: note, dataSource: dataSource).swipeAction(),
+            PinAction(note: note).swipeAction(),
+            ShareAction(note: note, presentingViewController: self).swipeAction()
+        ])
     }
 
     private func configureDataSource() {
@@ -251,56 +253,5 @@ extension LibraryViewController: UISearchBarDelegate {
         searchBar.endEditing(true)
         dataSource?.search(for: searchBar.text)
         updateViews()
-    }
-}
-
-// MARK: - Swipe Actions
-
-private extension LibraryViewController {
-
-    func deleteAction(for indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .destructive, title: title) { [weak self] action, _, completion in
-            guard let dataSource = self?.dataSource else {
-                completion(false)
-                return
-            }
-
-            dataSource.deleteNote(at: indexPath)
-            completion(true)
-        }
-
-        action.image = UIImage(systemName: "trash.fill", withConfiguration: Style.swipeActionImageConfiguration)
-        action.backgroundColor = .systemPink
-        return action
-    }
-
-    func shareAction(for indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
-            let text = self?.dataSource?.note(at: indexPath).text ?? ""
-            let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
-            self?.present(controller, animated: true)
-            completion(true)
-        }
-
-        action.image = UIImage(systemName: "square.and.arrow.up.fill", withConfiguration: Style.swipeActionImageConfiguration)
-        action.backgroundColor = Style.mainTint
-        return action
-    }
-
-    func pinAction(for indexPath: IndexPath) -> UIContextualAction? {
-        guard let note = dataSource?.note(at: indexPath) else { return nil }
-
-        let action = UIContextualAction(style: .normal, title: title) { [weak self] action, _, completion in
-            note.isPinned = !note.isPinned
-            self?.dataSource?.save()
-            completion(true)
-        }
-
-        action.image = note.isPinned
-            ? UIImage(systemName: "pin.slash.fill", withConfiguration: Style.swipeActionImageConfiguration)
-            : UIImage(systemName: "pin.fill", withConfiguration: Style.swipeActionImageConfiguration)
-
-        action.backgroundColor = .systemOrange
-        return action
     }
 }
