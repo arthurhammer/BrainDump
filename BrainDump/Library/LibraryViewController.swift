@@ -269,7 +269,7 @@ private extension LibraryViewController {
             completion(true)
         }
 
-        action.image = #imageLiteral(resourceName: "trash-large")
+        action.image = UIImage(systemName: "trash.fill", withConfiguration: Style.swipeActionImageConfiguration)
         action.backgroundColor = Style.red
         return action
     }
@@ -282,7 +282,7 @@ private extension LibraryViewController {
             completion(true)
         }
 
-        action.image = #imageLiteral(resourceName: "share-large")
+        action.image = UIImage(systemName: "square.and.arrow.up.fill", withConfiguration: Style.swipeActionImageConfiguration)
         action.backgroundColor = Style.mainTint
         return action
     }
@@ -296,7 +296,10 @@ private extension LibraryViewController {
             completion(true)
         }
 
-        action.image = note.isPinned ? #imageLiteral(resourceName: "unpin-large") : #imageLiteral(resourceName: "pin-large")
+        action.image = note.isPinned
+            ? UIImage(systemName: "pin.slash.fill", withConfiguration: Style.swipeActionImageConfiguration)
+            : UIImage(systemName: "pin.fill", withConfiguration: Style.swipeActionImageConfiguration)
+
         action.backgroundColor = Style.orange
         return action
     }

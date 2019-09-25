@@ -33,7 +33,7 @@ extension LibrarySectionHeader {
         switch type {
 
         case .pinned:
-            imageView.image = #imageLiteral(resourceName: "pin-filled")
+            imageView.image = UIImage(named: "pin.circle.fill")
             imageView.tintColor = Style.orange
             titleLabel.text = NSLocalizedString("Pinned", comment: "")
             // Alpha instead of hiding to take the button into account when sizing the
@@ -41,7 +41,7 @@ extension LibrarySectionHeader {
             actionButton.alpha = 0
 
         case .unpinned:
-            imageView.image = #imageLiteral(resourceName: "bulb-filled")
+            imageView.image = UIImage(named: "lightbulb.circle.fill")
             imageView.tintColor = Style.mainTint
             titleLabel.text = NSLocalizedString("My Thoughts", comment: "")
             actionButton.alpha = 1

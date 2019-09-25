@@ -21,6 +21,10 @@ struct Style {
 }
 
 extension Style {
+    static var swipeActionImageConfiguration = UIImage.SymbolConfiguration(textStyle: .title2)
+}
+
+extension Style {
 
     static func configure(for window: UIWindow?) {
         window?.tintColor = Style.mainTint
