@@ -30,13 +30,6 @@ class EditorViewController: UIViewController {
         editor?.delegate = self
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // In some cases, inputAccessoryView vanishes, e.g. when showing full screen share
-        // sheet action.
-        becomeFirstResponder()
-    }
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         dataSource?.save()
@@ -61,7 +54,15 @@ class EditorViewController: UIViewController {
         createNewNote(with: nil)
     }
 
+    func setNote(_ note: Note?) {
+        guard note != dataSource?.note else { return }
+        editor?.scrollToTop(animated: false)
+        dataSource?.note = note
+    }
+
     func createNewNote(with text: String?) {
+        editor?.scrollToTop(animated: false)
+
         if let text = text?.trimmedOrNil {
             dataSource?.createNewNote(with: text)
         } else {
