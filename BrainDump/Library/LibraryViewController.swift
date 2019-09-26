@@ -127,13 +127,24 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         guard let dataSource = dataSource else { return nil }
         let note = dataSource.note(at: indexPath)
 
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: {
+            NotePreviewController(note: note)
+        }, actionProvider: { _ in
             UIMenu(title: "", children: [
                 PinAction(note: note).menuAction(),
                 DuplicateAction(note: note, dataSource: dataSource).menuAction(),
                 ShareAction(note: note, presentingViewController: self).menuAction(),
                 DeleteAction(note: note, dataSource: dataSource).menuAction()
             ])
+        })
+    }
+
+    func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let controller = animator.previewViewController as? NotePreviewController,
+            let note = controller.note else { return }
+
+        animator.addAnimations {
+            self.delegate?.controller(self, didSelectNote: note)
         }
     }
 

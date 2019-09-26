@@ -8,12 +8,23 @@ class EditorTextView: UITextView {
 
     private let notificationCenter: NotificationCenter = .default
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        configureViews()
+    }
 
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureViews()
+    }
+
+    private func configureViews() {
         subscribeToNotifications()
         textContainerInset = textInsets
+        configureTextStyle()
+    }
 
+    private func configureTextStyle() {
         let font = UIFontMetrics(forTextStyle: .body).scaledFont(for: baseFont)
         adjustsFontForContentSizeCategory = true
 
