@@ -29,9 +29,12 @@ class SettingsViewController: UITableViewController {
         configureViews()
     }
 
-    @IBAction func done() {
-        // Save changes now.
+    func save() {
         settings.deleteNotesAfter = modifiedDeleteNotesAfter
+    }
+
+    @IBAction func done() {
+        save()
         delegate?.controllerDidFinish(self)
     }
 
@@ -48,6 +51,8 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureViews() {
+        navigationController?.presentationController?.delegate = self
+
         createNoteAfterSwitch.isOn = settings.createNoteAfter.isEnabled
         createNoteAfterStepper.dateValues = settings.createNoteAfterOptions
         createNoteAfterStepper.dateValue = settings.createNoteAfter.value
@@ -88,5 +93,12 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         indexPath.section > 1
+    }
+}
+
+extension SettingsViewController: UIAdaptivePresentationControllerDelegate {
+    
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        save()
     }
 }
